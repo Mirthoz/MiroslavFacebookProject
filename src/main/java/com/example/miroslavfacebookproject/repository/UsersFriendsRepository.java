@@ -1,7 +1,8 @@
 package com.example.miroslavfacebookproject.repository;
+import com.example.miroslavfacebookproject.entity.UsersFriends;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsersFriendsRepository extends JpaRepository {
+public interface UsersFriendsRepository extends JpaRepository <UsersFriends, Long>{
 }
