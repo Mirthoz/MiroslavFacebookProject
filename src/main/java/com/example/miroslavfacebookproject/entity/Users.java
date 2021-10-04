@@ -17,6 +17,12 @@ public class Users {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "age")
+    private String age;
+
     @Column(name = "register_date")
     private Date registerDate;
 
@@ -76,5 +82,20 @@ public class Users {
 
     public void setProfileId(Long profileId) {
         this.profileId = profileId;
+    }
+
+    public String getName() {return name;}
+
+    public void setName(String name) {this.name = name;}
+
+    public String getAge() {return age;}
+
+    public void setAge(String age) {this.age = age;}
+
+    public Users(String email, String password, String name, String age) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.age = age;
     }
 }
