@@ -22,6 +22,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .and()
                 .logout().logoutSuccessUrl("/login").permitAll();
+        
     }
 
 }
