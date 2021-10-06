@@ -17,6 +17,12 @@ public class MainController {
     @GetMapping("/login")
     public String login() {return "login";}
 
+    @GetMapping("/profile")
+    public String profile() {return "profile";}
+
+    @GetMapping("/forgot_password")
+    public String forgotPassword() {return "forgot_password";}
+
     @Autowired
     public UsersRepository usersRepository;
 
