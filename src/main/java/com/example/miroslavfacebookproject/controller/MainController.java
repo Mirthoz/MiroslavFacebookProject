@@ -1,6 +1,5 @@
 package com.example.miroslavfacebookproject.controller;
 
-import com.example.miroslavfacebookproject.dto.UserDto;
 import com.example.miroslavfacebookproject.entity.Users;
 import com.example.miroslavfacebookproject.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
