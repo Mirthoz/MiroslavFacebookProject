@@ -18,19 +18,16 @@
 </style>
 
 <div id="form">
-<form action="registration/add" method="post">
+<form th:method="POST" th:action="@{/registration/new}" th:object="${person}">
     <h1 class="h3 mb-3 fw-normal">Registration</h1>
 
     <div class="form-floating">
-        <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <input type="email" th:filed="*{email}" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
         <label for="floatingInput">Email address</label>
     </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> 4580f71ebaeeb7b8295aade665e95b9314d5277a
     <div class="form-floating">
-        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <input type="password" th:filed="*{password}" name="password" class="form-control" id="floatingPassword" placeholder="Password">
         <label for="floatingPassword">Password</label>
     </div>
 
@@ -40,12 +37,12 @@
     </div>
 
     <div class="form-floating">
-        <input type="text" name="name" class="form-control" id="nameInput" placeholder="name@example.com">
+        <input type="text" th:filed="*{name}" name="name" class="form-control" id="nameInput" placeholder="name@example.com">
         <label for="nameInput">Name</label>
     </div>
 
     <div class="form-floating">
-        <input type="text" name="age" class="form-control" id="ageInput" placeholder="name@example.com">
+        <input type="text" th:filed="*{age}" name="age" class="form-control" id="ageInput" placeholder="name@example.com">
         <label for="ageInput">Age</label>
     </div>
 
