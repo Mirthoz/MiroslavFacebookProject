@@ -2,7 +2,7 @@ package com.example.miroslavfacebookproject.dto;
 
 import javax.validation.constraints.*;
 
-public class UserRegistrationDto {
+public class RegisterDTO {
     @NotEmpty(message = "Email should not be empty")
     @Email(message = "Email should be valid")
     private String email;
@@ -19,7 +19,7 @@ public class UserRegistrationDto {
     private int age;
 
     @NotEmpty(message = "Name should not be empty")
-    @Size(min =2, max = 30, message = "Name should be between 2 and 30 characters")
+    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
     private String name;
 
     public String getEmail() {
@@ -62,9 +62,10 @@ public class UserRegistrationDto {
         this.repeatPassword = repeatPassword;
     }
 
-    public UserRegistrationDto(){}
+    public RegisterDTO() {
+    }
 
-    public UserRegistrationDto(String email, String password, String repeatPassword, int age, String name) {
+    public RegisterDTO(String email, String password, String repeatPassword, int age, String name) {
         this.email = email;
         this.password = password;
         this.repeatPassword = repeatPassword;

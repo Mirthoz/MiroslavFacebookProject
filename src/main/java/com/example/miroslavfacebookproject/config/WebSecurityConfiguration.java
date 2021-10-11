@@ -13,14 +13,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/", "/registration", "/forgot_password", "registration/add").permitAll()
-                //.anyRequest().permitAll()
+                    .authorizeRequests()
+                    .antMatchers("/", "/register").permitAll()
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
-                .usernameParameter("name")
-                .passwordParameter("password")
+                    .formLogin().loginPage("/login").permitAll()
+                    .usernameParameter("email")
+                    .passwordParameter("password")
                 .and()
-                .logout().logoutSuccessUrl("/login").permitAll();
+                    .logout().logoutSuccessUrl("/login").permitAll();
     }
 }
