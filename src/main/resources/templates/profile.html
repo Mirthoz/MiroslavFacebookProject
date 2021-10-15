@@ -2,11 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
     <title>Title</title>
 </head>
 <body>
 This is My profile
+<div><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png" alt="ProfileImg" width="200" height="200">
+</div>
 <h1 sec:authorize="isAuthenticated()" sec:authentication="name"></h1>
+<br>
+<textarea name="post_text"></textarea>
 <br>
 <a href="/logout">LogOut</a>
 </body>
