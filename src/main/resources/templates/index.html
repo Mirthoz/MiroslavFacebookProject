@@ -6,8 +6,8 @@
 </head>
 <body>
 <h1 sec:authorize="isAuthenticated()" sec:authentication="name"></h1>
-<p th:if="${dto != null}" th:text="${dto.getSomething()}"></p>
-<p th:if="${dto != null}" th:text="${dto.getOther()}"></p>
+<!--<p th:if="${dto != null}" th:text="${dto.getSomething()}"></p>-->
+<!--<p th:if="${dto != null}" th:text="${dto.getOther()}"></p>-->
 <a th:href="@{/demo}">Link</a>
 <a th:href="@{/login}">Login</a>
 <a th:href="@{/register}">Register</a>

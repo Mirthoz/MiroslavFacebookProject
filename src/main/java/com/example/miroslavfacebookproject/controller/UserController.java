@@ -43,6 +43,11 @@ public class UserController extends BaseController {
         userService.register(registerDTO);
         return redirect("login");
     }
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/")
+    public ModelAndView loginProfile(){
+        return send("profile");
+    }
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("/login")
