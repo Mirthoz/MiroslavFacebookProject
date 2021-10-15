@@ -1,49 +1,46 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org " xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Login</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
 </head>
 
 <style>
-#form{
-    position: absolute;
+    #form {
+        position: absolute;
 
-    height: 200px;
-    width: 500px;
-    top: 25%;
-    left: 35%;
-}
+        height: 200px;
+        width: 500px;
+        top: 25%;
+        left: 35%;
+    }
 </style>
 
 <body class="text-center">
 <main class="form-singin">
 
     <div id="form">
-<form>
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <form method="post" action="/login">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-    <div class="form-floating">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
-    </div>
+            <div class="form-floating">
+                <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+            </div>
 
-    <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
-    </div>
+            <div class="form-floating">
+                <input type="password" name="password" class="form-control" id="floatingPassword"
+                       placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
 
-<<<<<<< HEAD
-    <a href="http://localhost:8080/forgot_password">Forgot password?</a>
-    <br>
-    <a href="http://localhost:8080/registration">Registration</a>
-=======
-    <a href="http://localhost:8080/forgot_password.html">Forgot password?</a>
->>>>>>> 4580f71ebaeeb7b8295aade665e95b9314d5277a
+            <a href="http://localhost:8080/forgot_password">Forgot password?</a>
+            <br>
+            <a href="register">Registration</a>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-</form>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        </form>
         <br>
     </div>
 </main>
