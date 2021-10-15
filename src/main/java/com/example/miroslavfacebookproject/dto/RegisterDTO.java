@@ -1,33 +1,35 @@
 package com.example.miroslavfacebookproject.dto;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 public class RegisterDTO {
-    @NotEmpty(message = "Email should not be empty")
-    @Email(message = "Email should be valid")
+
+    @NotBlank
     private String email;
 
-    @NotEmpty(message = "Password should not be empty")
+    @NotBlank
+    private String username;
+
+    @NotBlank
+    @Min(14)
+    private String age;
+
+    @NotBlank
     private String password;
 
-    @NotEmpty(message = "Repeat password should not be empty")
-    private String repeatPassword;
+    @NotBlank
+    private String passwordRepeat;
 
-    @Positive(message = "Age should be greater than 14")
-    @NotEmpty(message = "Age should not be empty")
-    @Min(value = 15, message = "Age should be greater than 14")
-    private int age;
-
-    @NotEmpty(message = "Name should not be empty")
-    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
-    private String name;
-
-    public String getEmail() {
-        return email;
+    public RegisterDTO() {
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -38,38 +40,27 @@ public class RegisterDTO {
         this.password = password;
     }
 
-    public int getAge() {
+    public String getPasswordRepeat() {
+        return passwordRepeat;
+    }
+
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
+    }
+
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getRepeatPassword() {
-        return repeatPassword;
-    }
-
-    public void setRepeatPassword(String repeatPassword) {
-        this.repeatPassword = repeatPassword;
-    }
-
-    public RegisterDTO() {
-    }
-
-    public RegisterDTO(String email, String password, String repeatPassword, int age, String name) {
+    public void setEmail(String email) {
         this.email = email;
-        this.password = password;
-        this.repeatPassword = repeatPassword;
-        this.age = age;
-        this.name = name;
     }
 }

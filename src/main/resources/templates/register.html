@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Registration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -8,6 +8,7 @@
 <body class="text-center">
 
 <style>
+
     #form {
         position: absolute;
         height: 200px;
@@ -15,40 +16,41 @@
         top: 25%;
         left: 35%;
     }
+
 </style>
 
 <div id="form">
-    <form th:method="POST" th:action="@{/new}" th:object="${person}">
+    <form action="/register" method="post" th:object="${user}">
         <h1 class="h3 mb-3 fw-normal">Registration</h1>
 
         <div class="form-floating">
-            <input type="email" th:filed="*{email}" name="email" class="form-control" id="floatingInput"
+            <input type="email" name="email" class="form-control" id="floatingInput"
                    placeholder="name@example.com">
             <label for="floatingInput">Email address</label>
         </div>
 
         <div class="form-floating">
-            <input type="password" th:filed="*{password}" name="password" class="form-control" id="floatingPassword"
-                   placeholder="Password">
-            <label for="floatingPassword">Password</label>
-        </div>
-
-        <div class="form-floating">
-            <input type="password" name="repeatPassword" class="form-control" id="floatingRepeatPassword"
-                   placeholder="repeatPassword">
-            <label for="floatingPassword">Repeat password</label>
-        </div>
-
-        <div class="form-floating">
-            <input type="text" th:filed="*{name}" name="name" class="form-control" id="nameInput"
+            <input type="text" name="username" class="form-control" id="nameInput"
                    placeholder="name@example.com">
             <label for="nameInput">Name</label>
         </div>
 
         <div class="form-floating">
-            <input type="text" th:filed="*{age}" name="age" class="form-control" id="ageInput"
+            <input type="text" name="age" class="form-control" id="ageInput"
                    placeholder="name@example.com">
             <label for="ageInput">Age</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="floatingPassword"
+                   placeholder="Password">
+            <label for="floatingPassword">Password</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" name="passwordRepeat" class="form-control" id="floatingRepeatPassword"
+                   placeholder="repeatPassword">
+            <label for="floatingPassword">Repeat password</label>
         </div>
 
         <button class="btn btn-success" type="submit">Sign in</button>
