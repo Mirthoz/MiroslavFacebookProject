@@ -1,4 +1,5 @@
 package com.example.miroslavfacebookproject.service.implementation;
+import com.example.miroslavfacebookproject.dto.UserDTO;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.entity.Role;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -57,8 +59,27 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         User user = userRepository.findFirstByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found; with email: " + email));
         return user;
-
     }
+
+    public User getUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findFirstByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found; with username: " + username));
+        return user;
+    }
+
+    public ModelAndView getUserData(UserDetails userDetails){
+        com.example.miroslavfacebookproject.entity.User user = getUserByUsername(userDetails.getUsername());
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(user.getEmail());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setAge(user.getAge());
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userDTO", userDTO);
+        return modelAndView;
+    }
+
+
 
 
 }

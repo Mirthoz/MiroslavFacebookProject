@@ -6,13 +6,27 @@
     <title>Title</title>
 </head>
 <body>
-This is My profile
-<div><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png" alt="ProfileImg" width="200" height="200">
+<div class="container">
+<div class="container">
+<img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png" alt="ProfileImg" width="200" height="200">
 </div>
-<h1 sec:authorize="isAuthenticated()" sec:authentication="name"></h1>
+<div class="container">
+<!--<h1 sec:authorize="isAuthenticated()" sec:authentication="name"></h1>-->
+<h1 th:text="${userDTO.getUsername()}"></h1>
+<h1 th:text="${userDTO.getEmail()}"></h1>
+<h1 th:text="${userDTO.getAge()}"></h1>
+</div>
 <br>
-<textarea name="post_text"></textarea>
+
+<div class="panel panel-default">
+<div class="panel-heading">Post</div>
+<div class="panel-body">Text</div>
+<div class="panel-footer">Likes</div>
+</div>
+
 <br>
 <a href="/logout">LogOut</a>
+
+</div>
 </body>
 </html>
