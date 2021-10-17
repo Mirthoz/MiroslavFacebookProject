@@ -1,5 +1,6 @@
 package com.example.miroslavfacebookproject.controller;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
+import com.example.miroslavfacebookproject.dto.UserDTO;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -67,8 +68,14 @@ public class UserController extends BaseController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/change_my_information")
-    public ModelAndView changeUserInfo() {
-        return send("change_my_information");
+    public ModelAndView changeUserData(){
+       return send("change_my_information");
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/change")
+    public ModelAndView changeUserInfo(@ModelAttribute("user") UserDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) {
+        userServiceImpl.changeData(userDTO, userDetails);
+        return send("login");
+    }
 }
