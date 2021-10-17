@@ -81,14 +81,12 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     }
 
     public void changeData(UserDTO userDTO, UserDetails userDetails){
-        User user = new User();
+        com.example.miroslavfacebookproject.entity.User user = getUserByUsername(userDetails.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setAge(userDTO.getAge());
         user.setUsername(userDTO.getUsername());
 
         userRepository.save(user);
-
-
     }
 
 
