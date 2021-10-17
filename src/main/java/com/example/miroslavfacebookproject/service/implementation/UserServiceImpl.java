@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -77,6 +78,17 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userDTO", userDTO);
         return modelAndView;
+    }
+
+    public void changeData(UserDTO userDTO, UserDetails userDetails){
+        User user = new User();
+        user.setEmail(userDTO.getEmail());
+        user.setAge(userDTO.getAge());
+        user.setUsername(userDTO.getUsername());
+
+        userRepository.save(user);
+
+
     }
 
 

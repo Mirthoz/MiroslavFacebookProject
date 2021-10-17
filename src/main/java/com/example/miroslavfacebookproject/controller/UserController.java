@@ -59,10 +59,16 @@ public class UserController extends BaseController {
     return userServiceImpl.getUserData(userDetails);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("/my-page")
-    public ModelAndView myPage() {
-        return send("profile");
+//    @PreAuthorize("hasRole('ROLE_USER')")
+//    @GetMapping("/my-page")
+//    public ModelAndView myPage() {
+//        return send("profile");
+//    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/change_my_information")
+    public ModelAndView changeUserInfo() {
+        return send("change_my_information");
     }
 
 }
