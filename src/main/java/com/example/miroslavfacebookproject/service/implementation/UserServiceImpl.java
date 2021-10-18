@@ -85,7 +85,6 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         user.setEmail(userDTO.getEmail());
         user.setAge(userDTO.getAge());
         user.setUsername(userDTO.getUsername());
-
         userRepository.save(user);
     }
 
