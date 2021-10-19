@@ -1,10 +1,13 @@
 package com.example.miroslavfacebookproject.controller;
+import com.example.miroslavfacebookproject.dto.ForgotPasswordDTO;
 import com.example.miroslavfacebookproject.service.implementation.ProfileServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -22,9 +25,17 @@ private final ProfileServiceImpl profileServiceImpl;
         profileServiceImpl.deleteProfile(userDetails);
         return redirect("logout");
     }
+
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("/forgot_password")
     public ModelAndView forgotPassword(){
+        return send("forgot_password");
+    }
+
+    @PreAuthorize("!isAuthenticated()")
+    @PostMapping("/forgot_password")
+    public ModelAndView forgotPassword(@ModelAttribute("user") ForgotPasswordDTO forgotPasswordDTO){
+
         return send("forgot_password");
     }
 }
