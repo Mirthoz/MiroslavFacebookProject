@@ -22,4 +22,9 @@ private final ProfileServiceImpl profileServiceImpl;
         profileServiceImpl.deleteProfile(userDetails);
         return redirect("logout");
     }
+    @PreAuthorize("!isAuthenticated()")
+    @GetMapping("/forgot_password")
+    public ModelAndView forgotPassword(){
+        return send("forgot_password");
+    }
 }
