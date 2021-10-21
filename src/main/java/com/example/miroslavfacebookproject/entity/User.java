@@ -27,9 +27,6 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-//    @Column(name = "activation_code")
-//    private String activationCode;
-
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},

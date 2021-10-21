@@ -20,5 +20,3 @@ public class ResetPasswordService{
         return result;
     }
 }
-
-

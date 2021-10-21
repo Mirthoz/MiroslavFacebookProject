@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
                 .orElseThrow(() -> new IllegalArgumentException("User not found; with email: " + email));
         return user;
     }
-
+    @Override
     public User getUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findFirstByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found; with username: " + username));
@@ -88,7 +88,12 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         userRepository.save(user);
     }
 
-
-
-
+    public void resetUserPassword(String email, String password, String passwordRepeat) {
+        if (password.equals(passwordRepeat) && userRepository.findByEmail(email) != null) {
+            User user = userRepository.findByEmail(email);
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+            System.out.println("Password is reset!!!");
+        }
+    }
 }

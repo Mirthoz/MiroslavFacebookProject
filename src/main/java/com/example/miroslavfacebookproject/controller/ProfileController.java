@@ -3,6 +3,7 @@ import com.example.miroslavfacebookproject.dto.ForgotPasswordDTO;
 import com.example.miroslavfacebookproject.service.implementation.EmailSenderService;
 import com.example.miroslavfacebookproject.service.implementation.ProfileServiceImpl;
 import com.example.miroslavfacebookproject.service.implementation.ResetPasswordService;
+import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +17,13 @@ public class ProfileController extends BaseController{
 private final ProfileServiceImpl profileServiceImpl;
 private final EmailSenderService emailSenderService;
 private final ResetPasswordService resetPasswordService;
+private final UserServiceImpl userServiceImpl;
 
-    public ProfileController(ProfileServiceImpl profileServiceImpl, EmailSenderService emailSenderService, ResetPasswordService resetPasswordService) {
+    public ProfileController(ProfileServiceImpl profileServiceImpl, EmailSenderService emailSenderService, ResetPasswordService resetPasswordService, UserServiceImpl userServiceImpl) {
         this.profileServiceImpl = profileServiceImpl;
         this.emailSenderService = emailSenderService;
         this.resetPasswordService = resetPasswordService;
+        this.userServiceImpl = userServiceImpl;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -39,25 +42,21 @@ private final ResetPasswordService resetPasswordService;
     @PreAuthorize("!isAuthenticated()")
     @PostMapping("/forgot_password")
     public ModelAndView forgotPassword(@ModelAttribute("user") ForgotPasswordDTO forgotPasswordDTO){
+        emailSenderService.sendEmail(forgotPasswordDTO.getEmail(), forgotPasswordDTO.getPassword(), forgotPasswordDTO.getPasswordRepeat());
         return send("forgot_password");
-    }
-
-    @PreAuthorize("!isAuthenticated()")
-    @GetMapping("/send_email")
-    public ModelAndView sendEmail(){
-       emailSenderService.sendEmail();
-        return redirect("login");
     }
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("reset_password/{code}")
     public ModelAndView resetPassword(@PathVariable("code") String codeReset){
         if (resetPasswordService.resetPassword(codeReset)){
+            userServiceImpl.resetUserPassword(emailSenderService.userEmail,
+                    emailSenderService.userPassword,
+                    emailSenderService.userRepeatPassword);
             return redirect("login");
         }else {
             System.out.println();
             return redirect("register");
-
         }
     }
 }
