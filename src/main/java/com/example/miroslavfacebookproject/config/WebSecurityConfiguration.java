@@ -15,19 +15,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserServiceImpl userService;
-    private final EmailSenderService emailSenderService;
 
     @Autowired
-    public WebSecurityConfiguration(UserServiceImpl userService, EmailSenderService emailSenderService) {
+    public WebSecurityConfiguration(UserServiceImpl userService) {
         this.userService = userService;
-        this.emailSenderService = emailSenderService;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                     .authorizeRequests()
-                    .antMatchers("/", "/register", "/send_email").permitAll()
+                    .antMatchers("/", "/register").permitAll()
 //                    .anyRequest().authenticated()
                 .and()
                     .formLogin().loginPage("/login").permitAll()
