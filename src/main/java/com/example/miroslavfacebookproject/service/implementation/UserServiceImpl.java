@@ -1,6 +1,8 @@
 package com.example.miroslavfacebookproject.service.implementation;
-
+import com.example.miroslavfacebookproject.dto.PostDTO;
 import com.example.miroslavfacebookproject.dto.UserDTO;
+import com.example.miroslavfacebookproject.entity.Post;
+import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.entity.Role;
@@ -23,12 +25,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleServiceImpl roleService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final PostRepository postRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleServiceImpl roleService, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleServiceImpl roleService, BCryptPasswordEncoder passwordEncoder, PostRepository postRepository) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
+        this.postRepository = postRepository;
     }
 
     @Override
@@ -96,5 +100,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             userRepository.save(user);
             System.out.println("Password is reset!!!");
         }
+    }
+
+    public void savePost(PostDTO postDTO, User user){
+        Post post = new Post();
+        post.setText(postDTO.getPostText());
+        post.setPoster(user);
+        postRepository.save(post);
     }
 }
