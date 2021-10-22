@@ -16,7 +16,6 @@ public class ResetPasswordService{
         }else {
             result = false;
         }
-        System.out.println(emailSenderService.resetCode);
         return result;
     }
 }

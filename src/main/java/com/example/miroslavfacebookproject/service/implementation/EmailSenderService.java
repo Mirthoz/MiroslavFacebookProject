@@ -29,13 +29,9 @@ public class EmailSenderService {
         message.setText("http://localhost:8080/reset_password/" + uuid);
         message.setSubject("Password reset");
         javaMailSender.send(message);
-
         userEmail = email;
         userPassword = password;
         userRepeatPassword = passwordRepeat;
-
-        System.out.println("Mail is sent!");
-        System.out.println(uuid);
     }
 
     public String generateCode(){
