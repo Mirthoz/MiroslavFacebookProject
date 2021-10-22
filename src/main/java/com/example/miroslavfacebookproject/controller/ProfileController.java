@@ -26,6 +26,12 @@ private final UserServiceImpl userServiceImpl;
         this.userServiceImpl = userServiceImpl;
     }
 
+    @PreAuthorize("!isAuthenticated()")
+    @GetMapping("follow_the_link")
+    public ModelAndView followTheLink(){
+        return redirect("follow_the_link");
+    }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete")
     public ModelAndView deleteProfile(@AuthenticationPrincipal UserDetails userDetails){
@@ -43,7 +49,7 @@ private final UserServiceImpl userServiceImpl;
     @PostMapping("/forgot_password")
     public ModelAndView forgotPassword(@ModelAttribute("user") ForgotPasswordDTO forgotPasswordDTO){
         emailSenderService.sendEmail(forgotPasswordDTO.getEmail(), forgotPasswordDTO.getPassword(), forgotPasswordDTO.getPasswordRepeat());
-        return send("forgot_password");
+        return send("follow_the_link");
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -55,7 +61,6 @@ private final UserServiceImpl userServiceImpl;
                     emailSenderService.userRepeatPassword);
             return redirect("login");
         }else {
-            System.out.println();
             return redirect("register");
         }
     }
