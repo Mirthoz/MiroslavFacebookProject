@@ -1,4 +1,5 @@
 package com.example.miroslavfacebookproject.service.implementation;
+
 import com.example.miroslavfacebookproject.dto.UserDTO;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
@@ -14,11 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService{
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleServiceImpl roleService;
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     }
 
     @Override
-    public User register(RegisterDTO registerDTO){
+    public User register(RegisterDTO registerDTO) {
         if (registerDTO.getPasswordRepeat() == null || !registerDTO.getPassword().equals(registerDTO.getPasswordRepeat()))
             throw new IllegalArgumentException("Password do not match");
 
@@ -62,13 +62,14 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         return user;
     }
 
+    @Override
     public User getUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findFirstByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found; with username: " + username));
         return user;
     }
 
-    public ModelAndView getUserData(UserDetails userDetails){
+    public ModelAndView getUserData(UserDetails userDetails) {
         com.example.miroslavfacebookproject.entity.User user = getUserByUsername(userDetails.getUsername());
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(user.getEmail());
@@ -80,7 +81,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         return modelAndView;
     }
 
-    public void changeData(UserDTO userDTO, UserDetails userDetails){
+    public void changeData(UserDTO userDTO, UserDetails userDetails) {
         com.example.miroslavfacebookproject.entity.User user = getUserByUsername(userDetails.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setAge(userDTO.getAge());
@@ -88,7 +89,12 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         userRepository.save(user);
     }
 
-
-
-
+    public void resetUserPassword(String email, String password, String passwordRepeat) {
+        if (password.equals(passwordRepeat) && userRepository.findByEmail(email) != null) {
+            User user = userRepository.findByEmail(email);
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+            System.out.println("Password is reset!!!");
+        }
+    }
 }
