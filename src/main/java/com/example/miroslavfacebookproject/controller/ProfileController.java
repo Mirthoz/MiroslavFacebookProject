@@ -20,6 +20,7 @@ public class ProfileController extends BaseController {
     private final ResetPasswordService resetPasswordService;
     private final UserServiceImpl userServiceImpl;
 
+
     public ProfileController(ProfileServiceImpl profileServiceImpl, EmailSenderService emailSenderService, ResetPasswordService resetPasswordService, UserServiceImpl userServiceImpl) {
         this.profileServiceImpl = profileServiceImpl;
         this.emailSenderService = emailSenderService;

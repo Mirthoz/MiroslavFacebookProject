@@ -15,17 +15,10 @@
              alt="ProfileImg" width="200" height="200">
     </div>
     <div>
-        <!--<h1 sec:authorize="isAuthenticated()" sec:authentication="name"></h1>-->
         <h1 th:text="${userDTO.getUsername()}"></h1>
         <h1 th:text="${userDTO.getEmail()}"></h1>
         <h1 th:text="${userDTO.getAge()}"></h1>
-
         <br>
-    </div>
-    <div class="post">
-        <div class="panel-heading">Post</div>
-        <div class="panel-body">Text</div>
-        <div class="panel-footer">Likes</div>
     </div>
 
     <div>
@@ -44,6 +37,28 @@
     <br>
     <a href="/delete">Delete my profile</a>
 
+    <div id="form">
+        <form method="post" action="/add_post">
+            <h1 class="h3 mb-3 fw-normal mt-3">Add new story</h1>
+
+            <div class="form-floating">
+                <input type="text" name="postText" class="form-control" id="floatingInput" placeholder="Story text">
+                <button class="w-100 btn btn-lg btn-primary ml-2" type="submit" >Add story</button>
+            </div>
+
+        </form>
+        <br>
+    </div>
+
+    <div class="container mt-3">
+        <H1>My stories</H1>
+        <div th:each="el : ${posts}" class="alert alert-info mt-2">
+            <div><img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/001/217/245/datas/original.png">
+            <h3 th:text="${el.text}"/>
+            <h3 th:text="${el.id}"/>
+        </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
