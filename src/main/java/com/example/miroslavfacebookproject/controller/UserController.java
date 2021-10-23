@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Stack;
 
 @Controller
@@ -64,7 +66,7 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        Iterable<Post> posts = postRepository.findAll();
+       Iterable<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
     return userServiceImpl.getUserData(userDetails);
     }
