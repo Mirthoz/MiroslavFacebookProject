@@ -58,7 +58,6 @@
         <H1>Users</H1>
 
         <div th:each="el : ${find_users}" class="alert alert-info mt-2">
-
             <div>
                 <h3 th:text="${el.getUsername()}"/>
             </div>
@@ -74,10 +73,9 @@
              width="150" height="150">
     </div>
 
-    <div >
+    <div>
 
         <div id="form">
-
             <form method="post" action="/add_post">
                 <h1 class="h3 mb-3 fw-normal mt-3">Add new story</h1>
 

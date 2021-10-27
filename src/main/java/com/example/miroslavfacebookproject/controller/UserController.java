@@ -9,7 +9,6 @@ import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -69,19 +68,26 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-       Iterable<Post> posts = postRepository.findAll();
+        Iterable<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
-        List<User> users = userRepository.findAll();
-        model.addAttribute("users", users);
+
     return userServiceImpl.getUserData(userDetails);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/search_user")
-    public ModelAndView searchUserByName(@ModelAttribute("username") SearchUserDTO searchUserDTO, Model model){
-        List<User> findUsers = userRepository.findAllByUsername(searchUserDTO.getUsername());
+    public ModelAndView searchUserByName(@AuthenticationPrincipal User user, @ModelAttribute("username") SearchUserDTO searchUserDTO, Model model){
+        List<UserDTO> findUsers = userServiceImpl.findByName(searchUserDTO.getUsername());
+        Iterable<Post> posts = postRepository.findAll();
+        model.addAttribute("posts", posts);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(user.getUsername());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setAge(user.getAge());
+        model.addAttribute("userDTO", user.getUsername());
+        model.addAttribute("userDTO", userDTO);
         model.addAttribute("find_users", findUsers);
-        return redirect("profile");
+        return send("profile");
     }
 
     @PreAuthorize("isAuthenticated()")
