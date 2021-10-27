@@ -1,10 +1,12 @@
 package com.example.miroslavfacebookproject.controller;
 import com.example.miroslavfacebookproject.dto.PostDTO;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
+import com.example.miroslavfacebookproject.dto.SearchUserDTO;
 import com.example.miroslavfacebookproject.dto.UserDTO;
 import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.entity.User;
 import com.example.miroslavfacebookproject.repository.PostRepository;
+import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,20 +20,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.Stack;
+import java.util.List;
 
 @Controller
 public class UserController extends BaseController {
 
     private final UserServiceImpl userServiceImpl;
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserController(UserServiceImpl userService, PostRepository postRepository) {
+    public UserController(UserServiceImpl userService, PostRepository postRepository, UserRepository userRepository) {
         this.userServiceImpl = userService;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -66,9 +68,26 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-       Iterable<Post> posts = postRepository.findAll();
+        Iterable<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
+
     return userServiceImpl.getUserData(userDetails);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/search_user")
+    public ModelAndView searchUserByName(@AuthenticationPrincipal User user, @ModelAttribute("username") SearchUserDTO searchUserDTO, Model model){
+        List<UserDTO> findUsers = userServiceImpl.findByName(searchUserDTO.getUsername());
+        Iterable<Post> posts = postRepository.findAll();
+        model.addAttribute("posts", posts);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(user.getUsername());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setAge(user.getAge());
+        model.addAttribute("userDTO", user.getUsername());
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("find_users", findUsers);
+        return send("profile");
     }
 
     @PreAuthorize("isAuthenticated()")

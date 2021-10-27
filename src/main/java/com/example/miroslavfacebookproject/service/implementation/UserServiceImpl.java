@@ -16,8 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -107,5 +106,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         post.setText(postDTO.getPostText());
         post.setPoster(user);
         postRepository.save(post);
+    }
+
+    public List<UserDTO> findByName(String name){
+        List<User> users = userRepository.findByUsernameContainingIgnoreCase(name.toLowerCase(Locale.ROOT));
+        List<UserDTO> userDTOS = new ArrayList<>();
+        for (User user : users) {
+            userDTOS.add(mapUserToUserDTO(user));
+        }
+        return userDTOS;
+    }
+
+    private UserDTO mapUserToUserDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(user.getUsername());
+        return userDTO;
     }
 }
