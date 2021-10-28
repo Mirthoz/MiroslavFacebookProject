@@ -1,11 +1,12 @@
 package com.example.miroslavfacebookproject.service.implementation;
+import com.example.miroslavfacebookproject.service.contract.ResetPasswordService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ResetPasswordService{
-    private final EmailSenderService emailSenderService;
+public class ResetPasswordServiceImpl implements ResetPasswordService {
+    private final EmailSenderServiceImpl emailSenderService;
 
-    public ResetPasswordService(EmailSenderService emailSenderService) {
+    public ResetPasswordServiceImpl(EmailSenderServiceImpl emailSenderService) {
         this.emailSenderService = emailSenderService;
     }
 

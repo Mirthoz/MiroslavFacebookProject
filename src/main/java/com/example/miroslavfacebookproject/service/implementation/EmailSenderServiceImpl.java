@@ -1,4 +1,5 @@
 package com.example.miroslavfacebookproject.service.implementation;
+import com.example.miroslavfacebookproject.service.contract.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -7,12 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class EmailSenderService {
+public class EmailSenderServiceImpl implements EmailSenderService {
 
     @Autowired
     private final JavaMailSender javaMailSender;
 
-    public EmailSenderService(JavaMailSender javaMailSender) {
+    public EmailSenderServiceImpl(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 
@@ -21,6 +22,7 @@ public class EmailSenderService {
     public String userPassword;
     public String userRepeatPassword;
 
+    @Override
     public void sendEmail(String email, String password, String passwordRepeat){
         SimpleMailMessage message = new SimpleMailMessage();
         String uuid = generateCode();
@@ -32,8 +34,10 @@ public class EmailSenderService {
         userEmail = email;
         userPassword = password;
         userRepeatPassword = passwordRepeat;
+        System.out.println("Mail is sent!");
     }
 
+    @Override
     public String generateCode(){
         UUID uuid = UUID.randomUUID();
         resetCode = uuid.toString();

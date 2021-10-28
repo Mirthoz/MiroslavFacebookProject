@@ -1,9 +1,9 @@
 package com.example.miroslavfacebookproject.controller;
 
 import com.example.miroslavfacebookproject.dto.ForgotPasswordDTO;
-import com.example.miroslavfacebookproject.service.implementation.EmailSenderService;
-import com.example.miroslavfacebookproject.service.implementation.ProfileServiceImpl;
-import com.example.miroslavfacebookproject.service.implementation.ResetPasswordService;
+import com.example.miroslavfacebookproject.service.contract.ProfileService;
+import com.example.miroslavfacebookproject.service.implementation.EmailSenderServiceImpl;
+import com.example.miroslavfacebookproject.service.implementation.ResetPasswordServiceImpl;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,14 +15,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ProfileController extends BaseController {
 
-    private final ProfileServiceImpl profileServiceImpl;
-    private final EmailSenderService emailSenderService;
-    private final ResetPasswordService resetPasswordService;
+    private final ProfileService profileService;
+    private final EmailSenderServiceImpl emailSenderService;
+    private final ResetPasswordServiceImpl resetPasswordService;
     private final UserServiceImpl userServiceImpl;
 
 
-    public ProfileController(ProfileServiceImpl profileServiceImpl, EmailSenderService emailSenderService, ResetPasswordService resetPasswordService, UserServiceImpl userServiceImpl) {
-        this.profileServiceImpl = profileServiceImpl;
+    public ProfileController(ProfileService profileService, EmailSenderServiceImpl emailSenderService, ResetPasswordServiceImpl resetPasswordService, UserServiceImpl userServiceImpl) {
+        this.profileService = profileService;
         this.emailSenderService = emailSenderService;
         this.resetPasswordService = resetPasswordService;
         this.userServiceImpl = userServiceImpl;
@@ -37,7 +37,7 @@ public class ProfileController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete")
     public ModelAndView deleteProfile(@AuthenticationPrincipal UserDetails userDetails) {
-        profileServiceImpl.deleteProfile(userDetails);
+        profileService.deleteProfile(userDetails);
         return redirect("logout");
     }
 

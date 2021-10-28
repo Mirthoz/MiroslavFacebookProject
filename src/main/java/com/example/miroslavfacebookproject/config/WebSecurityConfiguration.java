@@ -1,6 +1,5 @@
 package com.example.miroslavfacebookproject.config;
 
-import com.example.miroslavfacebookproject.service.implementation.EmailSenderService;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
