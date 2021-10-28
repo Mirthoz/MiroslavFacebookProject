@@ -1,7 +1,7 @@
 package com.example.miroslavfacebookproject.controller;
 
 import com.example.miroslavfacebookproject.dto.ImageUploadDTO;
-import com.example.miroslavfacebookproject.service.implementation.ImageUploadService;
+import com.example.miroslavfacebookproject.service.implementation.ImageUploadServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,9 +13,9 @@ import java.io.IOException;
 @Controller
 public class ImageController extends BaseController {
 
-    private final ImageUploadService imageUploadService;
+    private final ImageUploadServiceImpl imageUploadService;
 
-    public ImageController(ImageUploadService imageUploadService) {
+    public ImageController(ImageUploadServiceImpl imageUploadService) {
         this.imageUploadService = imageUploadService;
     }
 
