@@ -1,6 +1,7 @@
 package com.example.miroslavfacebookproject.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "post")
@@ -15,6 +16,9 @@ public class Post {
 
     @Column(name = "status")
     private Integer status; //1- only for user, 2- for friends and user, 3- for all
+
+    @Column(name = "date")
+    private Date date;
 
     public Post(){}
 
@@ -62,5 +66,13 @@ public class Post {
 
     public void setPoster(User poster) {
         this.poster = poster;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

@@ -9,6 +9,7 @@ import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController extends BaseController {
@@ -68,7 +71,8 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        Iterable<Post> posts = postRepository.findAll();
+        List<Post> posts = postRepository.findAll();
+        posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
         model.addAttribute("posts", posts);
 
     return userServiceImpl.getUserData(userDetails);
@@ -78,7 +82,8 @@ public class UserController extends BaseController {
     @PostMapping("/search_user")
     public ModelAndView searchUserByName(@AuthenticationPrincipal User user, @ModelAttribute("username") SearchUserDTO searchUserDTO, Model model){
         List<UserDTO> findUsers = userServiceImpl.findByName(searchUserDTO.getUsername());
-        Iterable<Post> posts = postRepository.findAll();
+        List<Post> posts = postRepository.findAll();
+        posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
         model.addAttribute("posts", posts);
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(user.getUsername());

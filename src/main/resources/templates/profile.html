@@ -7,44 +7,39 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
     <title>Title</title>
 </head>
-
 <body>
-    <div class="row">
+<div class="row">
     <div class="col-lg-6 mt-3 ml-3">
         <div class="container">
-        <img class="img-thumbnail"
-             src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png"
-             alt="ProfileImg" width="200" height="200">
-        <br>
-        <h1 th:text="${userDTO.getUsername()}"></h1>
-        <h1 th:text="${userDTO.getEmail()}"></h1>
-        <h1 th:text="${userDTO.getAge()}"></h1>
-        <br>
-        <a href="/change_my_information">Change my information</a>
-        <br>
-        <a href="/logout">LogOut</a>
-        <br>
-        <a href="/delete">Delete my profile</a>
+            <img class="img-thumbnail"
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png"
+                 alt="ProfileImg" width="200" height="200">
+            <br>
+            <h1 th:text="${userDTO.getUsername()}"></h1>
+            <h1 th:text="${userDTO.getEmail()}"></h1>
+            <h1 th:text="${userDTO.getAge()}"></h1>
+            <br>
+            <a href="/change_my_information">Change my information</a>
+            <br>
+            <a href="/logout">LogOut</a>
+            <br>
+            <a href="/delete">Delete my profile</a>
+        </div>
     </div>
-    </div>
-
-        <style>
-            #search_user{
-                height: 500px;
-                weight: 500px;
-                overflow: auto;
-            }
-
-            #form {
-                position: absolute;
-
-                height: 200px;
-                width: 500px;
-                top: 25%;
-                left: 35%;
-            }
-        </style>
-
+    <style>
+        #search_user {
+            height: 500px;
+            weight: 500px;
+            overflow: auto;
+        }
+        #form {
+            position: absolute;
+            height: 200px;
+            width: 500px;
+            top: 25%;
+            left: 35%;
+        }
+    </style>
     <div class="col-lg-5 mt-3 ml-2" id="search_user">
         <div id="form">
             <form method="post" action="/search_user" th:object="${find_users}">
@@ -54,17 +49,15 @@
                     <input type="text" name="username" class="form-control" placeholder="Name">
                 </div>
             </form>
-
-        <H1>Users</H1>
-
-        <div th:each="el : ${find_users}" class="alert alert-info mt-2">
-            <div>
-                <h3 th:text="${el.getUsername()}"/>
+            <H1>Users</H1>
+            <div th:each="el : ${find_users}" class="alert alert-info mt-2">
+                <div>
+                    <h3 th:text="${el.getUsername()}"/>
+                </div>
             </div>
         </div>
     </div>
-</div>
-    <div>
+    <div class="container mb-3" id="images">
         <img src="https://img2.freepng.ru/20180329/uue/kisspng-computer-icons-windows-photo-gallery-photo-5abd4963a0e061.600520291522354531659.jpg"
              width="150" height="150">
         <img src="https://img2.freepng.ru/20180329/uue/kisspng-computer-icons-windows-photo-gallery-photo-5abd4963a0e061.600520291522354531659.jpg"
@@ -72,28 +65,27 @@
         <img src="https://img2.freepng.ru/20180329/uue/kisspng-computer-icons-windows-photo-gallery-photo-5abd4963a0e061.600520291522354531659.jpg"
              width="150" height="150">
     </div>
-
     <div>
-
         <div id="form">
             <form method="post" action="/add_post">
                 <h1 class="h3 mb-3 fw-normal mt-3">Add new story</h1>
-
                 <div class="form-floating">
                     <input type="text" name="postText" class="form-control" id="floatingInput" placeholder="Story text">
-                    <button class="w-100 btn btn-lg btn-primary ml-2" type="submit" >Add story</button>
+                    <button class="w-100 btn btn-lg btn-primary ml-2" type="submit">Add story</button>
                 </div>
-
             </form>
             <br>
         </div>
 
-        <H1>My stories</H1>
-        <div th:each="el : ${posts}" class="alert alert-info mt-2">
-            <div><img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/001/217/245/datas/original.png">
-            <h3 th:text="${el.text}"/>
-            <h3 th:text="${el.id}"/>
-        </div>
+        <div class="container ml-3" id="wall">
+            <H1>My stories</H1>
+            <div th:each="el : ${posts}" class="alert alert-info mt-2">
+                <div><img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/001/217/245/datas/original.png">
+                    <h3 th:text="${el.text}"/>
+                    <br>
+                    <h3 th:text="${el.getDate()}"/>
+                </div>
+            </div>
         </div>
     </div>
 

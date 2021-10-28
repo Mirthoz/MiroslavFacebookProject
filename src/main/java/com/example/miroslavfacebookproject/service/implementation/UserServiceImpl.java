@@ -78,7 +78,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userDTO.setEmail(user.getEmail());
         userDTO.setUsername(user.getUsername());
         userDTO.setAge(user.getAge());
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userDTO", userDTO);
         return modelAndView;
@@ -102,9 +101,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     public void savePost(PostDTO postDTO, User user){
+        Date date = new Date();
         Post post = new Post();
         post.setText(postDTO.getPostText());
         post.setPoster(user);
+        post.setDate(date);
         postRepository.save(post);
     }
 
