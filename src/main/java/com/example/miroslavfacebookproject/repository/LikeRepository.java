@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
-    boolean existsByPost(Post post);
+    boolean existsByPostAndUser(Post post, User user);
+    Long existsByUserId(User userId);
     Like findFirstByPostAndUser(Post post, User currentUser);
 }

@@ -7,7 +7,9 @@ import com.example.miroslavfacebookproject.entity.User;
 import com.example.miroslavfacebookproject.repository.LikeRepository;
 import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.service.contract.LikeService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LikeServiceImpl implements LikeService {
 
     private final LikeRepository likeRepository;
@@ -21,7 +23,7 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public void likePost(LikeDTO likeDTO, User currentUser) {
         Post post = postRepository.findFirstById(likeDTO.getPostId());
-        if (!likeRepository.existsByPost(post)){
+        if (!likeRepository.existsByPostAndUser(post, currentUser)){
             Like like = new Like();
             like.setPost(post);
             like.setUser(currentUser);

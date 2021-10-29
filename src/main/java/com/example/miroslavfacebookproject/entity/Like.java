@@ -19,7 +19,8 @@ public class Like {
     @ManyToOne(targetEntity = Post.class, fetch = FetchType.LAZY)
     private Post post;
 
-    public Like(){}
+    public Like() {
+    }
 
     public Long getId() {
         return id;
