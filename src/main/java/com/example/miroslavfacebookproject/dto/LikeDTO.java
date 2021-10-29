@@ -9,6 +9,7 @@ public class LikeDTO {
     public LikeDTO(){}
 
     private Long postId;
+    private boolean meLiked;
 
     @ManyToOne(targetEntity = Post.class, fetch = FetchType.LAZY)
     private Post post;
@@ -27,5 +28,13 @@ public class LikeDTO {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public boolean isMeLiked() {
+        return meLiked;
+    }
+
+    public void setMeLiked(boolean meLiked) {
+        this.meLiked = meLiked;
     }
 }

@@ -86,7 +86,7 @@
                     <div class="like-form" style="display: block">
                         <form action="/likePost" method="post">
                             <input type="number" name="postId" th:value="${el.getId()}" style="display: none">
-                            <input type="image" src="../images/like.png" width="20" height="20" name="submit" value="Like" class="like-button">
+<!--                            <input type="image" src="../images/like.png" width="20" height="20" name="submit" value="Like" class="like-button">-->
                             <input type="image" src="../images/likeFill.png" width="20" height="20" name="submit" value="Like" class="like-button">
                             <span th:text="${el.getLikes().size()}"></span>
                         </form>
