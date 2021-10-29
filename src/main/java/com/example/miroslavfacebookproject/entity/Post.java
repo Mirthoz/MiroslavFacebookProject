@@ -2,6 +2,8 @@ package com.example.miroslavfacebookproject.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "post")
@@ -27,6 +29,9 @@ public class Post {
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     private User poster;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    private Set<Like> likes;
 
     public Long getId() {
         return id;
@@ -74,5 +79,13 @@ public class Post {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
     }
 }
