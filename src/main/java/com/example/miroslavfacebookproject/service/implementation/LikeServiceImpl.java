@@ -39,10 +39,10 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void checkLikes(User currentUser) {
-        postRepository.findAll().stream().forEach(x -> setLikes(x.getId(), currentUser));
+        postRepository.findAll().stream().forEach(x -> markLike(x.getId(), currentUser));
     }
 
-    protected void setLikes(Long id, User currentUser){
+    protected void markLike(Long id, User currentUser){
         Post post = postRepository.findFirstById(id);
         Like like = likeRepository.findFirstByPostAndUser(post, currentUser);
         if (like != null){
