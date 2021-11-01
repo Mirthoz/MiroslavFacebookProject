@@ -32,6 +32,7 @@
             weight: 500px;
             overflow: auto;
         }
+
         #form {
             position: absolute;
             height: 200px;
@@ -80,25 +81,35 @@
         <div class="container ml-3" id="wall">
             <H1>My stories</H1>
             <div th:each="el : ${posts}" class="alert alert-info mt-2">
-                <div><img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/001/217/245/datas/original.png">
+                <div><img
+                        src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/001/217/245/datas/original.png">
                     <h3 th:text="${el.text}"/>
 
                     <div class="like-form" style="display: block">
                         <form action="/likePost" method="post">
                             <input type="number" name="postId" th:value="${el.getId()}" style="display: none">
-<!--                            <input type="image" src="../images/like.png" width="20" height="20" name="submit" value="Like" class="like-button">-->
-                            <input type="image" src="../images/likeFill.png" width="20" height="20" name="submit" value="Like" class="like-button">
+
+                            <div th:if="${el.meLiked == 1}">
+                                <input type="image" src="../images/like.png" width="20" height="20" name="submit"
+                                       value="Like" class="like-button">
+                            </div>
+
+                            <div th:unless="${el.meLiked == 1}">
+                                <input type="image" src="../images/likeFill.png" width="20" height="20" name="submit"
+                                       value="Like" class="like-button">
+                            </div>
+
                             <span th:text="${el.getLikes().size()}"></span>
                         </form>
 
-                    <br>
-                    <h3 th:text="${el.getDate()}"/>
-                </div>
+                        <br>
+                        <h3 th:text="${el.getDate()}"/>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
 </body>
 </html>

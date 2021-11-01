@@ -21,6 +21,9 @@ public class Post {
     @Column(name = "date")
     private Date date;
 
+    @Column(name = "liked")
+    private int meLiked;
+
     public Post(){}
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -86,5 +89,13 @@ public class Post {
 
     public void setLikes(Set<Like> likes) {
         this.likes = likes;
+    }
+
+    public int getMeLiked() {
+        return meLiked;
+    }
+
+    public void setMeLiked(int meLiked) {
+        this.meLiked = meLiked;
     }
 }
