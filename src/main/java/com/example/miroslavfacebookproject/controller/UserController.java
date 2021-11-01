@@ -7,9 +7,9 @@ import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.entity.User;
 import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
+import com.example.miroslavfacebookproject.service.contract.LikeService;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,12 +30,14 @@ public class UserController extends BaseController {
     private final UserServiceImpl userServiceImpl;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final LikeService likeService;
 
     @Autowired
-    public UserController(UserServiceImpl userService, PostRepository postRepository, UserRepository userRepository) {
+    public UserController(UserServiceImpl userService, PostRepository postRepository, UserRepository userRepository, LikeService likeService) {
         this.userServiceImpl = userService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.likeService = likeService;
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -70,7 +71,8 @@ public class UserController extends BaseController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
-    public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, @AuthenticationPrincipal User currentUser, Model model) {
+        likeService.checkLikes(currentUser);
         List<Post> posts = postRepository.findAll();
         posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
         model.addAttribute("posts", posts);

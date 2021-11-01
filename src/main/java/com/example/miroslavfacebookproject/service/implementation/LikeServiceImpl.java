@@ -36,4 +36,20 @@ public class LikeServiceImpl implements LikeService {
             likeRepository.delete(like);
         }
     }
+
+    @Override
+    public void checkLikes(User currentUser) {
+        postRepository.findAll().stream().forEach(x -> setLikes(x.getId(), currentUser));
+    }
+
+    protected void setLikes(Long id, User currentUser){
+        Post post = postRepository.findFirstById(id);
+        Like like = likeRepository.findFirstByPostAndUser(post, currentUser);
+        if (like != null){
+            postRepository.findFirstById(id).setMeLiked(0);
+        }else
+            postRepository.findFirstById(id).setMeLiked(1);
+    }
+
+
 }
