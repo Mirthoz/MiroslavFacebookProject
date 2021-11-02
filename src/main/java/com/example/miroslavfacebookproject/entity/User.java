@@ -31,9 +31,19 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-
-
     private Set<Role> roles;
+
+    @OneToMany
+    @JoinTable(name = "friends_requests",
+    joinColumns = @JoinColumn(name = "requester_id"),
+            inverseJoinColumns = @JoinColumn(name = "receiver_id"))
+    private Set<FriendRequest> friendRequests;
+
+    @OneToMany
+    @JoinTable(name = "user_friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friendId"))
+    private Set<User> userFriends;
 
     public User() {
     }
