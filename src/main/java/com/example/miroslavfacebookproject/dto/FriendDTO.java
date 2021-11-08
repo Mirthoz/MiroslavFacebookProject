@@ -4,10 +4,13 @@ public class FriendDTO {
 
     private Long friendId;
 
-    FriendDTO(){}
+    public FriendDTO(){}
 
     public Long getFriendId() {
         return friendId;
     }
 
+    public void setFriendId(Long friendId) {
+        this.friendId = friendId;
+    }
 }

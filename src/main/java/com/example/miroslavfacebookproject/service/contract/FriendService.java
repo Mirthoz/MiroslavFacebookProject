@@ -4,5 +4,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface FriendService {
-    void addFriend(Long friendId);
+    void addFriend(Long friendId, Long user);
 }
