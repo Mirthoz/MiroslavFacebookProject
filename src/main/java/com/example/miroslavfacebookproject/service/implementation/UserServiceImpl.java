@@ -120,6 +120,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private UserDTO mapUserToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         return userDTO;
     }

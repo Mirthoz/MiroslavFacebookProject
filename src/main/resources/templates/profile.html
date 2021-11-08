@@ -66,8 +66,8 @@
                 <div class="container">
                     <h3 th:text="${el.getUsername()}"/>
                     <form method="post" name="addFriend" action="addFriend">
-                        <input type="number" name="friendId" th:attr="setFriendId() = ${el.getId()}" style="display: none">
-                        //Make relation
+                        <input type="number" name="friendId" th:value="${el.id}" style="display: none" >
+<!--                        Make relation-->
                         <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Add friend</button>
                     </form>
                 </div>
@@ -116,17 +116,13 @@
                                        value="Like" class="like-button">
                                 <span th:text="${el.getLikes().size()}"></span>
                             </div>
-
                         </form>
-
                         <br>
                         <h3 th:text="${el.getDate()}"/>
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>
 </body>
 </html>

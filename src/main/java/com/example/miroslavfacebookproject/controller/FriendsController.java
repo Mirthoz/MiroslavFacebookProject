@@ -21,7 +21,7 @@ public class FriendsController extends BaseController{
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("addFriend")
-    public ModelAndView addFriend(@AuthenticationPrincipal User user, @ModelAttribute FriendDTO friendDTO){
+    public ModelAndView addNewFriend(@AuthenticationPrincipal User user, @ModelAttribute FriendDTO friendDTO){
         System.out.println("userId: " + user.getId());
         System.out.println("friendId: " + friendDTO.getFriendId());
         return redirect("profile");
