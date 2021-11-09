@@ -6,5 +6,5 @@ import java.util.Set;
 
 @Repository
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long> {
-Set<FriendRequest> findAllByRequesterId(Long userId);
+Set<FriendRequest> findAllByReceiverId(Long userId);
 }

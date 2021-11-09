@@ -7,7 +7,9 @@
 </head>
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <svg class="bi me-2" width="40" height="32">
+            <use xlink:href="#bootstrap"></use>
+        </svg>
         <span class="fs-4">Friends</span>
     </a>
 
@@ -18,16 +20,26 @@
 </header>
 
 <body>
-<div th:each="el : ${requests}" class="alert alert-info mt-2">
+
+<style>
+    #friendsRequests {
+        position: absolute;
+        top: 20%;
+        left: 70%;
+        overflow: auto;
+    }
+</style>
+
+<div id="friendsRequests" th:each="el : ${requests}" class="alert alert-info mt-2">
+    
     <div class="container">
-        <h3 th:text="${el.getReceiver().getUsername()}"/>
-<!--        <form method="post" name="addFriend" action="addFriend">-->
-<!--            <input type="number" name="friendId" th:value="${el.id}" style="display: none" >-->
-<!--            <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Add friend</button>-->
-<!--        </form>-->
+        <h3 th:text="${el.getRequester().getUsername()}"/>
+        <form id="form" method="post" name="addAsFriend" action="addAsFriend">
+            <input type="number" name="friendId" th:value="${el.getRequester().getId()}" style="display: none">
+            <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Add as friend</button>
+        </form>
     </div>
 </div>
-
 
 
 </body>

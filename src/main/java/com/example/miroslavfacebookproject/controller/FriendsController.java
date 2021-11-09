@@ -28,14 +28,23 @@ public class FriendsController extends BaseController{
     @PreAuthorize("isAuthenticated()")
     @GetMapping("friends")
     public ModelAndView friends(@AuthenticationPrincipal User user){
-        Set<FriendRequest> friendRequests = friendRequestRepository.findAllByRequesterId(user.getId());
+        Set<FriendRequest> friendRequests = friendRequestRepository.findAllByReceiverId(user.getId());
         return send("friends", "requests", friendRequests);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("addFriend")
-    public ModelAndView addNewFriend(@AuthenticationPrincipal User user, @ModelAttribute FriendDTO friendDTO){
+    public ModelAndView addNewFriendRequest(@AuthenticationPrincipal User user, @ModelAttribute FriendDTO friendDTO){
         friendService.addFriend(friendDTO.getFriendId(), user.getId());
         return redirect("profile");
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("addAsFriend")
+    public ModelAndView addAsFriend(@AuthenticationPrincipal User user, @ModelAttribute FriendDTO friendDTO){
+        System.out.println(user.getId());
+        System.out.println(friendDTO.getFriendId());
+        return redirect("friends");
+    }
+
 }
