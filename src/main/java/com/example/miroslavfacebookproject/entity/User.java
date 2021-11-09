@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,13 +34,13 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "friends_requests",
     joinColumns = @JoinColumn(name = "requester_id"),
             inverseJoinColumns = @JoinColumn(name = "receiver_id"))
     private Set<FriendRequest> friendRequests;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_friends",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friendId"))
@@ -121,5 +122,21 @@ public class User implements UserDetails {
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public Set<FriendRequest> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void setFriendRequests(Set<FriendRequest> friendRequests) {
+        this.friendRequests = friendRequests;
+    }
+
+    public Set<User> getUserFriends() {
+        return userFriends;
+    }
+
+    public void setUserFriends(Set<User> userFriends) {
+        this.userFriends = userFriends;
     }
 }

@@ -17,7 +17,6 @@ public class FriendServiceImpl implements FriendService {
         this.userRepository = userRepository;
     }
 
-
     @Override
     public void addFriend(Long friendId, Long user) {
         FriendRequest friendRequest = new FriendRequest();
