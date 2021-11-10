@@ -36,14 +36,14 @@ public class User implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "friends_requests",
-    joinColumns = @JoinColumn(name = "requester_id"),
+            joinColumns = @JoinColumn(name = "requester_id"),
             inverseJoinColumns = @JoinColumn(name = "receiver_id"))
     private Set<FriendRequest> friendRequests;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_friends",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friendId"))
+            inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private Set<User> userFriends;
 
     public User() {
