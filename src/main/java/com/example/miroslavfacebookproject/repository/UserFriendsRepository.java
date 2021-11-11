@@ -11,5 +11,6 @@ import java.util.Set;
 @Repository
 public interface UserFriendsRepository extends JpaRepository<UserFriend, Long> {
     Set<UserFriend> findAllByUserIdId(Long userId);
+    Set<UserFriend> findAllByFriendIdId(Long userId);
     UserFriend findFirstUserFriendByFriendId(User friendId);
 }
