@@ -1,7 +1,7 @@
 package com.example.miroslavfacebookproject.service.implementation;
 
 import com.example.miroslavfacebookproject.entity.FriendRequest;
-import com.example.miroslavfacebookproject.entity.UserFriends;
+import com.example.miroslavfacebookproject.entity.UserFriend;
 import com.example.miroslavfacebookproject.repository.FriendRequestRepository;
 import com.example.miroslavfacebookproject.repository.UserFriendsRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
@@ -31,7 +31,7 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void addFriend(Long friendId, Long user) {
-        UserFriends userFriend = new UserFriends();
+        UserFriend userFriend = new UserFriend();
         userFriend.setUserId(userRepository.findUserById(user));
         userFriend.setFriendId(userRepository.findUserById(friendId));
         userFriendsRepository.save(userFriend);
@@ -44,9 +44,8 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void deleteFriend(Long friendId) {
-
+        UserFriend userFriend = userFriendsRepository.findFirstUserFriendByFriendId(userRepository.findUserById(friendId));
+    userFriendsRepository.delete(userFriend);
     }
-
-
 
 }

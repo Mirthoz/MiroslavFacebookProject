@@ -42,9 +42,9 @@
 <div th:each="el : ${userFriends}" class="alert alert-info mt-2">
     <div class="container">
         <h3 th:text="${el.getFriendId().getUsername()}"/>
-        <form id="formFriends" method="post" name="addAsFriend" action="addAsFriend">
+        <form id="formFriends" method="post" name="deleteFriend" action="deleteFriend">
             <input type="number" name="friendId" th:value="${el.getFriendId().getId()}" style="display: none">
-            <button class="w-10 btn btn-lg btn-primary ml-2 color-red" type="submit">Delete</button>
+            <button class="w-10 btn btn-lg btn-danger ml-2" type="submit">Delete</button>
         </form>
     </div>
 </div>

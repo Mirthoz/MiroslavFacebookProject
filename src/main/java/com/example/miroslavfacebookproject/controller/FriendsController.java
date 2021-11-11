@@ -3,7 +3,7 @@ package com.example.miroslavfacebookproject.controller;
 import com.example.miroslavfacebookproject.dto.FriendDTO;
 import com.example.miroslavfacebookproject.entity.FriendRequest;
 import com.example.miroslavfacebookproject.entity.User;
-import com.example.miroslavfacebookproject.entity.UserFriends;
+import com.example.miroslavfacebookproject.entity.UserFriend;
 import com.example.miroslavfacebookproject.repository.FriendRequestRepository;
 import com.example.miroslavfacebookproject.repository.UserFriendsRepository;
 import com.example.miroslavfacebookproject.service.contract.FriendService;
@@ -33,7 +33,7 @@ public class FriendsController extends BaseController{
     @GetMapping("friends")
     public ModelAndView friends(@AuthenticationPrincipal User user, ModelAndView modelAndView){
         Set<FriendRequest> friendRequests = friendRequestRepository.findAllByReceiverId(user.getId());
-        Set<UserFriends> userFriends = userFriendsRepository.findAllByUserIdId(user.getId());
+        Set<UserFriend> userFriends = userFriendsRepository.findAllByUserIdId(user.getId());
         modelAndView.addObject("userFriends", userFriends);
         modelAndView.addObject("friendRequests", friendRequests);
         modelAndView.setViewName("friends");
@@ -51,6 +51,13 @@ public class FriendsController extends BaseController{
     @PostMapping("addAsFriend")
     public ModelAndView addAsFriend(@AuthenticationPrincipal User user, @ModelAttribute FriendDTO friendDTO){
         friendService.addFriend(friendDTO.getFriendId(), user.getId());
+        return redirect("friends");
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("deleteFriend")
+    public ModelAndView deleteFriend(@ModelAttribute FriendDTO friendDTO){
+        friendService.deleteFriend(friendDTO.getFriendId());
         return redirect("friends");
     }
 }
