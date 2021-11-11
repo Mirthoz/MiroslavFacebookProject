@@ -31,15 +31,22 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void addFriend(Long friendId, Long user) {
-        UserFriends userFriends = new UserFriends();
-        userFriends.setUserId(userRepository.findUserById(user));
-        userFriends.setFriendId(userRepository.findUserById(friendId));
-        userFriendsRepository.save(userFriends);
-        deleteFriendRequest(user, friendId);
+        UserFriends userFriend = new UserFriends();
+        userFriend.setUserId(userRepository.findUserById(user));
+        userFriend.setFriendId(userRepository.findUserById(friendId));
+        userFriendsRepository.save(userFriend);
+        deleteFriendRequest(friendId, user);
     }
 
     protected void deleteFriendRequest(Long friendId, Long user) {
         friendRequestRepository.delete(friendRequestRepository.findFirstByReceiverIdAndRequesterId(user, friendId));
     }
+
+    @Override
+    public void deleteFriend(Long friendId) {
+
+    }
+
+
 
 }
