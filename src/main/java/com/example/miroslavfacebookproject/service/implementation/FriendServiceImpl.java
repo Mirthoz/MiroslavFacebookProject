@@ -22,11 +22,14 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public void addFriendRequest(Long friendId, Long user) {
-        FriendRequest friendRequest = new FriendRequest();
-        friendRequest.setReceiver(userRepository.findUserById(friendId));
-        friendRequest.setRequester(userRepository.findUserById(user));
-        friendRequestRepository.save(friendRequest);
+    public void addFriendRequest(Long friendId, Long userId) {
+        FriendRequest checkFriendRequest = friendRequestRepository.findFirstByReceiverIdAndRequesterId(friendId, userId);
+        if (checkFriendRequest == null){
+            FriendRequest friendRequest = new FriendRequest();
+            friendRequest.setReceiver(userRepository.findUserById(friendId));
+            friendRequest.setRequester(userRepository.findUserById(userId));
+            friendRequestRepository.save(friendRequest);
+        }
     }
 
     @Override
@@ -38,8 +41,10 @@ public class FriendServiceImpl implements FriendService {
         deleteFriendRequest(friendId, user);
     }
 
-    protected void deleteFriendRequest(Long friendId, Long user) {
-        friendRequestRepository.delete(friendRequestRepository.findFirstByReceiverIdAndRequesterId(user, friendId));
+    protected void deleteFriendRequest(Long friendId, Long userId) {
+        FriendRequest friendRequest = friendRequestRepository.findFirstByReceiverIdAndRequesterId(userId, friendId);
+        System.out.println(friendRequest.getId());
+        friendRequestRepository.delete(friendRequest);
     }
 
     @Override
@@ -47,5 +52,4 @@ public class FriendServiceImpl implements FriendService {
         UserFriend userFriend = userFriendsRepository.findFirstUserFriendByFriendId(userRepository.findUserById(friendId));
     userFriendsRepository.delete(userFriend);
     }
-
 }

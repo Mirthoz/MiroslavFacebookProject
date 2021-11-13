@@ -28,23 +28,17 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "friends_requests",
-            joinColumns = @JoinColumn(name = "requester_id"),
-            inverseJoinColumns = @JoinColumn(name = "receiver_id"))
+    @OneToMany(targetEntity = FriendRequest.class, fetch = FetchType.EAGER, mappedBy = "requester", orphanRemoval = true)
     private Set<FriendRequest> friendRequests;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_friends",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id"))
-    private Set<User> userFriends;
+    @OneToMany(targetEntity = UserFriend.class, fetch = FetchType.EAGER, mappedBy = "friendId", orphanRemoval = true)
+    private Set<FriendRequest> userFriends;
 
     public User() {
     }
@@ -124,19 +118,4 @@ public class User implements UserDetails {
         return roles;
     }
 
-    public Set<FriendRequest> getFriendRequests() {
-        return friendRequests;
-    }
-
-    public void setFriendRequests(Set<FriendRequest> friendRequests) {
-        this.friendRequests = friendRequests;
-    }
-
-    public Set<User> getUserFriends() {
-        return userFriends;
-    }
-
-    public void setUserFriends(Set<User> userFriends) {
-        this.userFriends = userFriends;
-    }
 }
