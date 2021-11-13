@@ -87,13 +87,16 @@ public class UserController extends BaseController {
         List<Post> posts = postRepository.findAll();
         posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
         model.addAttribute("posts", posts);
+
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
         userDTO.setAge(user.getAge());
-        model.addAttribute("userDTO", user.getUsername());
+        userDTO.setId(user.getId());
+
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("find_users", findUsers);
+
         return send("profile");
     }
 
