@@ -72,19 +72,4 @@ public class ProfileController extends BaseController {
             return redirect("register");
         }
     }
-
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/profile/pic")
-    public ModelAndView upload(@ModelAttribute("file") ImageUploadDTO multipartFile) {
-//        logger.info("HIT -/upload | File Name : {}", multipartFile.getOriginalFilename());
-        System.out.println(multipartFile.getImage());
-        fileService.upload(multipartFile.getImage());
-        return redirect("profile");
-    }
-
-    @PostMapping("/profile/pic/{fileName}")
-    public Object download(@PathVariable String fileName) throws IOException {
-//        logger.info("HIT -/download | File Name : {}", fileName);
-        return fileService.download(fileName);
-    }
 }

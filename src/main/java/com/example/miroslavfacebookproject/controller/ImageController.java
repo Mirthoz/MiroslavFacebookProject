@@ -1,34 +1,26 @@
 package com.example.miroslavfacebookproject.controller;
 
 import com.example.miroslavfacebookproject.dto.ImageUploadDTO;
-import com.example.miroslavfacebookproject.service.implementation.ImageUploadServiceImpl;
+import com.example.miroslavfacebookproject.service.implementation.UploadImageServiceImpl;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
-
 @Controller
-public class ImageController extends BaseController {
+public class ImageController extends BaseController{
+    private final UploadImageServiceImpl fileService;
 
-    private final ImageUploadServiceImpl imageUploadService;
-
-    public ImageController(ImageUploadServiceImpl imageUploadService) {
-        this.imageUploadService = imageUploadService;
+    public ImageController(UploadImageServiceImpl fileService) {
+        this.fileService = fileService;
     }
 
-    @GetMapping("/image/upload")
-    public ModelAndView imageUpload(){
-        return send("upload");
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/profile/pic")
+    public ModelAndView upload(@ModelAttribute("file") ImageUploadDTO multipartFile) {
+        System.out.println(multipartFile.getImage());
+        fileService.upload(multipartFile.getImage());
+        return redirect("profile");
     }
-
-    @PostMapping("/image/upload")
-    public ModelAndView imageUpload(@ModelAttribute ImageUploadDTO imageUploadDTO) throws IOException {
-        imageUploadService.uploadImage(imageUploadDTO.getImage());
-        return redirect("login");
-    }
-
-
 }

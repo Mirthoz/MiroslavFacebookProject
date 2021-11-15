@@ -41,12 +41,6 @@ public class UploadImageServiceImpl extends BaseController {
         return tempFile;
     }
 
-//    private File convertToFile(MultipartFile multipartFile, String fileName) throws IllegalStateException, IOException {
-//        File tempFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
-//        multipartFile.transferTo(tempFile);
-//        return tempFile;
-//    }
-
     public Object upload(MultipartFile multipartFile) {
 
         try {
