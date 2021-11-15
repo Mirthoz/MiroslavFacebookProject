@@ -19,30 +19,33 @@ import java.util.UUID;
 @Service
 public class UploadImageServiceImpl extends BaseController {
 
-    private static final String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/facebookproject-3ac7a.appspot.com/o/%s?alt=media";
+    private static final String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/facebookproject-3ac7a.appspot.com/o/%s?alt=image/jpeg";
     private static String TEMP_URL = "http://localhost:8080/profile";
 
     private String uploadFile(File file, String fileName) throws IOException {
         BlobId blobId = BlobId.of("facebookproject-3ac7a.appspot.com", fileName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/jpeg").build();
         Credentials credentials = GoogleCredentials.fromStream(new FileInputStream("C:\\Users\\PC\\IdeaProjects\\MiroslavFacebookProject\\src\\main\\resources\\serviceAccountKey.json"));
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
         storage.create(blobInfo, Files.readAllBytes(file.toPath()));
         return String.format(DOWNLOAD_URL, URLEncoder.encode(fileName, StandardCharsets.UTF_8));
     }
 
-    private File convertToFile(MultipartFile multipartFile, String fileName) throws IOException {
+    private File convertToFile(MultipartFile multipartFile, String fileName) throws IllegalStateException, IOException {
         File tempFile = new File(fileName);
-        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+        try (
+                FileOutputStream fos = new FileOutputStream(tempFile)) {
             fos.write(multipartFile.getBytes());
             fos.close();
         }
         return tempFile;
     }
 
-    private String getExtension(String fileName) {
-        return fileName.substring(fileName.lastIndexOf("."));
-    }
+//    private File convertToFile(MultipartFile multipartFile, String fileName) throws IllegalStateException, IOException {
+//        File tempFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
+//        multipartFile.transferTo(tempFile);
+//        return tempFile;
+//    }
 
     public Object upload(MultipartFile multipartFile) {
 
@@ -53,11 +56,15 @@ public class UploadImageServiceImpl extends BaseController {
             File file = this.convertToFile(multipartFile, fileName);                      // to convert multipartFile to File
             TEMP_URL = this.uploadFile(file, fileName);                                   // to get uploaded file link
             file.delete();                                                                // to delete the copy of uploaded file stored in the project folder
-            return send(TEMP_URL);                     // Your customized response
+            return send(TEMP_URL);                                                        // Customized response
         } catch (Exception e) {
             e.printStackTrace();
             return send(TEMP_URL);
         }
+    }
+
+    private String getExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 
     public Object download(String fileName) throws IOException {
