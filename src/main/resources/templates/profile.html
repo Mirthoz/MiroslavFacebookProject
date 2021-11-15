@@ -26,6 +26,12 @@
             <img class="img-thumbnail"
                  src="../images/profileImg.png"
                  alt="ProfileImg" width="200" height="200">
+
+            <form action="/profile/pic" method="post" enctype="multipart/form-data">
+                <input type="file" name="image" />
+                <input type="submit" value="Upload" />
+            </form>
+
             <br>
             <h1 th:text="${userDTO.getUsername()}"></h1>
             <h1 th:text="${userDTO.getEmail()}"></h1>

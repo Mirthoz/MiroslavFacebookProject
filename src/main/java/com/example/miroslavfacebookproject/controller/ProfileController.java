@@ -1,8 +1,10 @@
 package com.example.miroslavfacebookproject.controller;
 
 import com.example.miroslavfacebookproject.dto.ForgotPasswordDTO;
+import com.example.miroslavfacebookproject.dto.ImageUploadDTO;
 import com.example.miroslavfacebookproject.service.contract.ProfileService;
 import com.example.miroslavfacebookproject.service.implementation.EmailSenderServiceImpl;
+import com.example.miroslavfacebookproject.service.implementation.UploadImageServiceImpl;
 import com.example.miroslavfacebookproject.service.implementation.ResetPasswordServiceImpl;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+
 @Controller
 public class ProfileController extends BaseController {
 
@@ -19,13 +23,15 @@ public class ProfileController extends BaseController {
     private final EmailSenderServiceImpl emailSenderService;
     private final ResetPasswordServiceImpl resetPasswordService;
     private final UserServiceImpl userServiceImpl;
+    private final UploadImageServiceImpl fileService;
 
 
-    public ProfileController(ProfileService profileService, EmailSenderServiceImpl emailSenderService, ResetPasswordServiceImpl resetPasswordService, UserServiceImpl userServiceImpl) {
+    public ProfileController(ProfileService profileService, EmailSenderServiceImpl emailSenderService, ResetPasswordServiceImpl resetPasswordService, UserServiceImpl userServiceImpl, UploadImageServiceImpl fileService) {
         this.profileService = profileService;
         this.emailSenderService = emailSenderService;
         this.resetPasswordService = resetPasswordService;
         this.userServiceImpl = userServiceImpl;
+        this.fileService = fileService;
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -65,5 +71,20 @@ public class ProfileController extends BaseController {
         } else {
             return redirect("register");
         }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/profile/pic")
+    public ModelAndView upload(@ModelAttribute("file") ImageUploadDTO multipartFile) {
+//        logger.info("HIT -/upload | File Name : {}", multipartFile.getOriginalFilename());
+        System.out.println(multipartFile.getImage());
+        fileService.upload(multipartFile.getImage());
+        return redirect("profile");
+    }
+
+    @PostMapping("/profile/pic/{fileName}")
+    public Object download(@PathVariable String fileName) throws IOException {
+//        logger.info("HIT -/download | File Name : {}", fileName);
+        return fileService.download(fileName);
     }
 }
