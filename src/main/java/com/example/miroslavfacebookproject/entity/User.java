@@ -40,6 +40,10 @@ public class User implements UserDetails {
     @OneToMany(targetEntity = UserFriend.class, fetch = FetchType.EAGER, mappedBy = "friendId", orphanRemoval = true)
     private Set<FriendRequest> userFriends;
 
+    @OneToOne
+    @JoinColumn(name = "avatar", referencedColumnName = "id")
+    private Avatar avatar;
+
     public User() {
     }
 
