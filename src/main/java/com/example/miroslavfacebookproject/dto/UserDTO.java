@@ -14,6 +14,9 @@ public class UserDTO {
     private String username;
 
     @NotBlank
+    private String avatarURL;
+
+    @NotBlank
     @Min(14)
     private String age;
 
@@ -50,5 +53,13 @@ public class UserDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAvatarURL() {
+        return avatarURL;
+    }
+
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
     }
 }

@@ -93,6 +93,7 @@ public class UserController extends BaseController {
         userDTO.setEmail(user.getEmail());
         userDTO.setAge(user.getAge());
         userDTO.setId(user.getId());
+        userDTO.setAvatarURL(user.getAvatar().getAvatarURL());
 
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("find_users", findUsers);
