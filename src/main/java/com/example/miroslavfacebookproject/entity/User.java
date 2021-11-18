@@ -122,4 +122,27 @@ public class User implements UserDetails {
         return roles;
     }
 
+    public Set<FriendRequest> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void setFriendRequests(Set<FriendRequest> friendRequests) {
+        this.friendRequests = friendRequests;
+    }
+
+    public Set<FriendRequest> getUserFriends() {
+        return userFriends;
+    }
+
+    public void setUserFriends(Set<FriendRequest> userFriends) {
+        this.userFriends = userFriends;
+    }
+
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
 }

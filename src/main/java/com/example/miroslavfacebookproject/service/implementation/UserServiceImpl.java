@@ -1,7 +1,9 @@
 package com.example.miroslavfacebookproject.service.implementation;
 import com.example.miroslavfacebookproject.dto.PostDTO;
 import com.example.miroslavfacebookproject.dto.UserDTO;
+import com.example.miroslavfacebookproject.entity.Avatar;
 import com.example.miroslavfacebookproject.entity.Post;
+import com.example.miroslavfacebookproject.repository.AvatarRepository;
 import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
@@ -25,13 +27,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final RoleServiceImpl roleService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final PostRepository postRepository;
+    private final AvatarRepository avatarRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleServiceImpl roleService, BCryptPasswordEncoder passwordEncoder, PostRepository postRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleServiceImpl roleService, BCryptPasswordEncoder passwordEncoder, PostRepository postRepository, AvatarRepository avatarRepository) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.postRepository = postRepository;
+        this.avatarRepository = avatarRepository;
     }
 
     @Override
@@ -40,15 +44,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalArgumentException("Password do not match");
 
         User user = new User();
+        Avatar avatar = new Avatar();
+        avatarRepository.save(avatar);
+        user.setAvatar(avatar);
         user.setEmail(registerDTO.getEmail());
         user.setUsername(registerDTO.getUsername());
         user.setAge(registerDTO.getAge());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.getUserRole());
         user.setRoles(roles);
-
         userRepository.save(user);
         return user;
     }
@@ -78,6 +83,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userDTO.setEmail(user.getEmail());
         userDTO.setUsername(user.getUsername());
         userDTO.setAge(user.getAge());
+        userDTO.setAvatarURL(user.getAvatar().getAvatarURL());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userDTO", userDTO);
         return modelAndView;

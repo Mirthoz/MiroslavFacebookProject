@@ -25,7 +25,7 @@ public class UploadImageServiceImpl extends BaseController {
     private static String TEMP_URL = "http://localhost:8080/profile";
     private static final String KEY = "C:\\Users\\PC\\IdeaProjects\\MiroslavFacebookProject\\src\\main\\resources\\serviceAccountKey.json";
 
-    public String downloadUrl;
+    public String imageUrl;
     public String image;
 
     private String uploadFile(File file, String fileName) throws IOException {
@@ -43,7 +43,7 @@ public class UploadImageServiceImpl extends BaseController {
                 .build()
                 .getService();
         storage.create(blobInfo, Files.readAllBytes(file.toPath()));
-        downloadUrl = "https://firebasestorage.googleapis.com/v0/b/facebookproject-3ac7a.appspot.com/o/"
+        imageUrl = "https://firebasestorage.googleapis.com/v0/b/facebookproject-3ac7a.appspot.com/o/"
                 + fileName + "?alt=media&token=" + fileName;
         return String.format(DOWNLOAD_URL, URLEncoder.encode(fileName, StandardCharsets.UTF_8));
     }
