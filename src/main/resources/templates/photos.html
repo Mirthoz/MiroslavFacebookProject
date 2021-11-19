@@ -2,11 +2,12 @@
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org " xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Friends</title>
+    <title>Photos</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+</head>
 </head>
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -40,45 +41,57 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-<style>
-    #friendsRequests {
-        position: absolute;
-        top: 20%;
-        left: 70%;
-        overflow: auto;
-    }
+<div class="d-flex justify-content-center mb-5">
+<div class="btn-group">
+    <button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+        Add photo
+    </button>
 
-    #userFriends {
-        position: absolute;
-        top: 20%;
-        left: 20%;
-        overflow: auto;
-    }
-</style>
+    <div class="dropdown-menu">
 
-<div id="userFriends">
-<h1>Friends:</h1>
-<div th:each="el : ${userFriends}" class="alert alert-info mt-2">
-    <div class="container">
-        <h3 th:text="${el.getFriendId().getUsername()}"/>
-        <form id="formFriends" method="post" name="deleteFriend" action="deleteFriend">
-            <input type="number" name="friendId" th:value="${el.getFriendId().getId()}" style="display: none">
-            <button class="w-10 btn btn-lg btn-danger ml-2" type="submit">Delete</button>
+        <form action="/profile/add_album_image" method="post" enctype="multipart/form-data">
+            <input class="form-control" type="file" name="image"/>
+            <div class="form-floating mb-3">
+                <input type="text" name="imageDescription" class="form-control" id="floatingInput"
+                       placeholder="Description">
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+
         </form>
     </div>
 </div>
 </div>
 
+<style>
 
-<div id="friendsRequests">
-    <h1>Requests:</h1>
-<div th:each="el : ${friendRequests}" class="alert alert-info mt-2">
-    <div class="container">
-        <h3 th:text="${el.getRequester().getUsername()}"/>
-        <form id="form" method="post" name="addAsFriend" action="addAsFriend">
-            <input type="number" name="friendId" th:value="${el.getRequester().getId()}" style="display: none">
-            <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Add</button>
-        </form>
+    body {
+        margin: 0px;
+    }
+
+    .qwer {
+        height: 480px;
+        width: 640px;
+    }
+
+    .qwerty {
+        height: 480px;
+        width: 640px;
+        text-align: center;
+    }
+    .qw{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+</style>
+<div class="qw">
+<div class="qwer ml-5 mb-5" th:each="el : ${albumImagesDTO}">
+    <div class="qwerty">
+        <img th:src="${el.getImageURL()}" class="img-thumbnail" alt="Image" width="640" height="480">
+        <br>
+        <h2 th:text="${el.getImageDescription()}"></h2>
     </div>
 </div>
 </div>
