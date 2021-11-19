@@ -1,6 +1,7 @@
 package com.example.miroslavfacebookproject.service.implementation;
 
 import com.example.miroslavfacebookproject.controller.BaseController;
+import com.example.miroslavfacebookproject.service.contract.UploadImageService;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
@@ -19,7 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class UploadImageServiceImpl extends BaseController {
+public class UploadImageServiceImpl extends BaseController implements UploadImageService {
 
     private static final String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/facebookproject-3ac7a.appspot.com/o/%s?alt=image/jpeg";
     private static String TEMP_URL = "http://localhost:8080/profile";
@@ -56,8 +57,8 @@ public class UploadImageServiceImpl extends BaseController {
         image = fileName;
         return tempFile;
     }
-
-    public Object upload(MultipartFile multipartFile) {
+    @Override
+    public Object uploadImage(MultipartFile multipartFile) {
 
         try {
             String fileName = multipartFile.getOriginalFilename();
@@ -71,6 +72,11 @@ public class UploadImageServiceImpl extends BaseController {
             e.printStackTrace();
             return send(TEMP_URL);
         }
+    }
+
+    @Override
+    public String takeImageURL() {
+        return imageUrl;
     }
 
     private String getExtension(String fileName) {

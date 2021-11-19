@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -43,6 +44,9 @@ public class User implements UserDetails {
     @OneToOne
     @JoinColumn(name = "avatar", referencedColumnName = "id")
     private Avatar avatar;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<AlbumImage> albumImages = new ArrayList<>();
 
     public User() {
     }
@@ -144,5 +148,13 @@ public class User implements UserDetails {
 
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
+    }
+
+    public List<AlbumImage> getAlbumImages() {
+        return albumImages;
+    }
+
+    public void setAlbumImages(List<AlbumImage> albumImages) {
+        this.albumImages = albumImages;
     }
 }

@@ -23,8 +23,8 @@ public class AvatarController extends BaseController{
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/profile/pic")
-    public ModelAndView upload(@AuthenticationPrincipal User user, @ModelAttribute("file") ImageUploadDTO multipartFile) {
-        fileService.upload(multipartFile.getImage());
+    public ModelAndView upload(@AuthenticationPrincipal User user, @ModelAttribute("file") ImageUploadDTO imageUploadDTO) {
+        fileService.uploadImage(imageUploadDTO.getImage());
         avatarService.addAvatar(user.getId(), fileService.imageUrl);
         return redirect("profile");
     }

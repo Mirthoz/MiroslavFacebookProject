@@ -1,7 +1,6 @@
 package com.example.miroslavfacebookproject.controller;
 
 import com.example.miroslavfacebookproject.dto.ForgotPasswordDTO;
-import com.example.miroslavfacebookproject.dto.ImageUploadDTO;
 import com.example.miroslavfacebookproject.service.contract.ProfileService;
 import com.example.miroslavfacebookproject.service.implementation.EmailSenderServiceImpl;
 import com.example.miroslavfacebookproject.service.implementation.UploadImageServiceImpl;
@@ -13,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.io.IOException;
 
 @Controller
 public class ProfileController extends BaseController {
@@ -68,8 +65,7 @@ public class ProfileController extends BaseController {
                     emailSenderService.userPassword,
                     emailSenderService.userRepeatPassword);
             return redirect("login");
-        } else {
-            return redirect("register");
         }
+        return redirect("register");
     }
 }

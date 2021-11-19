@@ -34,7 +34,7 @@ public class FriendsController extends BaseController{
     public ModelAndView friends(@AuthenticationPrincipal User user, ModelAndView modelAndView){
         Set<FriendRequest> friendRequests = friendRequestRepository.findAllByReceiverId(user.getId());
         Set<UserFriend> userFriends = userFriendsRepository.findAllByUserIdId(user.getId());
-        if (userFriends.size() < 1){
+        if (userFriends.isEmpty()){
             userFriends = userFriendsRepository.findAllByFriendIdId(user.getId());
         }
         modelAndView.addObject("userFriends", userFriends);
