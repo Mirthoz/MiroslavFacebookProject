@@ -19,12 +19,10 @@ import java.io.IOException;
 public class AlbumController extends BaseController{
 
     private final AlbumImageService albumImageService;
-    private final AlbumImageRepository albumImageRepository;
     private final UploadImageService uploadImageService;
 
-    public AlbumController(AlbumImageService albumImageService, AlbumImageRepository albumImageRepository, UploadImageService uploadImageService) {
+    public AlbumController(AlbumImageService albumImageService,UploadImageService uploadImageService) {
         this.albumImageService = albumImageService;
-        this.albumImageRepository = albumImageRepository;
         this.uploadImageService = uploadImageService;
     }
 
