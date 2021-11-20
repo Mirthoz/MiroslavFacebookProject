@@ -23,6 +23,9 @@ public class User implements UserDetails {
     @Column(name = "username", nullable = false)
     private String username;
 
+    @Column(name = "surname", nullable = false)
+    private String surname;
+
     @Column(name = "age", nullable = false)
     private String age;
 
@@ -156,5 +159,13 @@ public class User implements UserDetails {
 
     public void setAlbumImages(List<AlbumImage> albumImages) {
         this.albumImages = albumImages;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 }

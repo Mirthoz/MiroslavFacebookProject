@@ -12,6 +12,9 @@ public class RegisterDTO {
     private String username;
 
     @NotBlank
+    private String surname;
+
+    @NotBlank
     @Min(14)
     private String age;
 
@@ -62,5 +65,13 @@ public class RegisterDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 }

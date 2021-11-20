@@ -61,7 +61,7 @@
             </div>
 
             <br>
-            <h1 th:text="${userDTO.getUsername()}"></h1>
+            <h1 th:text="${userDTO.getUsername()} + ${ userDTO.getSurname()}"></h1>
             <h1 th:text="${userDTO.getEmail()}"></h1>
             <h1 th:text="${userDTO.getAge()}"></h1>
             <br>

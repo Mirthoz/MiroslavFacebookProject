@@ -14,6 +14,9 @@ public class UserDTO {
     private String username;
 
     @NotBlank
+    private String surname;
+
+    @NotBlank
     private String avatarURL;
 
     @NotBlank
@@ -61,5 +64,13 @@ public class UserDTO {
 
     public void setAvatarURL(String avatarURL) {
         this.avatarURL = avatarURL;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 }

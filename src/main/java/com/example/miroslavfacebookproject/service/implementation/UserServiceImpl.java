@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setAvatar(avatar);
         user.setEmail(registerDTO.getEmail());
         user.setUsername(registerDTO.getUsername());
+        user.setSurname(registerDTO.getSurname());
         user.setAge(registerDTO.getAge());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         Set<Role> roles = new HashSet<>();
@@ -88,6 +89,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userDTO.setEmail(user.getEmail());
         userDTO.setUsername(user.getUsername());
         userDTO.setAge(user.getAge());
+        userDTO.setSurname(user.getSurname());
         userDTO.setAvatarURL(user.getAvatar().getAvatarURL());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userDTO", userDTO);
@@ -132,6 +134,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
+        userDTO.setSurname(user.getSurname());
         return userDTO;
     }
 }
