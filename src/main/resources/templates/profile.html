@@ -55,7 +55,7 @@
                 <div class="dropdown-menu">
                     <form action="/profile/pic" method="post" enctype="multipart/form-data">
                         <input class="form-control" type="file" name="image"/>
-                        <button type="submit" class="btn btn-primary">Add avatar</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
                     </form>
                 </div>
             </div>
@@ -65,11 +65,11 @@
             <h1 th:text="${userDTO.getEmail()}"></h1>
             <h1 th:text="${userDTO.getAge()}"></h1>
             <br>
-            <a href="/change_my_information">Change my information</a>
+            <a href="/change_my_information" class="btn btn-info">Change my information</a>
             <br>
-            <a href="/logout">LogOut</a>
+            <a href="/logout" class="btn btn-secondary">LogOut</a>
             <br>
-            <a href="/delete">Delete my profile</a>
+            <a href="/delete" class="btn btn-danger">Delete my profile</a>
         </div>
     </div>
     <style>
@@ -88,23 +88,16 @@
 
         #form_add_post {
             position: absolute;
-            top: 100%;
+            top: 90%;
             left: 10%;
         }
 
         #wall {
             position: absolute;
-            top: 125%;
+            top: 115%;
             left: 5%;
         }
 
-        #images {
-            position: absolute;
-            height: 200px;
-            width: 500px;
-            top: 75%;
-            left: 5%;
-        }
     </style>
     <div class="container col-lg-4 mt-3 mb-5" id="search_user">
         <div id="form">
@@ -126,14 +119,7 @@
             </div>
         </div>
     </div>
-    <div class="container mb-3" id="images">
-        <img src="https://img2.freepng.ru/20180329/uue/kisspng-computer-icons-windows-photo-gallery-photo-5abd4963a0e061.600520291522354531659.jpg"
-             width="150" height="150">
-        <img src="https://img2.freepng.ru/20180329/uue/kisspng-computer-icons-windows-photo-gallery-photo-5abd4963a0e061.600520291522354531659.jpg"
-             width="150" height="150">
-        <img src="https://img2.freepng.ru/20180329/uue/kisspng-computer-icons-windows-photo-gallery-photo-5abd4963a0e061.600520291522354531659.jpg"
-             width="150" height="150">
-    </div>
+
     <div>
         <div class="container" id="form_add_post">
             <form method="post" action="/add_post">

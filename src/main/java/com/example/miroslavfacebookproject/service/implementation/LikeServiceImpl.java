@@ -38,7 +38,7 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void checkLikes(User currentUser) {
+    public void checkingLikes(User currentUser) {
         postRepository.findAll().stream().forEach(x -> markLike(x.getId(), currentUser));
     }
 

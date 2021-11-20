@@ -30,7 +30,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final AvatarRepository avatarRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleServiceImpl roleService, BCryptPasswordEncoder passwordEncoder, PostRepository postRepository, AvatarRepository avatarRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           RoleServiceImpl roleService,
+                           BCryptPasswordEncoder passwordEncoder,
+                           PostRepository postRepository,
+                           AvatarRepository avatarRepository) {
+
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
@@ -39,7 +44,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User register(RegisterDTO registerDTO) {
+    public User registration(RegisterDTO registerDTO) {
         if (registerDTO.getPasswordRepeat() == null || !registerDTO.getPassword().equals(registerDTO.getPasswordRepeat()))
             throw new IllegalArgumentException("Password do not match");
 
@@ -52,14 +57,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setAge(registerDTO.getAge());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getUserRole());
+        roles.add(roleService.takeUserRole());
         user.setRoles(roles);
         userRepository.save(user);
         return user;
     }
 
     @Override
-    public String login(String email, String password) {
+    public String resetLogin(String email, String password) {
         return null;
     }
 
@@ -71,14 +76,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getUserByUsername(String username) throws UsernameNotFoundException {
+    public User takeUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findFirstByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found; with username: " + username));
         return user;
     }
 
-    public ModelAndView getUserData(UserDetails userDetails) {
-        com.example.miroslavfacebookproject.entity.User user = getUserByUsername(userDetails.getUsername());
+    public ModelAndView takeUserData(UserDetails userDetails) {
+        com.example.miroslavfacebookproject.entity.User user = takeUserByUsername(userDetails.getUsername());
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(user.getEmail());
         userDTO.setUsername(user.getUsername());
@@ -89,8 +94,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return modelAndView;
     }
 
-    public void changeData(UserDTO userDTO, UserDetails userDetails) {
-        com.example.miroslavfacebookproject.entity.User user = getUserByUsername(userDetails.getUsername());
+    public void changeUserInformation(UserDTO userDTO, UserDetails userDetails) {
+        com.example.miroslavfacebookproject.entity.User user = takeUserByUsername(userDetails.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setAge(userDTO.getAge());
         user.setUsername(userDTO.getUsername());
@@ -102,7 +107,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             User user = userRepository.findByEmail(email);
             user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
-            System.out.println("Password is reset!!!");
         }
     }
 

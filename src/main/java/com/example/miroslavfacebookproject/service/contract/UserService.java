@@ -9,9 +9,9 @@ import java.util.List;
 
 @Service
 public interface UserService {
-    User register(RegisterDTO registerDTO);
-    String login(String email, String password);
-    User getUserByUsername(String username);
+    User registration(RegisterDTO registerDTO);
+    String resetLogin(String email, String password);
+    User takeUserByUsername(String username);
     List<UserDTO> findByName(String name);
 
 }

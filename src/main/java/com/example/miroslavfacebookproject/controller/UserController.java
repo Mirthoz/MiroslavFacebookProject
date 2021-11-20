@@ -53,7 +53,7 @@ public class UserController extends BaseController {
             redirectAttributes.addFlashAttribute("user", registerDTO);
             return redirect("register", "user", registerDTO);
         }
-        userServiceImpl.register(registerDTO);
+        userServiceImpl.registration(registerDTO);
         return redirect("login");
     }
 
@@ -72,12 +72,12 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, @AuthenticationPrincipal User currentUser, Model model) {
-        likeService.checkLikes(currentUser);
+        likeService.checkingLikes(currentUser);
         List<Post> posts = postRepository.findAll();
         posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
         model.addAttribute("posts", posts);
 
-    return userServiceImpl.getUserData(userDetails);
+    return userServiceImpl.takeUserData(userDetails);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -117,7 +117,7 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/change")
     public ModelAndView changeUserInfo(@ModelAttribute("user") UserDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) {
-        userServiceImpl.changeData(userDTO, userDetails);
+        userServiceImpl.changeUserInformation(userDTO, userDetails);
         return send("login");
     }
 }

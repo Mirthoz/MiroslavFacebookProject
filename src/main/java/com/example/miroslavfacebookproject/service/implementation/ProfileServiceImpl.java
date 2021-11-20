@@ -18,7 +18,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void deleteProfile(UserDetails userName) {
-        User user = userServiceImpl.getUserByUsername(userName.getUsername());
+        User user = userServiceImpl.takeUserByUsername(userName.getUsername());
         userRepository.delete(user);
     }
 }

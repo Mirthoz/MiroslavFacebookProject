@@ -43,7 +43,6 @@ public class FriendServiceImpl implements FriendService {
 
     protected void deleteFriendRequest(Long friendId, Long userId) {
         FriendRequest friendRequest = friendRequestRepository.findFirstByReceiverIdAndRequesterId(userId, friendId);
-        System.out.println(friendRequest.getId());
         friendRequestRepository.delete(friendRequest);
     }
 

@@ -34,7 +34,6 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         userEmail = email;
         userPassword = password;
         userRepeatPassword = passwordRepeat;
-        System.out.println("Mail is sent!");
     }
 
     @Override
