@@ -1,5 +1,7 @@
 package com.example.miroslavfacebookproject.service.contract;
 
+import org.springframework.web.servlet.ModelAndView;
+
 public interface ResetPasswordService {
-    boolean resetPassword(String code);
+    ModelAndView resetPassword(String code, ModelAndView modelAndView);
 }

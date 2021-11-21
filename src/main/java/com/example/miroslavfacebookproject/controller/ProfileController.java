@@ -3,9 +3,9 @@ package com.example.miroslavfacebookproject.controller;
 import com.example.miroslavfacebookproject.dto.ForgotPasswordDTO;
 import com.example.miroslavfacebookproject.service.contract.AutoLoginService;
 import com.example.miroslavfacebookproject.service.contract.ProfileService;
+import com.example.miroslavfacebookproject.service.contract.ResetPasswordService;
 import com.example.miroslavfacebookproject.service.implementation.EmailSenderServiceImpl;
 import com.example.miroslavfacebookproject.service.implementation.UploadImageServiceImpl;
-import com.example.miroslavfacebookproject.service.implementation.ResetPasswordServiceImpl;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,19 +19,15 @@ public class ProfileController extends BaseController {
 
     private final ProfileService profileService;
     private final EmailSenderServiceImpl emailSenderService;
-    private final ResetPasswordServiceImpl resetPasswordService;
-    private final UserServiceImpl userServiceImpl;
-    private final UploadImageServiceImpl fileService;
-    private final AutoLoginService autoLoginService;
+    private final ResetPasswordService resetPasswordService;
 
+    public ProfileController(ProfileService profileService,
+                             EmailSenderServiceImpl emailSenderService,
+                             ResetPasswordService resetPasswordService) {
 
-    public ProfileController(ProfileService profileService, EmailSenderServiceImpl emailSenderService, ResetPasswordServiceImpl resetPasswordService, UserServiceImpl userServiceImpl, UploadImageServiceImpl fileService, AutoLoginService autoLoginService) {
         this.profileService = profileService;
         this.emailSenderService = emailSenderService;
         this.resetPasswordService = resetPasswordService;
-        this.userServiceImpl = userServiceImpl;
-        this.fileService = fileService;
-        this.autoLoginService = autoLoginService;
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -62,14 +58,7 @@ public class ProfileController extends BaseController {
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("reset_password/{code}")
-    public ModelAndView resetPassword(@PathVariable("code") String codeReset) {
-        if (resetPasswordService.resetPassword(codeReset)) {
-            userServiceImpl.resetUserPassword(emailSenderService.userEmail,
-                    emailSenderService.userPassword,
-                    emailSenderService.userRepeatPassword);
-                    autoLoginService.autoLogin(emailSenderService.takeRegisterDTO());
-            return redirect("profile");
-        }
-        return redirect("register");
+    public ModelAndView resetPassword(@PathVariable("code") String codeReset, ModelAndView modelAndView) {
+        return resetPasswordService.resetPassword(codeReset, modelAndView);
     }
 }
