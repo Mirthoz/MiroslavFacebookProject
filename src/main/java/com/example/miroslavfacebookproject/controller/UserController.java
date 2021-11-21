@@ -9,6 +9,7 @@ import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.service.contract.AutoLoginService;
 import com.example.miroslavfacebookproject.service.contract.LikeService;
+import com.example.miroslavfacebookproject.service.contract.ProfileService;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,17 +31,21 @@ public class UserController extends BaseController {
 
     private final UserServiceImpl userServiceImpl;
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
     private final LikeService likeService;
     private final AutoLoginService autoLoginService;
+    private final ProfileService profileService;
 
     @Autowired
-    public UserController(UserServiceImpl userService, PostRepository postRepository, UserRepository userRepository, LikeService likeService, AutoLoginService autoLoginService) {
+    public UserController(UserServiceImpl userService,
+                          PostRepository postRepository,
+                          LikeService likeService,
+                          AutoLoginService autoLoginService,
+                          ProfileService profileService) {
         this.userServiceImpl = userService;
         this.postRepository = postRepository;
-        this.userRepository = userRepository;
         this.likeService = likeService;
         this.autoLoginService = autoLoginService;
+        this.profileService = profileService;
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -51,7 +56,9 @@ public class UserController extends BaseController {
 
     @PreAuthorize("!isAuthenticated()")
     @PostMapping("/register")
-    public ModelAndView register(@Validated @ModelAttribute("user") RegisterDTO registerDTO, BindingResult result, RedirectAttributes redirectAttributes) {
+    public ModelAndView register(@Validated @ModelAttribute("user") RegisterDTO registerDTO,
+                                 BindingResult result,
+                                 RedirectAttributes redirectAttributes) {
         if (result.hasErrors()){
             redirectAttributes.addFlashAttribute("user", registerDTO);
             return redirect("register", "user", registerDTO);
@@ -87,22 +94,7 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/search_user")
     public ModelAndView searchUserByName(@AuthenticationPrincipal User user, @ModelAttribute("username") SearchUserDTO searchUserDTO, Model model){
-        List<UserDTO> findUsers = userServiceImpl.findByName(searchUserDTO.getUsername());
-        List<Post> posts = postRepository.findAll();
-        posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
-        model.addAttribute("posts", posts);
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUsername(user.getUsername());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setAge(user.getAge());
-        userDTO.setId(user.getId());
-        userDTO.setAvatarURL(user.getAvatar().getAvatarURL());
-
-        model.addAttribute("userDTO", userDTO);
-        model.addAttribute("find_users", findUsers);
-
-        return send("profile");
+        return profileService.searchUserByName(user, searchUserDTO, model);
     }
 
     @PreAuthorize("isAuthenticated()")
