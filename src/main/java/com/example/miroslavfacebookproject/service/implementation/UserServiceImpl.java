@@ -9,9 +9,9 @@ import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.entity.Role;
 import com.example.miroslavfacebookproject.entity.User;
+import com.example.miroslavfacebookproject.service.contract.AutoLoginService;
 import com.example.miroslavfacebookproject.service.contract.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -105,12 +105,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
     }
 
-    public void resetUserPassword(String email, String password, String passwordRepeat) {
+    public RegisterDTO resetUserPassword(String email, String password, String passwordRepeat) {
         if (password.equals(passwordRepeat) && userRepository.findByEmail(email) != null) {
             User user = userRepository.findByEmail(email);
             user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
+            RegisterDTO registerDTO = new RegisterDTO();
+            registerDTO.setEmail(user.getEmail());
+            registerDTO.setPassword(user.getPassword());
+            return registerDTO;
         }
+        return null;
     }
 
     public void savePost(PostDTO postDTO, User user){

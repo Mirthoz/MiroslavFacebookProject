@@ -1,4 +1,5 @@
 package com.example.miroslavfacebookproject.service.implementation;
+import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.service.contract.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,6 +22,13 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     public String userEmail;
     public String userPassword;
     public String userRepeatPassword;
+
+    public RegisterDTO takeRegisterDTO(){
+        RegisterDTO registerDTO = new RegisterDTO();
+        registerDTO.setEmail(userEmail);
+        registerDTO.setPassword(userPassword);
+        return registerDTO;
+    }
 
     @Override
     public void sendEmail(String email, String password, String passwordRepeat){
