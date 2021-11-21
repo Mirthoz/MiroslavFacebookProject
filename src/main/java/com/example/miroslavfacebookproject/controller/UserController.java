@@ -7,6 +7,7 @@ import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.entity.User;
 import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
+import com.example.miroslavfacebookproject.service.contract.AutoLoginService;
 import com.example.miroslavfacebookproject.service.contract.LikeService;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,15 @@ public class UserController extends BaseController {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final LikeService likeService;
+    private final AutoLoginService autoLoginService;
 
     @Autowired
-    public UserController(UserServiceImpl userService, PostRepository postRepository, UserRepository userRepository, LikeService likeService) {
+    public UserController(UserServiceImpl userService, PostRepository postRepository, UserRepository userRepository, LikeService likeService, AutoLoginService autoLoginService) {
         this.userServiceImpl = userService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.likeService = likeService;
+        this.autoLoginService = autoLoginService;
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -53,8 +56,9 @@ public class UserController extends BaseController {
             redirectAttributes.addFlashAttribute("user", registerDTO);
             return redirect("register", "user", registerDTO);
         }
-        userServiceImpl.register(registerDTO);
-        return redirect("login");
+        userServiceImpl.registration(registerDTO);
+        autoLoginService.autoLogin(registerDTO);
+        return redirect("profile");
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -72,12 +76,12 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, @AuthenticationPrincipal User currentUser, Model model) {
-        likeService.checkLikes(currentUser);
+        likeService.checkingLikes(currentUser);
         List<Post> posts = postRepository.findAll();
         posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
         model.addAttribute("posts", posts);
 
-    return userServiceImpl.getUserData(userDetails);
+    return userServiceImpl.takeUserData(userDetails);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -117,7 +121,7 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/change")
     public ModelAndView changeUserInfo(@ModelAttribute("user") UserDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) {
-        userServiceImpl.changeData(userDTO, userDetails);
+        userServiceImpl.changeUserInformation(userDTO, userDetails);
         return send("login");
     }
 }

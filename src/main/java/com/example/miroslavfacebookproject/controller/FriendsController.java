@@ -32,15 +32,7 @@ public class FriendsController extends BaseController{
     @PreAuthorize("isAuthenticated()")
     @GetMapping("friends")
     public ModelAndView friends(@AuthenticationPrincipal User user, ModelAndView modelAndView){
-        Set<FriendRequest> friendRequests = friendRequestRepository.findAllByReceiverId(user.getId());
-        Set<UserFriend> userFriends = userFriendsRepository.findAllByUserIdId(user.getId());
-        if (userFriends.isEmpty()){
-            userFriends = userFriendsRepository.findAllByFriendIdId(user.getId());
-        }
-        modelAndView.addObject("userFriends", userFriends);
-        modelAndView.addObject("friendRequests", friendRequests);
-        modelAndView.setViewName("friends");
-        return modelAndView;
+        return friendService.showFriends(user, modelAndView);
     }
 
     @PreAuthorize("isAuthenticated()")

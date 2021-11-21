@@ -42,25 +42,25 @@
         crossorigin="anonymous"></script>
 
 <div class="d-flex justify-content-center mb-5">
-<div class="btn-group">
-    <button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-        Add photo
-    </button>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+            Add photo
+        </button>
 
-    <div class="dropdown-menu">
+        <div class="dropdown-menu">
 
-        <form action="/profile/add_album_image" method="post" enctype="multipart/form-data">
-            <input class="form-control" type="file" name="image"/>
-            <div class="form-floating mb-3">
-                <input type="text" name="imageDescription" class="form-control" id="floatingInput"
-                       placeholder="Description">
-            </div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <form action="/profile/add_album_image" method="post" enctype="multipart/form-data">
+                <input class="form-control" type="file" name="image"/>
+                <div class="form-floating mb-3">
+                    <input type="text" name="imageDescription" class="form-control" id="floatingInput"
+                           placeholder="Description">
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
 
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 </div>
 
 <style>
@@ -69,31 +69,33 @@
         margin: 0px;
     }
 
-    .qwer {
-        height: 480px;
-        width: 640px;
-    }
-
-    .qwerty {
-        height: 480px;
-        width: 640px;
-        text-align: center;
-    }
-    .qw{
+    .box1 {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
     }
 
+    .box2 {
+        height: 480px;
+        width: 640px;
+    }
+
+    .box3 {
+        height: 480px;
+        width: 640px;
+        text-align: center;
+    }
+
 </style>
-<div class="qw">
-<div class="qwer ml-5 mb-5" th:each="el : ${albumImagesDTO}">
-    <div class="qwerty">
-        <img th:src="${el.getImageURL()}" class="img-thumbnail" alt="Image" width="640" height="480">
-        <br>
-        <h2 th:text="${el.getImageDescription()}"></h2>
+
+<div class="box1">
+    <div class="box2 ml-5 mb-5" th:each="el : ${albumImagesDTO}">
+        <div class="box3">
+            <img th:src="${el.getImageURL()}" class="img-thumbnail" alt="Image" width="640" height="480">
+            <br>
+            <h2 th:text="${el.getImageDescription()}"></h2>
+        </div>
     </div>
-</div>
 </div>
 
 </body>

@@ -1,6 +1,7 @@
 package com.example.miroslavfacebookproject.controller;
 
 import com.example.miroslavfacebookproject.dto.ForgotPasswordDTO;
+import com.example.miroslavfacebookproject.service.contract.AutoLoginService;
 import com.example.miroslavfacebookproject.service.contract.ProfileService;
 import com.example.miroslavfacebookproject.service.implementation.EmailSenderServiceImpl;
 import com.example.miroslavfacebookproject.service.implementation.UploadImageServiceImpl;
@@ -21,14 +22,16 @@ public class ProfileController extends BaseController {
     private final ResetPasswordServiceImpl resetPasswordService;
     private final UserServiceImpl userServiceImpl;
     private final UploadImageServiceImpl fileService;
+    private final AutoLoginService autoLoginService;
 
 
-    public ProfileController(ProfileService profileService, EmailSenderServiceImpl emailSenderService, ResetPasswordServiceImpl resetPasswordService, UserServiceImpl userServiceImpl, UploadImageServiceImpl fileService) {
+    public ProfileController(ProfileService profileService, EmailSenderServiceImpl emailSenderService, ResetPasswordServiceImpl resetPasswordService, UserServiceImpl userServiceImpl, UploadImageServiceImpl fileService, AutoLoginService autoLoginService) {
         this.profileService = profileService;
         this.emailSenderService = emailSenderService;
         this.resetPasswordService = resetPasswordService;
         this.userServiceImpl = userServiceImpl;
         this.fileService = fileService;
+        this.autoLoginService = autoLoginService;
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -64,7 +67,8 @@ public class ProfileController extends BaseController {
             userServiceImpl.resetUserPassword(emailSenderService.userEmail,
                     emailSenderService.userPassword,
                     emailSenderService.userRepeatPassword);
-            return redirect("login");
+                    autoLoginService.autoLogin(emailSenderService.takeRegisterDTO());
+            return redirect("profile");
         }
         return redirect("register");
     }

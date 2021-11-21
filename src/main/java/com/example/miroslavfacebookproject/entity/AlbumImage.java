@@ -26,7 +26,15 @@ import javax.persistence.*;
             return imageURL;
         }
 
+        public void setImageURL(String imageURL) {
+            this.imageURL = imageURL;
+        }
+
         public String getImageDescription() {
             return imageDescription;
+        }
+
+        public void setImageDescription(String imageDescription) {
+            this.imageDescription = imageDescription;
         }
     }

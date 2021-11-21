@@ -5,6 +5,9 @@ public class SearchUserDTO {
     private Long id;
 
     private String username;
+
+    private String surname;
+
     SearchUserDTO(){}
 
     public String getUsername() {
@@ -21,5 +24,13 @@ public class SearchUserDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 }

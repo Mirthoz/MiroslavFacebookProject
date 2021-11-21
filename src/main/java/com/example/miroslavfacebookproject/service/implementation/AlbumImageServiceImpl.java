@@ -1,14 +1,12 @@
 package com.example.miroslavfacebookproject.service.implementation;
 import com.example.miroslavfacebookproject.dto.AlbumImagesDTO;
 import com.example.miroslavfacebookproject.dto.ImageUploadDTO;
-import com.example.miroslavfacebookproject.dto.UserDTO;
 import com.example.miroslavfacebookproject.entity.AlbumImage;
 import com.example.miroslavfacebookproject.entity.User;
 import com.example.miroslavfacebookproject.repository.AlbumImageRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.service.contract.AlbumImageService;
 import com.example.miroslavfacebookproject.service.contract.UploadImageService;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
