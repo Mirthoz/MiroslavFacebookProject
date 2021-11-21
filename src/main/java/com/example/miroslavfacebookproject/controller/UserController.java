@@ -7,6 +7,7 @@ import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.entity.User;
 import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
+import com.example.miroslavfacebookproject.service.contract.AutoLoginService;
 import com.example.miroslavfacebookproject.service.contract.LikeService;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,15 @@ public class UserController extends BaseController {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final LikeService likeService;
+    private final AutoLoginService autoLoginService;
 
     @Autowired
-    public UserController(UserServiceImpl userService, PostRepository postRepository, UserRepository userRepository, LikeService likeService) {
+    public UserController(UserServiceImpl userService, PostRepository postRepository, UserRepository userRepository, LikeService likeService, AutoLoginService autoLoginService) {
         this.userServiceImpl = userService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.likeService = likeService;
+        this.autoLoginService = autoLoginService;
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -54,7 +57,8 @@ public class UserController extends BaseController {
             return redirect("register", "user", registerDTO);
         }
         userServiceImpl.registration(registerDTO);
-        return redirect("login");
+        autoLoginService.autoLogin(registerDTO);
+        return redirect("profile");
     }
 
     @PreAuthorize("isAuthenticated()")
