@@ -3,13 +3,9 @@ import com.example.miroslavfacebookproject.dto.PostDTO;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.dto.SearchUserDTO;
 import com.example.miroslavfacebookproject.dto.UserDTO;
-import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.entity.User;
-import com.example.miroslavfacebookproject.repository.PostRepository;
-import com.example.miroslavfacebookproject.repository.UserRepository;
-import com.example.miroslavfacebookproject.service.contract.AutoLoginService;
-import com.example.miroslavfacebookproject.service.contract.LikeService;
 import com.example.miroslavfacebookproject.service.contract.ProfileService;
+import com.example.miroslavfacebookproject.service.contract.RegistrationService;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,23 +19,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Controller
 public class UserController extends BaseController {
 
     private final UserServiceImpl userServiceImpl;
-    private final AutoLoginService autoLoginService;
     private final ProfileService profileService;
+    private final RegistrationService registrationService;
 
     @Autowired
     public UserController(UserServiceImpl userService,
-                          AutoLoginService autoLoginService,
-                          ProfileService profileService) {
+                          ProfileService profileService,
+                          RegistrationService registrationService) {
         this.userServiceImpl = userService;
-        this.autoLoginService = autoLoginService;
         this.profileService = profileService;
+        this.registrationService = registrationService;
     }
 
     @PreAuthorize("!isAuthenticated()")
@@ -50,16 +43,8 @@ public class UserController extends BaseController {
 
     @PreAuthorize("!isAuthenticated()")
     @PostMapping("/register")
-    public ModelAndView register(@Validated @ModelAttribute("user") RegisterDTO registerDTO,
-                                 BindingResult result,
-                                 RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()){
-            redirectAttributes.addFlashAttribute("user", registerDTO);
-            return redirect("register", "user", registerDTO);
-        }
-        userServiceImpl.registration(registerDTO);
-        autoLoginService.autoLogin(registerDTO);
-        return redirect("profile");
+    public ModelAndView register(@Validated @ModelAttribute("user") RegisterDTO registerDTO, BindingResult result, RedirectAttributes redirectAttributes) {
+    return registrationService.registration(registerDTO, result, redirectAttributes);
     }
 
     @PreAuthorize("isAuthenticated()")
