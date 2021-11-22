@@ -7,6 +7,7 @@ import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.entity.User;
 import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
+import com.example.miroslavfacebookproject.service.contract.LikeService;
 import com.example.miroslavfacebookproject.service.contract.ProfileService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,13 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
     private final UserRepository userRepository;
     private final UserServiceImpl userServiceImpl;
     private final PostRepository postRepository;
+    private final LikeService likeService;
 
-    public ProfileServiceImpl(UserRepository userRepository, UserServiceImpl userServiceImpl, PostRepository postRepository) {
+    public ProfileServiceImpl(UserRepository userRepository, UserServiceImpl userServiceImpl, PostRepository postRepository, LikeService likeService) {
         this.userRepository = userRepository;
         this.userServiceImpl = userServiceImpl;
         this.postRepository = postRepository;
+        this.likeService = likeService;
     }
 
     @Override
@@ -53,5 +56,14 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("find_users", findUsers);
         return send("profile");
+    }
+
+    @Override
+    public ModelAndView sendProfileData(UserDetails userDetails, User currentUser, Model model) {
+        likeService.checkingLikes(currentUser);
+        List<Post> posts = postRepository.findAll();
+        posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
+        model.addAttribute("posts", posts);
+        return userServiceImpl.takeUserData(userDetails);
     }
 }

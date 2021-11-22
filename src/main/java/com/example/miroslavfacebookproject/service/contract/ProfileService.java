@@ -13,4 +13,5 @@ import org.springframework.web.servlet.ModelAndView;
 public interface ProfileService {
     void deleteProfile(UserDetails userDetails);
     ModelAndView searchUserByName(User user, SearchUserDTO searchUserDTO, Model model);
+    ModelAndView sendProfileData(UserDetails userDetails, User currentUser, Model model);
 }

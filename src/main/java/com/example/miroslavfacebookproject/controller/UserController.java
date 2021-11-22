@@ -30,20 +30,14 @@ import java.util.stream.Collectors;
 public class UserController extends BaseController {
 
     private final UserServiceImpl userServiceImpl;
-    private final PostRepository postRepository;
-    private final LikeService likeService;
     private final AutoLoginService autoLoginService;
     private final ProfileService profileService;
 
     @Autowired
     public UserController(UserServiceImpl userService,
-                          PostRepository postRepository,
-                          LikeService likeService,
                           AutoLoginService autoLoginService,
                           ProfileService profileService) {
         this.userServiceImpl = userService;
-        this.postRepository = postRepository;
-        this.likeService = likeService;
         this.autoLoginService = autoLoginService;
         this.profileService = profileService;
     }
@@ -83,26 +77,18 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, @AuthenticationPrincipal User currentUser, Model model) {
-        likeService.checkingLikes(currentUser);
-        List<Post> posts = postRepository.findAll();
-        posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
-        model.addAttribute("posts", posts);
-
-    return userServiceImpl.takeUserData(userDetails);
-    }
+    return profileService.sendProfileData(userDetails, currentUser, model);}
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/search_user")
     public ModelAndView searchUserByName(@AuthenticationPrincipal User user, @ModelAttribute("username") SearchUserDTO searchUserDTO, Model model){
-        return profileService.searchUserByName(user, searchUserDTO, model);
-    }
+        return profileService.searchUserByName(user, searchUserDTO, model);}
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("add_post")
     public ModelAndView addPost(@ModelAttribute("post_add") PostDTO postDTO, @AuthenticationPrincipal User user){
     userServiceImpl.savePost(postDTO, user);
-        return redirect("profile");
-    }
+        return redirect("profile");}
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/change_my_information")
