@@ -33,7 +33,7 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
 
     @Override
     public void deleteProfile(UserDetails userName) {
-        User user = userServiceImpl.takeUserByUsername(userName.getUsername());
+        User user = userServiceImpl.takeUserByUserName(userName.getUsername());
         userRepository.delete(user);
     }
 

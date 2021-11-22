@@ -9,7 +9,6 @@ import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.entity.Role;
 import com.example.miroslavfacebookproject.entity.User;
-import com.example.miroslavfacebookproject.service.contract.AutoLoginService;
 import com.example.miroslavfacebookproject.service.contract.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -78,14 +77,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User takeUserByUsername(String username) throws UsernameNotFoundException {
+    public User takeUserByUserName(String username) throws UsernameNotFoundException {
         User user = userRepository.findFirstByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found; with username: " + username));
         return user;
     }
 
     public ModelAndView takeUserData(UserDetails userDetails) {
-        com.example.miroslavfacebookproject.entity.User user = takeUserByUsername(userDetails.getUsername());
+        com.example.miroslavfacebookproject.entity.User user = takeUserByUserName(userDetails.getUsername());
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(user.getEmail());
         userDTO.setUsername(user.getUsername());
@@ -98,7 +97,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     public void changeUserInformation(UserDTO userDTO, UserDetails userDetails) {
-        com.example.miroslavfacebookproject.entity.User user = takeUserByUsername(userDetails.getUsername());
+        com.example.miroslavfacebookproject.entity.User user = takeUserByUserName(userDetails.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setAge(userDTO.getAge());
         user.setUsername(userDTO.getUsername());

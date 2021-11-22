@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserService {
     User registration(RegisterDTO registerDTO);
     String resetLogin(String email, String password);
-    User takeUserByUsername(String username);
+    User takeUserByUserName(String username);
     List<UserDTO> findByName(String name);
 
 }

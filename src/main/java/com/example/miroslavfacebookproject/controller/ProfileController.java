@@ -27,8 +27,7 @@ public class ProfileController extends BaseController {
 
         this.profileService = profileService;
         this.emailSenderService = emailSenderService;
-        this.resetPasswordService = resetPasswordService;
-    }
+        this.resetPasswordService = resetPasswordService;}
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("follow_the_link")
@@ -40,8 +39,7 @@ public class ProfileController extends BaseController {
     @GetMapping("/delete")
     public ModelAndView deleteProfile(@AuthenticationPrincipal UserDetails userDetails) {
         profileService.deleteProfile(userDetails);
-        return redirect("logout");
-    }
+        return redirect("logout");}
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("/forgot_password")
@@ -53,12 +51,10 @@ public class ProfileController extends BaseController {
     @PostMapping("/forgot_password")
     public ModelAndView forgotPassword(@ModelAttribute("user") ForgotPasswordDTO forgotPasswordDTO) {
         emailSenderService.sendEmail(forgotPasswordDTO.getEmail(), forgotPasswordDTO.getPassword(), forgotPasswordDTO.getPasswordRepeat());
-        return send("follow_the_link");
-    }
+        return send("follow_the_link");}
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("reset_password/{code}")
     public ModelAndView resetPassword(@PathVariable("code") String codeReset, ModelAndView modelAndView) {
-        return resetPasswordService.resetPassword(codeReset, modelAndView);
-    }
+        return resetPasswordService.resetPassword(codeReset, modelAndView);}
 }

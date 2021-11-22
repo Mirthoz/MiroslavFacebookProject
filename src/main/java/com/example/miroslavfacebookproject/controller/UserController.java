@@ -32,8 +32,7 @@ public class UserController extends BaseController {
                           RegistrationService registrationService) {
         this.userServiceImpl = userService;
         this.profileService = profileService;
-        this.registrationService = registrationService;
-    }
+        this.registrationService = registrationService;}
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("/register")
@@ -44,8 +43,7 @@ public class UserController extends BaseController {
     @PreAuthorize("!isAuthenticated()")
     @PostMapping("/register")
     public ModelAndView register(@Validated @ModelAttribute("user") RegisterDTO registerDTO, BindingResult result, RedirectAttributes redirectAttributes) {
-    return registrationService.registration(registerDTO, result, redirectAttributes);
-    }
+    return registrationService.registration(registerDTO, result, redirectAttributes);}
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/")
@@ -85,6 +83,5 @@ public class UserController extends BaseController {
     @PostMapping("/change")
     public ModelAndView changeUserInfo(@ModelAttribute("user") UserDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) {
         userServiceImpl.changeUserInformation(userDTO, userDetails);
-        return send("login");
-    }
+        return send("login");}
 }
