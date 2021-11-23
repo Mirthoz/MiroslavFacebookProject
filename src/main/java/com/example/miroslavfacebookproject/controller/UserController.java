@@ -3,12 +3,9 @@ import com.example.miroslavfacebookproject.dto.PostDTO;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.dto.SearchUserDTO;
 import com.example.miroslavfacebookproject.dto.UserDTO;
-import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.entity.User;
-import com.example.miroslavfacebookproject.repository.PostRepository;
-import com.example.miroslavfacebookproject.repository.UserRepository;
-import com.example.miroslavfacebookproject.service.contract.AutoLoginService;
-import com.example.miroslavfacebookproject.service.contract.LikeService;
+import com.example.miroslavfacebookproject.service.contract.ProfileService;
+import com.example.miroslavfacebookproject.service.contract.RegistrationService;
 import com.example.miroslavfacebookproject.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,26 +19,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Controller
 public class UserController extends BaseController {
 
     private final UserServiceImpl userServiceImpl;
-    private final PostRepository postRepository;
-    private final UserRepository userRepository;
-    private final LikeService likeService;
-    private final AutoLoginService autoLoginService;
+    private final ProfileService profileService;
+    private final RegistrationService registrationService;
 
     @Autowired
-    public UserController(UserServiceImpl userService, PostRepository postRepository, UserRepository userRepository, LikeService likeService, AutoLoginService autoLoginService) {
+    public UserController(UserServiceImpl userService,
+                          ProfileService profileService,
+                          RegistrationService registrationService) {
         this.userServiceImpl = userService;
-        this.postRepository = postRepository;
-        this.userRepository = userRepository;
-        this.likeService = likeService;
-        this.autoLoginService = autoLoginService;
-    }
+        this.profileService = profileService;
+        this.registrationService = registrationService;}
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("/register")
@@ -52,14 +43,7 @@ public class UserController extends BaseController {
     @PreAuthorize("!isAuthenticated()")
     @PostMapping("/register")
     public ModelAndView register(@Validated @ModelAttribute("user") RegisterDTO registerDTO, BindingResult result, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()){
-            redirectAttributes.addFlashAttribute("user", registerDTO);
-            return redirect("register", "user", registerDTO);
-        }
-        userServiceImpl.registration(registerDTO);
-        autoLoginService.autoLogin(registerDTO);
-        return redirect("profile");
-    }
+    return registrationService.registration(registerDTO, result, redirectAttributes);}
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/")
@@ -76,41 +60,18 @@ public class UserController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, @AuthenticationPrincipal User currentUser, Model model) {
-        likeService.checkingLikes(currentUser);
-        List<Post> posts = postRepository.findAll();
-        posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
-        model.addAttribute("posts", posts);
-
-    return userServiceImpl.takeUserData(userDetails);
-    }
+    return profileService.sendProfileData(userDetails, currentUser, model);}
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/search_user")
     public ModelAndView searchUserByName(@AuthenticationPrincipal User user, @ModelAttribute("username") SearchUserDTO searchUserDTO, Model model){
-        List<UserDTO> findUsers = userServiceImpl.findByName(searchUserDTO.getUsername());
-        List<Post> posts = postRepository.findAll();
-        posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
-        model.addAttribute("posts", posts);
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUsername(user.getUsername());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setAge(user.getAge());
-        userDTO.setId(user.getId());
-        userDTO.setAvatarURL(user.getAvatar().getAvatarURL());
-
-        model.addAttribute("userDTO", userDTO);
-        model.addAttribute("find_users", findUsers);
-
-        return send("profile");
-    }
+        return profileService.searchUserByName(user, searchUserDTO, model);}
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("add_post")
     public ModelAndView addPost(@ModelAttribute("post_add") PostDTO postDTO, @AuthenticationPrincipal User user){
     userServiceImpl.savePost(postDTO, user);
-        return redirect("profile");
-    }
+        return redirect("profile");}
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/change_my_information")
@@ -122,6 +83,5 @@ public class UserController extends BaseController {
     @PostMapping("/change")
     public ModelAndView changeUserInfo(@ModelAttribute("user") UserDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) {
         userServiceImpl.changeUserInformation(userDTO, userDetails);
-        return send("login");
-    }
+        return send("login");}
 }

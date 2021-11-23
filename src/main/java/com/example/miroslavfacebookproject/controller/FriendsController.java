@@ -20,13 +20,9 @@ import java.util.Set;
 public class FriendsController extends BaseController{
 
     private final FriendService friendService;
-    private final FriendRequestRepository friendRequestRepository;
-    private final UserFriendsRepository userFriendsRepository;
 
-    public FriendsController(FriendService friendService, FriendRequestRepository friendRequestRepository, UserFriendsRepository userFriendsRepository) {
+    public FriendsController(FriendService friendService) {
         this.friendService = friendService;
-        this.friendRequestRepository = friendRequestRepository;
-        this.userFriendsRepository = userFriendsRepository;
     }
 
     @PreAuthorize("isAuthenticated()")

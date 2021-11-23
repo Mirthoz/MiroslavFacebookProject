@@ -41,11 +41,11 @@
         crossorigin="anonymous"></script>
 
 <div class="row">
-    <div class="col-lg-6 mt-3" id="user_info">
+    <div class="col-lg-4 mt-3" id="user_info">
         <div class="container">
             <img class="img-thumbnail"
                  th:src="${userDTO.getAvatarURL()}"
-                 alt="ProfileImg" width="300" height="400">
+                 alt="ProfileImg" width="480" height="640">
             <br>
             <div class="btn-group">
                 <button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
@@ -61,9 +61,9 @@
             </div>
 
             <br>
-            <h1 th:text="${userDTO.getUsername()} + ' ' + ${ userDTO.getSurname()}"></h1>
-            <h3 th:text="${userDTO.getEmail()}"></h3>
-            <h3 th:text="${userDTO.getAge()}"></h3>
+            <h2 th:text="'Name: ' + ${userDTO.getUsername()} + ' ' + ${ userDTO.getSurname()}"></h2>
+            <h3 th:text="'Email: ' + ${userDTO.getEmail()}"></h3>
+            <h3 th:text="'Age: ' + ${userDTO.getAge()}"></h3>
             <br>
             <a href="/change_my_information" class="btn btn-info">Change my information</a>
             <br>
@@ -74,53 +74,51 @@
     </div>
     <style>
 
+        #user_info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            left: 5%;
+        }
+
         #search_user {
-            top: 20%;
-            left: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: auto;
+            top: 2%;
         }
 
         #form {
             position: absolute;
-            top: 60%;
-            left: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 2%;
+        }
+
+        #users {
+            position: absolute;
+            top: 20%;
         }
 
         #form_add_post {
-            position: absolute;
-            top: 90%;
-            left: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 2%;
         }
 
         #wall {
-            position: absolute;
-            top: 115%;
-            left: 5%;
+            display: flex;
+            flex-direction: column;
+            top: 5%;
         }
 
     </style>
-    <div class="container col-lg-4 mt-3 mb-5" id="search_user">
-        <div id="form">
-            <form method="post" action="/search_user" th:object="${find_users}">
-                <h1 class="h3 mb-3 fw-normal">Search user</h1>
 
-                <div class="form-floating">
-                    <input type="text" name="username" class="form-control" placeholder="Name">
-                </div>
-            </form>
-            <div th:each="el : ${find_users}" class="alert alert-info mt-2">
-                <div class="container">
-                    <h3 th:text="${el.getUsername()}"/>
-                    <form method="post" name="addFriend" action="addFriend">
-                        <input type="number" name="friendId" th:value="${el.id}" style="display: none">
-                        <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Add friend</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div>
+    <div id="wall" class="col-lg-4 mt-3">
         <div class="container" id="form_add_post">
             <form method="post" action="/add_post">
                 <h1 class="h3 mb-3 fw-normal mt-3">Add new story</h1>
@@ -132,8 +130,8 @@
             <br>
         </div>
 
-        <div class="container ml-3" id="wall">
-            <H1>My stories</H1>
+        <div class="container ml-3">
+            <H1 class="mt-3">My stories</H1>
             <div th:each="el : ${posts}" class="alert alert-info mt-2">
                 <div><img
                         src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/001/217/245/datas/original.png">
@@ -158,6 +156,29 @@
                         <br>
                         <h3 th:text="${el.getDate()}"/>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mt-3" id="search_user">
+        <div id="form">
+            <form method="post" action="/search_user" th:object="${find_users}">
+                <h1 class="h3 mb-3 fw-normal">Search user</h1>
+
+                <div class="form-floating">
+                    <input type="text" name="username" class="form-control" placeholder="Name">
+                </div>
+            </form>
+        </div>
+        <div id="users">
+            <div th:each="el : ${find_users}" class="alert alert-info">
+                <div class="container">
+                    <h3 th:text="${el.getUsername()} + ' ' + ${el.getSurname()}"/>
+                    <form method="post" name="addFriend" action="addFriend">
+                        <input type="number" name="friendId" th:value="${el.id}" style="display: none">
+                        <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Add friend</button>
+                    </form>
                 </div>
             </div>
         </div>
