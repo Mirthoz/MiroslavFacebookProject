@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class PostDTO {
     private String postText;
-    private MultipartFile postImage;
+    private MultipartFile postImage = null;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     private Set<Like> likes;

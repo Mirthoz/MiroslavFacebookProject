@@ -117,15 +117,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return null;
     }
 
-    public void savePost(PostDTO postDTO, User user){
-        Date date = new Date();
-        Post post = new Post();
-        post.setText(postDTO.getPostText());
-        post.setPoster(user);
-        post.setDate(date);
-        postRepository.save(post);
-    }
-
     public List<UserDTO> findByName(String name){
         List<User> users = userRepository.findByUsernameContainingIgnoreCase(name.toLowerCase(Locale.ROOT));
         List<UserDTO> userDTOS = new ArrayList<>();
