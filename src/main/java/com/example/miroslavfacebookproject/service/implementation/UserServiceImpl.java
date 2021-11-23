@@ -59,11 +59,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public String resetLogin(String email, String password) {
-        return null;
-    }
-
-    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findFirstByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found; with email: " + email));
