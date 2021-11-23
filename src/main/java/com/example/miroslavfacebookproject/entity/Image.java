@@ -18,6 +18,10 @@ public class Image {
 
     public Image(){}
 
+    public Image(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     private User imageHolder;
 

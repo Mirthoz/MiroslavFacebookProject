@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+
 @Controller
 public class PostController extends BaseController{
     private final PostService postService;
@@ -20,7 +22,7 @@ public class PostController extends BaseController{
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("add_post")
-    public ModelAndView addPost(@ModelAttribute("post_add") PostDTO postDTO, @AuthenticationPrincipal User user){
+    public ModelAndView addPost(@ModelAttribute("post_add") PostDTO postDTO, @AuthenticationPrincipal User user) throws IOException {
         postService.savePost(postDTO, user);
         return redirect("profile");}
 }

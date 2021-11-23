@@ -24,6 +24,9 @@ public class Post {
     @Column(name = "liked")
     private int meLiked;
 
+    @Column(name = "post_image_url")
+    private String postImageURL;
+
     public Post(){}
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -97,5 +100,13 @@ public class Post {
 
     public void setMeLiked(int meLiked) {
         this.meLiked = meLiked;
+    }
+
+    public String getPostImageURL() {
+        return postImageURL;
+    }
+
+    public void setPostImageURL(String postImageURL) {
+        this.postImageURL = postImageURL;
     }
 }

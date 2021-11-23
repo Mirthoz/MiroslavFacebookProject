@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class PostDTO {
     private String postText;
-    private String postImageURL;
+    private MultipartFile postImage = null;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     private Set<Like> likes;
@@ -24,6 +24,13 @@ public class PostDTO {
         this.postText = postText;
     }
 
+    public MultipartFile getPostImage() {
+        return postImage;
+    }
+
+    public void setPostImage(MultipartFile postImage) {
+        this.postImage = postImage;
+    }
 
     public Set<Like> getLikes() {
         return likes;
@@ -31,13 +38,5 @@ public class PostDTO {
 
     public void setLikes(Set<Like> likes) {
         this.likes = likes;
-    }
-
-    public String getPostImageURL() {
-        return postImageURL;
-    }
-
-    public void setPostImageURL(String postImageURL) {
-        this.postImageURL = postImageURL;
     }
 }
