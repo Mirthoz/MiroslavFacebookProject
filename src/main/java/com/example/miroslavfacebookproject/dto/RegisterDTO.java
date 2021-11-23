@@ -15,7 +15,6 @@ public class RegisterDTO {
     private String surname;
 
     @NotBlank
-    @Min(14)
     private String age;
 
     @NotBlank

@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User registration(RegisterDTO registerDTO) {
+        if (Integer.parseInt(registerDTO.getAge()) <= 14) throw new IllegalArgumentException("User must be over 14 years old");
         if (registerDTO.getPasswordRepeat() == null || !registerDTO.getPassword().equals(registerDTO.getPasswordRepeat()))
             throw new IllegalArgumentException("Password do not match");
 
