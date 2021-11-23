@@ -23,15 +23,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController extends BaseController {
 
     private final UserServiceImpl userServiceImpl;
-    private final ProfileService profileService;
     private final RegistrationService registrationService;
 
     @Autowired
     public UserController(UserServiceImpl userService,
-                          ProfileService profileService,
                           RegistrationService registrationService) {
         this.userServiceImpl = userService;
-        this.profileService = profileService;
         this.registrationService = registrationService;}
 
     @PreAuthorize("!isAuthenticated()")
@@ -45,29 +42,11 @@ public class UserController extends BaseController {
     public ModelAndView register(@Validated @ModelAttribute("user") RegisterDTO registerDTO, BindingResult result, RedirectAttributes redirectAttributes) {
     return registrationService.registration(registerDTO, result, redirectAttributes);}
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/")
-    public ModelAndView loginProfile(){
-        return redirect("profile");
-    }
-
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("/login")
     public ModelAndView login() {
         return send("login");
     }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/profile")
-    public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, @AuthenticationPrincipal User currentUser, Model model) {
-    return profileService.sendProfileData(userDetails, currentUser, model);}
-
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/search_user")
-    public ModelAndView searchUserByName(@AuthenticationPrincipal User user, @ModelAttribute("username") SearchUserDTO searchUserDTO, Model model){
-        return profileService.searchUserByName(user, searchUserDTO, model);}
-
-
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/change_my_information")

@@ -1,10 +1,7 @@
 package com.example.miroslavfacebookproject.service.implementation;
-import com.example.miroslavfacebookproject.dto.PostDTO;
 import com.example.miroslavfacebookproject.dto.UserDTO;
 import com.example.miroslavfacebookproject.entity.Avatar;
-import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.repository.AvatarRepository;
-import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.entity.Role;
@@ -17,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.*;
 
 @Service
@@ -26,20 +22,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleServiceImpl roleService;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final PostRepository postRepository;
     private final AvatarRepository avatarRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            RoleServiceImpl roleService,
                            BCryptPasswordEncoder passwordEncoder,
-                           PostRepository postRepository,
                            AvatarRepository avatarRepository) {
 
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
-        this.postRepository = postRepository;
         this.avatarRepository = avatarRepository;
     }
 

@@ -23,6 +23,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     public String userPassword;
     public String userRepeatPassword;
 
+    @Override
     public RegisterDTO takeRegisterDTO(){
         RegisterDTO registerDTO = new RegisterDTO();
         registerDTO.setEmail(userEmail);
