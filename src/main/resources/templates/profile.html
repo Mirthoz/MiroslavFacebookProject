@@ -133,8 +133,8 @@
         <div class="container ml-3">
             <H1 class="mt-3">My stories</H1>
             <div th:each="el : ${posts}" class="alert alert-info mt-2">
-                <div><img
-                        src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/001/217/245/datas/original.png">
+                <div>
+<!--                    <img src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/001/217/245/datas/original.png">-->
                     <h3 th:text="${el.text}"/>
 
                     <div class="like-form" style="display: block">

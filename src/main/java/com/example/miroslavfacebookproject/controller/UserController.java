@@ -67,11 +67,7 @@ public class UserController extends BaseController {
     public ModelAndView searchUserByName(@AuthenticationPrincipal User user, @ModelAttribute("username") SearchUserDTO searchUserDTO, Model model){
         return profileService.searchUserByName(user, searchUserDTO, model);}
 
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("add_post")
-    public ModelAndView addPost(@ModelAttribute("post_add") PostDTO postDTO, @AuthenticationPrincipal User user){
-    userServiceImpl.savePost(postDTO, user);
-        return redirect("profile");}
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/change_my_information")
