@@ -23,5 +23,6 @@ public class LikesController extends BaseController {
     @PostMapping("/likePost")
     public ModelAndView likePost(@ModelAttribute LikeDTO likeDTO, @AuthenticationPrincipal User user) {
         likeService.likePost(likeDTO, user);
-        return redirect("profile");}
+        return redirect("profile");
+    }
 }

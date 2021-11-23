@@ -18,7 +18,8 @@ public class UserFriend {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    public UserFriend(){}
+    public UserFriend() {
+    }
 
     public Long getId() {
         return id;

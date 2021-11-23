@@ -9,7 +9,6 @@ import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.service.contract.FriendService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.Set;
 
 @Service
@@ -28,7 +27,7 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public void addFriendRequest(Long friendId, Long userId) {
         FriendRequest checkFriendRequest = friendRequestRepository.findFirstByReceiverIdAndRequesterId(friendId, userId);
-        if (checkFriendRequest == null){
+        if (checkFriendRequest == null) {
             FriendRequest friendRequest = new FriendRequest();
             friendRequest.setReceiver(userRepository.findUserById(friendId));
             friendRequest.setRequester(userRepository.findUserById(userId));
@@ -53,14 +52,14 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public void deleteFriend(Long friendId) {
         UserFriend userFriend = userFriendsRepository.findFirstUserFriendByFriendId(userRepository.findUserById(friendId));
-    userFriendsRepository.delete(userFriend);
+        userFriendsRepository.delete(userFriend);
     }
 
     @Override
     public ModelAndView showFriends(User currentUser, ModelAndView modelAndView) {
         Set<FriendRequest> friendRequests = friendRequestRepository.findAllByReceiverId(currentUser.getId());
         Set<UserFriend> userFriends = userFriendsRepository.findAllByUserIdId(currentUser.getId());
-        if (userFriends.isEmpty()){
+        if (userFriends.isEmpty()) {
             userFriends = userFriendsRepository.findAllByFriendIdId(currentUser.getId());
         }
         modelAndView.addObject("userFriends", userFriends);

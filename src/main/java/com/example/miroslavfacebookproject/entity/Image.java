@@ -14,9 +14,10 @@ public class Image {
     private String imageUrl;
 
     @Column(name = "status")
-    private Integer status; //1- only for user, 2- for friends and user, 3- for all
+    private Integer status;
 
-    public Image(){}
+    public Image() {
+    }
 
     public Image(String imageUrl) {
         this.imageUrl = imageUrl;

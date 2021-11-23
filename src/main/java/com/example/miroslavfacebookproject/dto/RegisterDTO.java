@@ -1,6 +1,5 @@
 package com.example.miroslavfacebookproject.dto;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 public class RegisterDTO {

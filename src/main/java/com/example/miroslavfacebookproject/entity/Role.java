@@ -1,7 +1,6 @@
 package com.example.miroslavfacebookproject.entity;
 
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
 
 @Entity
@@ -15,7 +14,8 @@ public class Role implements GrantedAuthority {
     @Column(name = "authority", nullable = false, unique = true)
     private String authority;
 
-    public Role() {}
+    public Role() {
+    }
 
     public Long getId() {
         return id;

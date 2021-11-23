@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class ForgottenPasswordController extends BaseController{
+public class ForgottenPasswordController extends BaseController {
     private final ResetPasswordService resetPasswordService;
     private final EmailSenderService emailSenderService;
 
@@ -30,13 +30,15 @@ public class ForgottenPasswordController extends BaseController{
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("reset_password/{code}")
     public ModelAndView resetPassword(@PathVariable("code") String codeReset, ModelAndView modelAndView) {
-        return resetPasswordService.resetPassword(codeReset, modelAndView);}
+        return resetPasswordService.resetPassword(codeReset, modelAndView);
+    }
 
     @PreAuthorize("!isAuthenticated()")
     @PostMapping("/forgot_password")
     public ModelAndView forgotPassword(@ModelAttribute("user") ForgotPasswordDTO forgotPasswordDTO) {
         emailSenderService.sendEmail(forgotPasswordDTO.getEmail(), forgotPasswordDTO.getPassword(), forgotPasswordDTO.getPasswordRepeat());
-        return send("follow_the_link");}
+        return send("follow_the_link");
+    }
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("follow_the_link")

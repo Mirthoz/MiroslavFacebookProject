@@ -8,7 +8,6 @@ import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.service.contract.PostService;
 import com.example.miroslavfacebookproject.service.contract.UploadImageService;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.Date;
 

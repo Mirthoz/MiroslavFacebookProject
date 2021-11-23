@@ -18,7 +18,8 @@ public class FriendRequest {
     @JoinColumn(name = "receiver_id")
     private User receiver;
 
-    public FriendRequest() {}
+    public FriendRequest() {
+    }
 
     public Long getId() {
         return id;

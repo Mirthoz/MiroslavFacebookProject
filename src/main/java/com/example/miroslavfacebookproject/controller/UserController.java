@@ -39,7 +39,8 @@ public class UserController extends BaseController {
     @PreAuthorize("!isAuthenticated()")
     @PostMapping("/register")
     public ModelAndView register(@Validated @ModelAttribute("user") RegisterDTO registerDTO, BindingResult result, RedirectAttributes redirectAttributes) {
-    return registrationService.registration(registerDTO, result, redirectAttributes);}
+        return registrationService.registration(registerDTO, result, redirectAttributes);
+    }
 
     @PreAuthorize("!isAuthenticated()")
     @GetMapping("/login")
@@ -49,8 +50,8 @@ public class UserController extends BaseController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/change_my_information")
-    public ModelAndView changeUserData(){
-       return send("change_my_information");
+    public ModelAndView changeUserData() {
+        return send("change_my_information");
     }
 
     @PreAuthorize("isAuthenticated()")

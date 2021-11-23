@@ -7,7 +7,6 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -57,6 +56,7 @@ public class UploadImageServiceImpl extends BaseController implements UploadImag
         image = fileName;
         return tempFile;
     }
+
     @Override
     public Object uploadImage(MultipartFile multipartFile) {
 

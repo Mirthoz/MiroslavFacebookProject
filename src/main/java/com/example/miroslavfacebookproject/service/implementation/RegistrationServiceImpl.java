@@ -22,13 +22,12 @@ public class RegistrationServiceImpl extends BaseController implements Registrat
     @Override
     public ModelAndView registration(RegisterDTO registerDTO, BindingResult result, RedirectAttributes redirectAttributes) {
 
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("user", registerDTO);
             return redirect("register", "user", registerDTO);
         }
         userServiceImpl.registration(registerDTO);
         autoLoginService.autoLogin(registerDTO);
         return redirect("profile");
-
     }
 }

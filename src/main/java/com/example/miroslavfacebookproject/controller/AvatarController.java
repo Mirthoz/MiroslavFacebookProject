@@ -14,13 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 
 @Controller
-public class AvatarController extends BaseController{
+public class AvatarController extends BaseController {
     private final UploadImageService uploadImageService;
     private final AvatarService avatarService;
 
     public AvatarController(UploadImageService uploadImageService, AvatarService avatarService) {
         this.uploadImageService = uploadImageService;
-
         this.avatarService = avatarService;
     }
 

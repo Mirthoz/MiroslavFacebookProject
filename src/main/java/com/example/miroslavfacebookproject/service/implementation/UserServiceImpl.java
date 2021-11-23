@@ -1,4 +1,5 @@
 package com.example.miroslavfacebookproject.service.implementation;
+import com.example.miroslavfacebookproject.component.Constants;
 import com.example.miroslavfacebookproject.dto.UserDTO;
 import com.example.miroslavfacebookproject.entity.Avatar;
 import com.example.miroslavfacebookproject.repository.AvatarRepository;
@@ -23,22 +24,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final RoleServiceImpl roleService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final AvatarRepository avatarRepository;
+    private final Constants constants;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            RoleServiceImpl roleService,
                            BCryptPasswordEncoder passwordEncoder,
-                           AvatarRepository avatarRepository) {
+                           AvatarRepository avatarRepository, Constants constants) {
 
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.avatarRepository = avatarRepository;
+        this.constants = constants;
     }
 
     @Override
     public User registration(RegisterDTO registerDTO) {
-        if (Integer.parseInt(registerDTO.getAge()) <= 14) throw new IllegalArgumentException("User must be over 14 years old");
+        if (Integer.parseInt(registerDTO.getAge()) <= constants.MIN_AGE) throw new IllegalArgumentException("User must be over 14 years old");
         if (registerDTO.getPasswordRepeat() == null || !registerDTO.getPassword().equals(registerDTO.getPasswordRepeat()))
             throw new IllegalArgumentException("Password do not match");
 
@@ -90,6 +93,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setEmail(userDTO.getEmail());
         user.setAge(userDTO.getAge());
         user.setUsername(userDTO.getUsername());
+        user.setSurname(userDTO.getSurname());
         userRepository.save(user);
     }
 

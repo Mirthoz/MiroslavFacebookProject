@@ -1,13 +1,13 @@
 package com.example.miroslavfacebookproject.dto;
 
 import com.example.miroslavfacebookproject.entity.AlbumImage;
-
 import java.util.List;
 
 public class AlbumImagesDTO {
-    List <AlbumImage> albumImages;
+    List<AlbumImage> albumImages;
 
-    public AlbumImagesDTO(){}
+    public AlbumImagesDTO() {
+    }
 
     public List<AlbumImage> getAlbumImages() {
         return albumImages;
