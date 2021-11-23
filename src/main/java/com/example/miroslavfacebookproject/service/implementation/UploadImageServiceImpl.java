@@ -25,8 +25,8 @@ public class UploadImageServiceImpl extends BaseController implements UploadImag
     private static String TEMP_URL = "http://localhost:8080/profile";
     private static final String KEY = "C:\\Users\\PC\\IdeaProjects\\MiroslavFacebookProject\\src\\main\\resources\\serviceAccountKey.json";
 
-    public String imageUrl;
-    public String image;
+    protected String imageUrl;
+    protected String image;
 
     private String uploadFile(File file, String fileName) throws IOException {
         BlobId blobId = BlobId.of("facebookproject-3ac7a.appspot.com", fileName);

@@ -30,7 +30,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserServiceImpl(UserRepository userRepository,
                            RoleServiceImpl roleService,
                            BCryptPasswordEncoder passwordEncoder,
-                           AvatarRepository avatarRepository, Constants constants) {
+                           AvatarRepository avatarRepository,
+                           Constants constants) {
 
         this.userRepository = userRepository;
         this.roleService = roleService;
