@@ -40,9 +40,6 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
     public ModelAndView searchUserByName(User user, SearchUserDTO searchUserDTO, Model model) {
 
         List<UserDTO> findUsers = userServiceImpl.findByName(searchUserDTO.getUsername());
-        List<Post> posts = postRepository.findAll();
-        posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
-        model.addAttribute("posts", posts);
 
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(user.getUsername());

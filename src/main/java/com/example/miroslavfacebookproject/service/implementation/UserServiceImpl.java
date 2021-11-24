@@ -7,6 +7,7 @@ import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.entity.Role;
 import com.example.miroslavfacebookproject.entity.User;
+import com.example.miroslavfacebookproject.service.contract.RoleService;
 import com.example.miroslavfacebookproject.service.contract.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,14 +22,14 @@ import java.util.*;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
-    private final RoleServiceImpl roleService;
+    private final RoleService roleService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final AvatarRepository avatarRepository;
     private final Constants constants;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
-                           RoleServiceImpl roleService,
+                           RoleService roleService,
                            BCryptPasswordEncoder passwordEncoder,
                            AvatarRepository avatarRepository,
                            Constants constants) {
