@@ -1,7 +1,6 @@
 package com.example.miroslavfacebookproject.entity;
 
 import javax.persistence.*;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 

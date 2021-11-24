@@ -1,11 +1,11 @@
 package com.example.miroslavfacebookproject.service.implementation;
+
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.service.contract.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
 import java.util.UUID;
 
 @Service
@@ -23,7 +23,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     public String userPassword;
     public String userRepeatPassword;
 
-    public RegisterDTO takeRegisterDTO(){
+    @Override
+    public RegisterDTO takeRegisterDTO() {
         RegisterDTO registerDTO = new RegisterDTO();
         registerDTO.setEmail(userEmail);
         registerDTO.setPassword(userPassword);
@@ -31,7 +32,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     }
 
     @Override
-    public void sendEmail(String email, String password, String passwordRepeat){
+    public void sendEmail(String email, String password, String passwordRepeat) {
         SimpleMailMessage message = new SimpleMailMessage();
         String uuid = generateCode();
         message.setFrom("${spring.mail.username}");
@@ -45,7 +46,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     }
 
     @Override
-    public String generateCode(){
+    public String generateCode() {
         UUID uuid = UUID.randomUUID();
         resetCode = uuid.toString();
         return uuid.toString();

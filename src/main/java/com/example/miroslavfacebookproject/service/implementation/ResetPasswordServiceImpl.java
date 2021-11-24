@@ -1,4 +1,5 @@
 package com.example.miroslavfacebookproject.service.implementation;
+
 import com.example.miroslavfacebookproject.controller.BaseController;
 import com.example.miroslavfacebookproject.service.contract.AutoLoginService;
 import com.example.miroslavfacebookproject.service.contract.ResetPasswordService;
@@ -16,17 +17,18 @@ public class ResetPasswordServiceImpl extends BaseController implements ResetPas
         this.userServiceImpl = userServiceImpl;
         this.autoLoginService = autoLoginService;
     }
-    @Override
-    public ModelAndView resetPassword(String code, ModelAndView modelAndView){
-        boolean comparisonOfCodes = code.equals(emailSenderService.resetCode);
-        if (comparisonOfCodes){
-        userServiceImpl.resetUserPassword(emailSenderService.userEmail,
-                emailSenderService.userPassword,
-                emailSenderService.userRepeatPassword);
-        autoLoginService.autoLogin(emailSenderService.takeRegisterDTO());
 
-        return redirect("profile");
-    }
+    @Override
+    public ModelAndView resetPassword(String code, ModelAndView modelAndView) {
+        boolean comparisonOfCodes = code.equals(emailSenderService.resetCode);
+        if (comparisonOfCodes) {
+            userServiceImpl.resetUserPassword(emailSenderService.userEmail,
+                    emailSenderService.userPassword,
+                    emailSenderService.userRepeatPassword);
+            autoLoginService.autoLogin(emailSenderService.takeRegisterDTO());
+
+            return redirect("profile");
+        }
         return redirect("register");
     }
 }

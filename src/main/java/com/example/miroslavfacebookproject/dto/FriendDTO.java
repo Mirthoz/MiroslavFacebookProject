@@ -4,7 +4,8 @@ public class FriendDTO {
 
     private Long friendId;
 
-    public FriendDTO(){}
+    public FriendDTO() {
+    }
 
     public Long getFriendId() {
         return friendId;

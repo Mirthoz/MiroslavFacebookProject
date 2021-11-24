@@ -1,14 +1,13 @@
 package com.example.miroslavfacebookproject.service.implementation;
-import com.example.miroslavfacebookproject.dto.PostDTO;
+import com.example.miroslavfacebookproject.component.Constants;
 import com.example.miroslavfacebookproject.dto.UserDTO;
 import com.example.miroslavfacebookproject.entity.Avatar;
-import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.repository.AvatarRepository;
-import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.dto.RegisterDTO;
 import com.example.miroslavfacebookproject.entity.Role;
 import com.example.miroslavfacebookproject.entity.User;
+import com.example.miroslavfacebookproject.service.contract.RoleService;
 import com.example.miroslavfacebookproject.service.contract.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,34 +16,34 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
-    private final RoleServiceImpl roleService;
+    private final RoleService roleService;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final PostRepository postRepository;
     private final AvatarRepository avatarRepository;
+    private final Constants constants;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
-                           RoleServiceImpl roleService,
+                           RoleService roleService,
                            BCryptPasswordEncoder passwordEncoder,
-                           PostRepository postRepository,
-                           AvatarRepository avatarRepository) {
+                           AvatarRepository avatarRepository,
+                           Constants constants) {
 
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
-        this.postRepository = postRepository;
         this.avatarRepository = avatarRepository;
+        this.constants = constants;
     }
 
     @Override
     public User registration(RegisterDTO registerDTO) {
+        if (Integer.parseInt(registerDTO.getAge()) <= constants.MIN_AGE) throw new IllegalArgumentException("User must be over 14 years old");
         if (registerDTO.getPasswordRepeat() == null || !registerDTO.getPassword().equals(registerDTO.getPasswordRepeat()))
             throw new IllegalArgumentException("Password do not match");
 
@@ -62,11 +61,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setRoles(roles);
         userRepository.save(user);
         return user;
-    }
-
-    @Override
-    public String resetLogin(String email, String password) {
-        return null;
     }
 
     @Override
@@ -101,6 +95,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setEmail(userDTO.getEmail());
         user.setAge(userDTO.getAge());
         user.setUsername(userDTO.getUsername());
+        user.setSurname(userDTO.getSurname());
         userRepository.save(user);
     }
 

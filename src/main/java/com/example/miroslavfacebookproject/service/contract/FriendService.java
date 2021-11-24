@@ -6,8 +6,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public interface FriendService {
+
     void addFriendRequest(Long friendId, Long user);
+
     void addFriend(Long friendId, Long user);
+
     void deleteFriend(Long friendId);
+
     ModelAndView showFriends(User currentUser, ModelAndView modelAndView);
 }

@@ -6,7 +6,8 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 public class LikeDTO {
-    public LikeDTO(){}
+    public LikeDTO() {
+    }
 
     private Long postId;
 

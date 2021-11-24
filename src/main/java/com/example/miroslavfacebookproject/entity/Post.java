@@ -27,7 +27,8 @@ public class Post {
     @Column(name = "post_image_url")
     private String postImageURL;
 
-    public Post(){}
+    public Post() {
+    }
 
     @OneToOne(fetch = FetchType.EAGER)
     private Image image;

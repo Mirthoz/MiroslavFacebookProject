@@ -2,7 +2,6 @@ package com.example.miroslavfacebookproject.dto;
 
 import com.example.miroslavfacebookproject.entity.Like;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.Set;

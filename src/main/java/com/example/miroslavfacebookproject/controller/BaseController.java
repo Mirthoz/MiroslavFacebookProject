@@ -8,13 +8,7 @@ public class BaseController {
         return new ModelAndView(viewName);
     }
 
-    protected ModelAndView send(String viewName, String objectName, Object object) {
-        ModelAndView modelAndView = new ModelAndView(viewName + ".html");
-        modelAndView.addObject(objectName, object);
-        return modelAndView;
-    }
-
-    protected ModelAndView redirect(String endpoint){
+    protected ModelAndView redirect(String endpoint) {
         return new ModelAndView("redirect:/" + endpoint);
     }
 

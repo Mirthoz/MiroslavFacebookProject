@@ -5,7 +5,8 @@ public class ForgotPasswordDTO {
     private String password;
     private String passwordRepeat;
 
-    ForgotPasswordDTO(){}
+    ForgotPasswordDTO() {
+    }
 
     public String getEmail() {
         return email;

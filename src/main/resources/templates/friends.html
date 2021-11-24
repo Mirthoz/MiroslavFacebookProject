@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org " xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org ">
 <head>
     <title>Friends</title>
     <meta charset="utf-8">
@@ -57,30 +57,30 @@
 </style>
 
 <div id="userFriends">
-<h1>Friends:</h1>
-<div th:each="el : ${userFriends}" class="alert alert-info mt-2">
-    <div class="container">
-        <h3 th:text="${el.getFriendId().getUsername()}"/>
-        <form id="formFriends" method="post" name="deleteFriend" action="deleteFriend">
-            <input type="number" name="friendId" th:value="${el.getFriendId().getId()}" style="display: none">
-            <button class="w-10 btn btn-lg btn-danger ml-2" type="submit">Delete</button>
-        </form>
+    <h1>Friends:</h1>
+    <div th:each="el : ${userFriends}" class="alert alert-info mt-2">
+        <div class="container">
+            <h3 th:text="${el.getFriendId().getUsername()}"/>
+            <form id="formFriends" method="post" name="deleteFriend" action="deleteFriend">
+                <input type="number" name="friendId" th:value="${el.getFriendId().getId()}" style="display: none">
+                <button class="w-10 btn btn-lg btn-danger ml-2" type="submit">Delete</button>
+            </form>
+        </div>
     </div>
-</div>
 </div>
 
 
 <div id="friendsRequests">
     <h1>Requests:</h1>
-<div th:each="el : ${friendRequests}" class="alert alert-info mt-2">
-    <div class="container">
-        <h3 th:text="${el.getRequester().getUsername()}"/>
-        <form id="form" method="post" name="addAsFriend" action="addAsFriend">
-            <input type="number" name="friendId" th:value="${el.getRequester().getId()}" style="display: none">
-            <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Add</button>
-        </form>
+    <div th:each="el : ${friendRequests}" class="alert alert-info mt-2">
+        <div class="container">
+            <h3 th:text="${el.getRequester().getUsername()}"/>
+            <form id="form" method="post" name="addAsFriend" action="addAsFriend">
+                <input type="number" name="friendId" th:value="${el.getRequester().getId()}" style="display: none">
+                <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Add</button>
+            </form>
+        </div>
     </div>
-</div>
 </div>
 
 </body>

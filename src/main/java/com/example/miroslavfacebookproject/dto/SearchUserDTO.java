@@ -3,12 +3,11 @@ package com.example.miroslavfacebookproject.dto;
 public class SearchUserDTO {
 
     private Long id;
-
     private String username;
-
     private String surname;
 
-    SearchUserDTO(){}
+    SearchUserDTO() {
+    }
 
     public String getUsername() {
         return username;

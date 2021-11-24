@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface LikeService {
+
     void likePost(LikeDTO likeDTO, User currentUser);
+
     void checkingLikes(User currentUser);
 
 }

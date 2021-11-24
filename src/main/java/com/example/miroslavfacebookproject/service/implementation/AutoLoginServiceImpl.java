@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 
 @Service
 public class AutoLoginServiceImpl implements AutoLoginService {
-    @Resource(name="authenticationManager")
+    @Resource(name = "authenticationManager")
     private AuthenticationManager authManager;
 
     @Override

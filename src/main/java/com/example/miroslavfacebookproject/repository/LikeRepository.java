@@ -10,6 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
     boolean existsByPostAndUser(Post post, User user);
-    Long existsByUserId(User userId);
     Like findFirstByPostAndUser(Post post, User currentUser);
 }

@@ -1,6 +1,5 @@
 package com.example.miroslavfacebookproject.dto;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 public class RegisterDTO {
@@ -15,7 +14,6 @@ public class RegisterDTO {
     private String surname;
 
     @NotBlank
-    @Min(14)
     private String age;
 
     @NotBlank

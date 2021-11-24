@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org " xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org ">
 <head>
     <title>Profile</title>
     <meta charset="utf-8">
@@ -169,6 +169,7 @@
                             </div>
                         </form>
                         <br>
+                        <h4 th:text="'Poster:' + ' ' + ${el.getPoster().getUsername()} + ' ' + ${el.getPoster().getSurname()}"></h4>
                         <h3 th:text="${el.getDate()}"/>
                     </div>
                 </div>

@@ -7,6 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public interface AlbumImageService {
+
     void addAlbumImage(User currentUser, ImageUploadDTO imageUploadDTO);
+
     ModelAndView takeAlbumImages(User currentUser);
 }

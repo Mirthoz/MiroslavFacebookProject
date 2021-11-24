@@ -23,14 +23,14 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public void likePost(LikeDTO likeDTO, User currentUser) {
         Post post = postRepository.findFirstById(likeDTO.getPostId());
-        if (!likeRepository.existsByPostAndUser(post, currentUser)){
+        if (!likeRepository.existsByPostAndUser(post, currentUser)) {
             Like like = new Like();
             like.setPost(post);
             like.setUser(currentUser);
             likeRepository.save(like);
             post.getLikes().add(like);
             postRepository.save(post);
-        }else {
+        } else {
             Like like = likeRepository.findFirstByPostAndUser(post, currentUser);
             post.getLikes().remove(like);
             likeRepository.delete(like);
@@ -39,17 +39,15 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void checkingLikes(User currentUser) {
-        postRepository.findAll().stream().forEach(x -> markLike(x.getId(), currentUser));
+        postRepository.findAll().forEach(x -> markLike(x.getId(), currentUser));
     }
 
-    protected void markLike(Long id, User currentUser){
+    protected void markLike(Long id, User currentUser) {
         Post post = postRepository.findFirstById(id);
         Like like = likeRepository.findFirstByPostAndUser(post, currentUser);
-        if (like != null){
+        if (like != null) {
             postRepository.findFirstById(id).setMeLiked(0);
-        }else
+        } else
             postRepository.findFirstById(id).setMeLiked(1);
     }
-
-
 }

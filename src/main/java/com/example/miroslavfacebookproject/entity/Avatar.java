@@ -12,7 +12,8 @@ public class Avatar {
     @Column(name = "avatar_url")
     private String avatarURL = "https://firebasestorage.googleapis.com/v0/b/facebookproject-3ac7a.appspot.com/o/64098da3-c03e-4d39-b7ed-51a1032bae6f.jpg?alt=media&token=64098da3-c03e-4d39-b7ed-51a1032bae6f.jpg";
 
-    public Avatar(){}
+    public Avatar() {
+    }
 
     public Long getId() {
         return id;

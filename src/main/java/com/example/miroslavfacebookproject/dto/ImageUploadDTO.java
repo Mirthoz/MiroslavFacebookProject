@@ -6,7 +6,8 @@ public class ImageUploadDTO {
     private MultipartFile image;
     public String imageDescription;
 
-    ImageUploadDTO(){}
+    ImageUploadDTO() {
+    }
 
     public MultipartFile getImage() {
         return image;

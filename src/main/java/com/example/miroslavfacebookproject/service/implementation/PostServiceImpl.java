@@ -8,7 +8,6 @@ import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.service.contract.PostService;
 import com.example.miroslavfacebookproject.service.contract.UploadImageService;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.Date;
 
@@ -25,17 +24,17 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void savePost(PostDTO postDTO, User user) throws IOException {
-            Date date = new Date();
-            Post post = new Post();
+        Date date = new Date();
+        Post post = new Post();
 
-        if(!postDTO.getPostImage().isEmpty()){
+        if (!postDTO.getPostImage().isEmpty()) {
             uploadImageService.uploadImage(postDTO.getPostImage());
             Image image = new Image(uploadImageService.takeImageURL());
             post.setPostImageURL(image.getImageUrl());
         }
-            post.setText(postDTO.getPostText());
-            post.setPoster(user);
-            post.setDate(date);
-            postRepository.save(post);
+        post.setText(postDTO.getPostText());
+        post.setPoster(user);
+        post.setDate(date);
+        postRepository.save(post);
     }
 }
