@@ -4,7 +4,7 @@ import com.example.miroslavfacebookproject.entity.AlbumImage;
 import java.util.List;
 
 public class AlbumImagesDTO {
-    List<AlbumImage> albumImages;
+    private List<AlbumImage> albumImages;
 
     public AlbumImagesDTO() {
     }

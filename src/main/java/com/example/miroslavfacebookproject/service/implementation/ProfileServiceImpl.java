@@ -58,6 +58,7 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
     public ModelAndView sendProfileData(UserDetails userDetails, User currentUser, Model model) {
         likeService.checkingLikes(currentUser);
         List<Post> posts = postRepository.findAll();
+        posts = posts.stream().filter(p -> p.getPoster().getId().equals(currentUser.getId())).collect(Collectors.toList());
         posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
         model.addAttribute("posts", posts);
         return userServiceImpl.takeUserData(userDetails);
