@@ -41,7 +41,7 @@ public class User implements UserDetails {
     private Set<FriendRequest> friendRequests;
 
     @OneToMany(targetEntity = UserFriend.class, fetch = FetchType.EAGER, mappedBy = "friendId", orphanRemoval = true)
-    private Set<FriendRequest> userFriends;
+    private Set<UserFriend> userFriends;
 
     @OneToOne
     @JoinColumn(name = "avatar", referencedColumnName = "id")
@@ -136,11 +136,11 @@ public class User implements UserDetails {
         this.friendRequests = friendRequests;
     }
 
-    public Set<FriendRequest> getUserFriends() {
+    public Set<UserFriend> getUserFriends() {
         return userFriends;
     }
 
-    public void setUserFriends(Set<FriendRequest> userFriends) {
+    public void setUserFriends(Set<UserFriend> userFriends) {
         this.userFriends = userFriends;
     }
 
