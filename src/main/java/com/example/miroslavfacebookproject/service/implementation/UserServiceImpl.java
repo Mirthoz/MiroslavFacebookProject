@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
+
 import java.util.*;
 
 @Service
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
     }
 
-    public RegisterDTO resetUserPassword(String email, String password, String passwordRepeat) {
+    public void resetUserPassword(String email, String password, String passwordRepeat) {
         if (password.equals(passwordRepeat) && userRepository.findByEmail(email) != null) {
             User user = userRepository.findByEmail(email);
             user.setPassword(passwordEncoder.encode(password));
@@ -92,9 +92,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             RegisterDTO registerDTO = new RegisterDTO();
             registerDTO.setEmail(user.getEmail());
             registerDTO.setPassword(user.getPassword());
-            return registerDTO;
         }
-        return null;
     }
 
     public List<UserDTO> findByName(String name){
