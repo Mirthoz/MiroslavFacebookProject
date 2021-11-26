@@ -61,6 +61,20 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
         posts = posts.stream().filter(p -> p.getPoster().getId().equals(currentUser.getId())).collect(Collectors.toList());
         posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
         model.addAttribute("posts", posts);
-        return userServiceImpl.takeUserData(userDetails);
+        return takeUserData(userDetails);
+    }
+
+    @Override
+    public ModelAndView takeUserData(UserDetails userDetails) {
+        com.example.miroslavfacebookproject.entity.User user = userServiceImpl.takeUserByUserName(userDetails.getUsername());
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(user.getEmail());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setAge(user.getAge());
+        userDTO.setSurname(user.getSurname());
+        userDTO.setAvatarURL(user.getAvatar().getAvatarURL());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userDTO", userDTO);
+        return modelAndView;
     }
 }

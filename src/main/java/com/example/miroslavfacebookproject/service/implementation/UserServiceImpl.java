@@ -72,22 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User takeUserByUserName(String username) throws UsernameNotFoundException {
-        User user = userRepository.findFirstByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found; with username: " + username));
-        return user;
-    }
-
-    public ModelAndView takeUserData(UserDetails userDetails) {
-        com.example.miroslavfacebookproject.entity.User user = takeUserByUserName(userDetails.getUsername());
-        UserDTO userDTO = new UserDTO();
-        userDTO.setEmail(user.getEmail());
-        userDTO.setUsername(user.getUsername());
-        userDTO.setAge(user.getAge());
-        userDTO.setSurname(user.getSurname());
-        userDTO.setAvatarURL(user.getAvatar().getAvatarURL());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userDTO", userDTO);
-        return modelAndView;
+        return userRepository.findFirstByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found; with username: " + username));
     }
 
     public void changeUserInformation(UserDTO userDTO, UserDetails userDetails) {
