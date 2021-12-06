@@ -1,6 +1,7 @@
 package com.example.miroslavfacebookproject.controller;
 
 import com.example.miroslavfacebookproject.entity.User;
+import com.example.miroslavfacebookproject.service.contract.LikeService;
 import com.example.miroslavfacebookproject.service.contract.ProfileService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,9 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProfileController extends BaseController {
 
     private final ProfileService profileService;
+    private final LikeService likeService;
 
-    public ProfileController(ProfileService profileService) {
+    public ProfileController(ProfileService profileService, LikeService likeService) {
         this.profileService = profileService;
+        this.likeService = likeService;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -35,6 +38,7 @@ public class ProfileController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, @AuthenticationPrincipal User currentUser, Model model) {
+        likeService.checkingLikes(currentUser);
         return profileService.sendProfileData(userDetails, currentUser, model);
     }
 }

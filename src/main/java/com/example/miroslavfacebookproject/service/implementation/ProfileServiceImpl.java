@@ -8,11 +8,14 @@ import com.example.miroslavfacebookproject.entity.User;
 import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.service.contract.LikeService;
+import com.example.miroslavfacebookproject.service.contract.PostService;
 import com.example.miroslavfacebookproject.service.contract.ProfileService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,12 +25,19 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
     private final UserServiceImpl userServiceImpl;
     private final PostRepository postRepository;
     private final LikeService likeService;
+    private final PostService postService;
 
-    public ProfileServiceImpl(UserRepository userRepository, UserServiceImpl userServiceImpl, PostRepository postRepository, LikeService likeService) {
+    public ProfileServiceImpl(UserRepository userRepository,
+                              UserServiceImpl userServiceImpl,
+                              PostRepository postRepository,
+                              LikeService likeService,
+                              PostService postService) {
+
         this.userRepository = userRepository;
         this.userServiceImpl = userServiceImpl;
         this.postRepository = postRepository;
         this.likeService = likeService;
+        this.postService = postService;
     }
 
     @Override
@@ -56,7 +66,6 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
 
     @Override
     public ModelAndView sendProfileData(UserDetails userDetails, User currentUser, Model model) {
-        likeService.checkingLikes(currentUser);
         List<Post> posts = postRepository.findAll();
         posts = posts.stream().filter(p -> p.getPoster().getId().equals(currentUser.getId())).collect(Collectors.toList());
         posts = posts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
