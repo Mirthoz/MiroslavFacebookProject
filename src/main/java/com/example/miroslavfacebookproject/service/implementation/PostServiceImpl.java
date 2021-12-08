@@ -46,8 +46,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Long> takeUserFriendsIds(Long currentUserId) {
-        return userFriendsRepository.findAllByUserIdId(currentUserId).stream()
-                .map(f -> f.getFriendId().getId()).collect(Collectors.toList());
+    public List<User> takeUserFriends(Long currentUserId) {
+        return userFriendsRepository.findAllByUserIdId(currentUserId).stream().map(f -> f.getFriendId()).collect(Collectors.toList());
     }
 }
