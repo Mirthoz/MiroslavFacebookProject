@@ -36,12 +36,12 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public void addFriend(Long friendId, Long user) {
-        UserFriend userFriend = new UserFriend();
-        userFriend.setUserId(userRepository.findUserById(user));
-        userFriend.setFriendId(userRepository.findUserById(friendId));
+    public void addFriend(Long friendId, Long userId) {
+        UserFriend userFriend = new UserFriend(userRepository.findUserById(userId), userRepository.findUserById(friendId));
+        UserFriend userFriendForUser = new UserFriend(userRepository.findUserById(friendId), userRepository.findUserById(userId));
         userFriendsRepository.save(userFriend);
-        deleteFriendRequest(friendId, user);
+        userFriendsRepository.save(userFriendForUser);
+        deleteFriendRequest(friendId, userId);
     }
 
     protected void deleteFriendRequest(Long friendId, Long userId) {
@@ -59,9 +59,7 @@ public class FriendServiceImpl implements FriendService {
     public ModelAndView showFriends(User currentUser, ModelAndView modelAndView) {
         Set<FriendRequest> friendRequests = friendRequestRepository.findAllByReceiverId(currentUser.getId());
         Set<UserFriend> userFriends = userFriendsRepository.findAllByUserIdId(currentUser.getId());
-        if (userFriends.isEmpty()) {
-            userFriends = userFriendsRepository.findAllByFriendIdId(currentUser.getId());
-        }
+
         modelAndView.addObject("userFriends", userFriends);
         modelAndView.addObject("friendRequests", friendRequests);
         modelAndView.setViewName("friends");

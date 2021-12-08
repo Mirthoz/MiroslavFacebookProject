@@ -60,7 +60,7 @@
     <h1>Friends:</h1>
     <div th:each="el : ${userFriends}" class="alert alert-info mt-2">
         <div class="container">
-            <h3 th:text="${el.getFriendId().getUsername()}"/>
+            <h3 th:text="${el.getFriendId().getUsername() + ' ' + el.getFriendId().getSurname()}"/>
             <form id="formFriends" method="post" name="deleteFriend" action="deleteFriend">
                 <input type="number" name="friendId" th:value="${el.getFriendId().getId()}" style="display: none">
                 <button class="w-10 btn btn-lg btn-danger ml-2" type="submit">Delete</button>
@@ -69,12 +69,11 @@
     </div>
 </div>
 
-
 <div id="friendsRequests">
     <h1>Requests:</h1>
     <div th:each="el : ${friendRequests}" class="alert alert-info mt-2">
         <div class="container">
-            <h3 th:text="${el.getRequester().getUsername()}"/>
+            <h3 th:text="${el.getRequester().getUsername() + ' ' + el.getRequester().getSurname()}"/>
             <form id="form" method="post" name="addAsFriend" action="addAsFriend">
                 <input type="number" name="friendId" th:value="${el.getRequester().getId()}" style="display: none">
                 <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Add</button>

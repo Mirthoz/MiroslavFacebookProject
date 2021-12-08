@@ -9,7 +9,7 @@ public interface FriendService {
 
     void addFriendRequest(Long friendId, Long user);
 
-    void addFriend(Long friendId, Long user);
+    void addFriend(Long friendId, Long userId);
 
     void deleteFriend(Long friendId);
 

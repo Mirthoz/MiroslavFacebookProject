@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
+
 import java.util.*;
 
 @Service
@@ -72,22 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User takeUserByUserName(String username) throws UsernameNotFoundException {
-        User user = userRepository.findFirstByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found; with username: " + username));
-        return user;
-    }
-
-    public ModelAndView takeUserData(UserDetails userDetails) {
-        com.example.miroslavfacebookproject.entity.User user = takeUserByUserName(userDetails.getUsername());
-        UserDTO userDTO = new UserDTO();
-        userDTO.setEmail(user.getEmail());
-        userDTO.setUsername(user.getUsername());
-        userDTO.setAge(user.getAge());
-        userDTO.setSurname(user.getSurname());
-        userDTO.setAvatarURL(user.getAvatar().getAvatarURL());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userDTO", userDTO);
-        return modelAndView;
+        return userRepository.findFirstByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found; with username: " + username));
     }
 
     public void changeUserInformation(UserDTO userDTO, UserDetails userDetails) {
@@ -99,7 +84,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
     }
 
-    public RegisterDTO resetUserPassword(String email, String password, String passwordRepeat) {
+    public void resetUserPassword(String email, String password, String passwordRepeat) {
         if (password.equals(passwordRepeat) && userRepository.findByEmail(email) != null) {
             User user = userRepository.findByEmail(email);
             user.setPassword(passwordEncoder.encode(password));
@@ -107,9 +92,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             RegisterDTO registerDTO = new RegisterDTO();
             registerDTO.setEmail(user.getEmail());
             registerDTO.setPassword(user.getPassword());
-            return registerDTO;
         }
-        return null;
     }
 
     public List<UserDTO> findByName(String name){

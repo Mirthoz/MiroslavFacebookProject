@@ -21,6 +21,11 @@ public class UserFriend {
     public UserFriend() {
     }
 
+    public UserFriend(User friendId, User userId) {
+        this.friendId = friendId;
+        this.userId = userId;
+    }
+
     public Long getId() {
         return id;
     }
