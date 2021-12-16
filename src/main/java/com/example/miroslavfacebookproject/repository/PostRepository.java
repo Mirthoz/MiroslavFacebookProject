@@ -11,5 +11,4 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     Post findFirstById(Long id);
-    List<Post> findAllByPoster(User user);
 }
