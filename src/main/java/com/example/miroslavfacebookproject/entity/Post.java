@@ -1,7 +1,9 @@
 package com.example.miroslavfacebookproject.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,6 +31,9 @@ public class Post {
 
     public Post() {
     }
+
+    @ManyToMany
+    private List<Comment> comments;
 
     @OneToOne(fetch = FetchType.EAGER)
     private Image image;
@@ -109,5 +114,13 @@ public class Post {
 
     public void setPostImageURL(String postImageURL) {
         this.postImageURL = postImageURL;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
