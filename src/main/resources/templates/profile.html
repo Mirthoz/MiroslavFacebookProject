@@ -178,6 +178,7 @@
 
                         <form method="post" action="/add_comment">
                         <input type="text" name="commentText" class="form-control" id="commentInput" placeholder="Comment">
+                            <input type="number" name="currentPostId" th:value="${el.getId()}" style="display: none">
                         <button class="w-10 btn btn-lg btn-primary ml-2 mt-2" type="submit">Comment</button>
                         </form>
 

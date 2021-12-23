@@ -13,17 +13,17 @@ public class Comment {
     @Column(name = "text")
     private String commentText;
 
-    @Column(name = "commentator_id")
-    private Long commentatorId;
+    @Column(name = "commentator_name_and_surname")
+    private String commentatorNameAndSurname;
 
     @ManyToMany
     private List<Post> posts;
 
     public Comment(){}
 
-    public Comment(String commentText, Long commentatorId) {
+    public Comment(String commentText, String commentatorNameAndSurname) {
         this.commentText = commentText;
-        this.commentatorId = commentatorId;
+        this.commentatorNameAndSurname = commentatorNameAndSurname;
     }
 
     public Long getId() {
@@ -42,12 +42,12 @@ public class Comment {
         this.commentText = commentText;
     }
 
-    public Long getCommentatorId() {
-        return commentatorId;
+    public String getCommentatorNameAndSurname() {
+        return commentatorNameAndSurname;
     }
 
-    public void setCommentatorId(Long commentatorId) {
-        this.commentatorId = commentatorId;
+    public void setCommentatorNameAndSurname(String commentatorNameAndSurname) {
+        this.commentatorNameAndSurname = commentatorNameAndSurname;
     }
 
     public List<Post> getPosts() {

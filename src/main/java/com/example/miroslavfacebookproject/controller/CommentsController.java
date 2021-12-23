@@ -21,7 +21,7 @@ public class CommentsController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/add_comment")
     public ModelAndView addComment(@AuthenticationPrincipal User currentUser, CommentDTO commentDTO){
-        commentService.addComment(commentDTO.getCommentText(), currentUser);
+        commentService.addComment(commentDTO, currentUser);
         return redirect("profile");
     }
 }
