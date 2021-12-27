@@ -2,14 +2,10 @@ package com.example.miroslavfacebookproject.dto;
 
 public class CommentDTO {
     String commentText;
-    Long commentatorID;
+    Long currentPostId;
+    String commentatorNameAndSurname;
 
     CommentDTO(){};
-
-    public CommentDTO(String commentText, Long commentatorID) {
-        this.commentText = commentText;
-        this.commentatorID = commentatorID;
-    }
 
     public String getCommentText() {
         return commentText;
@@ -19,11 +15,19 @@ public class CommentDTO {
         this.commentText = commentText;
     }
 
-    public Long getCommentatorID() {
-        return commentatorID;
+    public Long getCurrentPostId() {
+        return currentPostId;
     }
 
-    public void setCommentatorID(Long commentatorID) {
-        this.commentatorID = commentatorID;
+    public void setCurrentPostId(Long currentPostId) {
+        this.currentPostId = currentPostId;
+    }
+
+    public String getCommentatorNameAndSurname() {
+        return commentatorNameAndSurname;
+    }
+
+    public void setCommentatorNameAndSurname(String commentatorNameAndSurname) {
+        this.commentatorNameAndSurname = commentatorNameAndSurname;
     }
 }
