@@ -28,8 +28,5 @@ public class CommentServiceImpl extends BaseController implements CommentService
         commentRepository.save(freshComment);
         currentPost.getComments().add(freshComment);
         postRepository.save(currentPost);
-
-        System.out.println(currentPost.getComments().size());
-        System.out.println(commentDTO.getCommentText() + " " + currentUser.getUsername() + " " + currentUser.getSurname() + "Post Id: " + commentDTO.getCurrentPostId());
     }
 }

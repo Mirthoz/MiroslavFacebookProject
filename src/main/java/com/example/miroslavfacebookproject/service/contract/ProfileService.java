@@ -16,7 +16,7 @@ public interface ProfileService {
 
     ModelAndView searchUserByName(User user, SearchUserDTO searchUserDTO, Model model);
 
-    ModelAndView sendProfileData(UserDetails userDetails, User currentUser, Model model);
+    ModelAndView sendProfileData(User currentUser, Model model);
 
-    ModelAndView takeUserData(UserDetails userDetails);
+    ModelAndView takeUserData(User currentUser);
 }
