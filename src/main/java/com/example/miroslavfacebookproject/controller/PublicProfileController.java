@@ -14,24 +14,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class AnotherProfileController extends BaseController{
+public class PublicProfileController extends BaseController{
 
     private final UserRepository userRepository;
     private final LikeService likeService;
     private final ProfileService profileService;
 
-    public AnotherProfileController(UserRepository userRepository, LikeService likeService, ProfileService profileService) {
+    public PublicProfileController(UserRepository userRepository, LikeService likeService, ProfileService profileService) {
         this.userRepository = userRepository;
         this.likeService = likeService;
         this.profileService = profileService;
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/another_profile")
+    @GetMapping("/public_profile")
     public ModelAndView searchUserProfile(@ModelAttribute("searchProfile") SearchUserDTO searchUserDTO, Model model) {
         User user = userRepository.findUserById(searchUserDTO.getUserId());
         likeService.checkingLikes(user);
         profileService.sendProfileData(user, model);
-        return send("another_profile");
+        return send("public_profile");
     }
 }

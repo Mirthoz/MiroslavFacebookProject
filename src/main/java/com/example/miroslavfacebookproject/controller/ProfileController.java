@@ -1,8 +1,6 @@
 package com.example.miroslavfacebookproject.controller;
 
-import com.example.miroslavfacebookproject.dto.SearchUserDTO;
 import com.example.miroslavfacebookproject.entity.User;
-import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.service.contract.LikeService;
 import com.example.miroslavfacebookproject.service.contract.ProfileService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller

@@ -208,7 +208,7 @@
                 <div class="container">
                    <h3 th:text="${el.getUsername()} + ' ' + ${el.getSurname()}"/>
 
-                    <form method="get" name="searchProfile" action="/another_profile">
+                    <form method="get" name="searchProfile" action="/public_profile">
                         <input type="number" name="userId" th:value="${el.id}" style="display: none">
                         <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Profile</button>
                     </form>

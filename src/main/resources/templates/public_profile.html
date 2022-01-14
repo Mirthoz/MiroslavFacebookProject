@@ -14,15 +14,12 @@
             <use xlink:href="#bootstrap"></use>
         </svg>
     </a>
-
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link" href="profile">Back to my profile</a>
         </li>
     </ul>
-
 </header>
-
 <body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -33,20 +30,18 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
 <div class="row">
     <div class="col-lg-4 mt-3" id="user_info">
-<!--        <div class="container">-->
-<!--            <img class="img-thumbnail" th:src="${userDTO.getAvatarURL()}" alt="ProfileImg" width="480" height="640">-->
+        <!--        <div class="container">-->
+        <!--            <img class="img-thumbnail" th:src="${userDTO.getAvatarURL()}" alt="ProfileImg" width="480" height="640">-->
 
-<!--            <br>-->
-<!--            <h2 th:text="'Name: ' + ${userDTO.getUsername()} + ' ' + ${SearchUserDTO.getSurname()}"></h2>-->
-<!--            <h3 th:text="'Email: ' + ${userDTO.getEmail()}"></h3>-->
-<!--            <h3 th:text="'Age: ' + ${userDTO.getAge()}"></h3>-->
-<!--        </div>-->
+        <!--            <br>-->
+        <!--            <h2 th:text="'Name: ' + ${userDTO.getUsername()} + ' ' + ${SearchUserDTO.getSurname()}"></h2>-->
+        <!--            <h3 th:text="'Email: ' + ${userDTO.getEmail()}"></h3>-->
+        <!--            <h3 th:text="'Age: ' + ${userDTO.getAge()}"></h3>-->
+        <!--        </div>-->
     </div>
     <style>
-
         #user_info {
             display: flex;
             align-items: center;
@@ -70,14 +65,11 @@
             text-align: center;
         }
 
-        H1{
+        H1 {
             text-align: center;
         }
-
     </style>
-
     <div id="wall" class="col-lg-4 mt-3">
-
         <div class="container ml-3">
             <H1 class="mt-3 mb-3">Wall</H1>
             <div th:each="el : ${posts}" class="alert alert-info mt-2">
@@ -90,13 +82,11 @@
                     <div class="like-form" style="display: block">
                         <form action="/likePost" method="post">
                             <input type="number" name="postId" th:value="${el.getId()}" style="display: none">
-
                             <div th:if="${el.meLiked == 1}">
                                 <input type="image" src="../images/like.png" width="20" height="20" name="submit"
                                        value="Like" class="like-button">
                                 <span th:text="${el.getLikes().size()}"></span>
                             </div>
-
                             <div th:unless="${el.meLiked == 1}">
                                 <input type="image" src="../images/likeFill.png" width="20" height="20" name="submit"
                                        value="Like" class="like-button">
@@ -106,7 +96,6 @@
                         <br>
                         <h4 th:text="'Poster:' + ' ' + ${el.getPoster().getUsername()} + ' ' + ${el.getPoster().getSurname()}"></h4>
                         <h3 th:text="${el.getDate()}"/>
-
                         <div th:each="comment : ${el.getComments()}" id="comments">
                             <br>
                             <h5><span th:text="${comment.getCommentText()}"></span></h5>
@@ -117,7 +106,6 @@
             </div>
         </div>
     </div>
-
 </div>
 </body>
 </html>
