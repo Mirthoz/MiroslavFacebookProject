@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -31,7 +30,6 @@ public class PublicProfileController extends BaseController{
     public ModelAndView searchUserProfile(@ModelAttribute("searchProfile") SearchUserDTO searchUserDTO, Model model) {
         User user = userRepository.findUserById(searchUserDTO.getUserId());
         likeService.checkingLikes(user);
-        profileService.sendProfileData(user, model);
-        return send("public_profile");
+        return profileService.sendProfileData(user, model);
     }
 }

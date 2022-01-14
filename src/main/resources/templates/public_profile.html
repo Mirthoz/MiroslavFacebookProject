@@ -32,14 +32,13 @@
         crossorigin="anonymous"></script>
 <div class="row">
     <div class="col-lg-4 mt-3" id="user_info">
-        <!--        <div class="container">-->
-        <!--            <img class="img-thumbnail" th:src="${userDTO.getAvatarURL()}" alt="ProfileImg" width="480" height="640">-->
-
-        <!--            <br>-->
-        <!--            <h2 th:text="'Name: ' + ${userDTO.getUsername()} + ' ' + ${SearchUserDTO.getSurname()}"></h2>-->
-        <!--            <h3 th:text="'Email: ' + ${userDTO.getEmail()}"></h3>-->
-        <!--            <h3 th:text="'Age: ' + ${userDTO.getAge()}"></h3>-->
-        <!--        </div>-->
+        <div class="container">
+            <img class="img-thumbnail" th:src="${userDTO.getAvatarURL()}" alt="ProfileImg" width="480" height="640">
+            <br>
+            <h2 th:text="'Name: ' + ${userDTO.getUsername()} + ' ' + ${userDTO.getSurname()}"></h2>
+            <h3 th:text="'Email: ' + ${userDTO.getEmail()}"></h3>
+            <h3 th:text="'Age: ' + ${userDTO.getAge()}"></h3>
+        </div>
     </div>
     <style>
         #user_info {
