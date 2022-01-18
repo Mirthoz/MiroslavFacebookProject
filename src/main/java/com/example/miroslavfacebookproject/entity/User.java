@@ -31,6 +31,15 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "email_privacy")
+    private String emailPrivacy;
+
+    @Column(name = "age_privacy")
+    private String agePrivacy;
+
+    @Column(name = "posts_and_images_privacy")
+    private String postsAndImagesPrivacy;
+
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
@@ -166,5 +175,29 @@ public class User implements UserDetails {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getEmailPrivacy() {
+        return emailPrivacy;
+    }
+
+    public void setEmailPrivacy(String emailPrivacy) {
+        this.emailPrivacy = emailPrivacy;
+    }
+
+    public String getAgePrivacy() {
+        return agePrivacy;
+    }
+
+    public void setAgePrivacy(String agePrivacy) {
+        this.agePrivacy = agePrivacy;
+    }
+
+    public String getPostsAndImagesPrivacy() {
+        return postsAndImagesPrivacy;
+    }
+
+    public void setPostsAndImagesPrivacy(String postsAndImagesPrivacy) {
+        this.postsAndImagesPrivacy = postsAndImagesPrivacy;
     }
 }

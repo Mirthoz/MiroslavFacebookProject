@@ -23,6 +23,10 @@ public class UserDTO {
     @Min(14)
     private String age;
 
+    private boolean emailPrivacy = false;
+    private boolean agePrivacy = false;
+    private boolean postsAndImagesPrivacy = false;
+
     public UserDTO() {
     }
 
@@ -72,5 +76,29 @@ public class UserDTO {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public boolean isEmailPrivacy() {
+        return emailPrivacy;
+    }
+
+    public void setEmailPrivacy(boolean emailPrivacy) {
+        this.emailPrivacy = emailPrivacy;
+    }
+
+    public boolean isAgePrivacy() {
+        return agePrivacy;
+    }
+
+    public void setAgePrivacy(boolean agePrivacy) {
+        this.agePrivacy = agePrivacy;
+    }
+
+    public boolean isPostsAndImagesPrivacy() {
+        return postsAndImagesPrivacy;
+    }
+
+    public void setPostsAndImagesPrivacy(boolean postsAndImagesPrivacy) {
+        this.postsAndImagesPrivacy = postsAndImagesPrivacy;
     }
 }
