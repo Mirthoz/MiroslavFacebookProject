@@ -29,6 +29,15 @@
             <label for="floatingInput">Email address</label>
         </div>
 
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" name="emailPrivacy" aria-label="Checkbox for following text input">
+                </div>
+            </div>
+            <h6>All users can see my email</h6>
+        </div>
+
         <div class="form-floating">
             <input type="text" name="username" class="form-control" id="nameInput"
                    placeholder="Name">
@@ -47,6 +56,15 @@
             <label for="ageInput">Age</label>
         </div>
 
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" name="agePrivacy" aria-label="Checkbox for following text input">
+                </div>
+            </div>
+            <h6>All users can see my age</h6>
+        </div>
+
         <div class="form-floating">
             <input type="password" name="password" class="form-control" id="floatingPassword"
                    placeholder="Password">
@@ -57,6 +75,15 @@
             <input type="password" name="passwordRepeat" class="form-control" id="floatingRepeatPassword"
                    placeholder="repeatPassword">
             <label for="floatingPassword">Repeat password</label>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" name="postsAndImagesPrivacy" aria-label="Checkbox for following text input">
+                </div>
+            </div>
+            <h6>All users can see my posts and images</h6>
         </div>
 
         <button class="btn btn-success" type="submit">Sign in</button>
