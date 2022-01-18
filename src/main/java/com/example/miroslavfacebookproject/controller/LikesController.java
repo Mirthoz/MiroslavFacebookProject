@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LikesController extends BaseController {
+    public static Long publicProfileId;
 
     private final LikeService likeService;
 
@@ -24,5 +25,12 @@ public class LikesController extends BaseController {
     public ModelAndView likePost(@ModelAttribute LikeDTO likeDTO, @AuthenticationPrincipal User user) {
         likeService.likePost(likeDTO, user);
         return redirect("profile");
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/likePublicPost")
+    public ModelAndView likePublicPost(@ModelAttribute LikeDTO likeDTO, @AuthenticationPrincipal User user) {
+        likeService.likePost(likeDTO, user);
+        return redirect("public_profile?userId=" + publicProfileId);
     }
 }

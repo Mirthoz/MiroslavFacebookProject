@@ -79,7 +79,7 @@
                     </div>
                     <h3 id="post_text" th:text="${el.text}"></h3>
                     <div class="like-form" style="display: block">
-                        <form action="/likePost" method="post">
+                        <form action="/likePublicPost" method="post">
                             <input type="number" name="postId" th:value="${el.getId()}" style="display: none">
                             <div th:if="${el.meLiked == 1}">
                                 <input type="image" src="../images/like.png" width="20" height="20" name="submit"
@@ -95,6 +95,12 @@
                         <br>
                         <h4 th:text="'Poster:' + ' ' + ${el.getPoster().getUsername()} + ' ' + ${el.getPoster().getSurname()}"></h4>
                         <h3 th:text="${el.getDate()}"/>
+                        <form method="post" action="/add_public_comment">
+                            <input type="text" name="commentText" class="form-control" id="commentInput"
+                                   placeholder="Comment">
+                            <input type="number" name="currentPostId" th:value="${el.getId()}" style="display: none">
+                            <button class="w-10 btn btn-lg btn-primary ml-2 mt-2" type="submit">Comment</button>
+                        </form>
                         <div th:each="comment : ${el.getComments()}" id="comments">
                             <br>
                             <h5><span th:text="${comment.getCommentText()}"></span></h5>

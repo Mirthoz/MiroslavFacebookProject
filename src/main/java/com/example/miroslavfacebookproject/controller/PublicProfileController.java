@@ -19,7 +19,9 @@ public class PublicProfileController extends BaseController{
     private final LikeService likeService;
     private final ProfileService profileService;
 
-    public PublicProfileController(UserRepository userRepository, LikeService likeService, ProfileService profileService) {
+    public PublicProfileController(UserRepository userRepository,
+                                   LikeService likeService,
+                                   ProfileService profileService) {
         this.userRepository = userRepository;
         this.likeService = likeService;
         this.profileService = profileService;
@@ -28,6 +30,8 @@ public class PublicProfileController extends BaseController{
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/public_profile")
     public ModelAndView searchUserProfile(@ModelAttribute("searchProfile") SearchUserDTO searchUserDTO, Model model) {
+        LikesController.publicProfileId = searchUserDTO.getUserId();
+        CommentsController.publicProfileId = searchUserDTO.getUserId();
         User user = userRepository.findUserById(searchUserDTO.getUserId());
         likeService.checkingLikes(user);
         return profileService.sendProfileData(user, model);
