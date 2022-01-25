@@ -36,8 +36,8 @@
             <img class="img-thumbnail" th:src="${userDTO.getAvatarURL()}" alt="ProfileImg" width="480" height="640">
             <br>
             <h2 th:text="'Name: ' + ${userDTO.getUsername()} + ' ' + ${userDTO.getSurname()}"></h2>
-            <h3 th:text="'Email: ' + ${userDTO.getEmail()}"></h3>
-            <h3 th:text="'Age: ' + ${userDTO.getAge()}"></h3>
+            <h3 th:text="'Email: ' + ${userDTO.getEmail()}" th:if="${privacyDTO.isEmailPrivacy()}"></h3>
+            <h3 th:text="'Age: ' + ${userDTO.getAge()}" th:if="${privacyDTO.isAgePrivacy()}"></h3>
         </div>
     </div>
     <style>
@@ -68,7 +68,7 @@
             text-align: center;
         }
     </style>
-    <div id="wall" class="col-lg-4 mt-3">
+    <div id="wall" class="col-lg-4 mt-3" th:if="${privacyDTO.isPostsAndImagesPrivacy()}">
         <div class="container ml-3">
             <H1 class="mt-3 mb-3">Wall</H1>
             <div th:each="el : ${posts}" class="alert alert-info mt-2">
