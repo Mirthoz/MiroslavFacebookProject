@@ -5,7 +5,7 @@ public class PrivacyDTO {
     private boolean agePrivacy = false;
     private boolean postsAndImagesPrivacy = false;
 
-    PrivacyDTO(){}
+    public PrivacyDTO(){}
 
     public boolean isEmailPrivacy() {
         return emailPrivacy;

@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LikesController extends BaseController {
     public static Long publicProfileId;
-
     private final LikeService likeService;
 
     public LikesController(LikeService likeService) {
