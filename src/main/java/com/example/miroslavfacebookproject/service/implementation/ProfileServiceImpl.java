@@ -52,14 +52,13 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
         userDTO.setId(user.getId());
         userDTO.setAvatarURL(user.getAvatar().getAvatarURL());
         userDTO.setSurname(user.getSurname());
-
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("find_users", findUsers);
         return send("profile");
     }
 
     @Override
-    public ModelAndView sendProfileData(UserDetails userDetails, User currentUser, Model model) {
+    public ModelAndView sendProfileData(User currentUser, Model model) {
         List<Post> allPosts = postRepository.findAll();
         List<Post> userPosts = allPosts.stream().filter(p -> p.getPoster().getId().equals(currentUser.getId())).collect(Collectors.toList());
         List<User> userFriends = postService.takeUserFriends(currentUser.getId());
@@ -69,18 +68,17 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
         userProfilePosts.addAll(friendsPosts);
         userProfilePosts = userProfilePosts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
         model.addAttribute("posts", userProfilePosts);
-        return takeUserData(userDetails);
+        return takeUserData(currentUser);
     }
 
     @Override
-    public ModelAndView takeUserData(UserDetails userDetails) {
-        com.example.miroslavfacebookproject.entity.User user = userServiceImpl.takeUserByUserName(userDetails.getUsername());
+    public ModelAndView takeUserData(User currentUser) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setEmail(user.getEmail());
-        userDTO.setUsername(user.getUsername());
-        userDTO.setAge(user.getAge());
-        userDTO.setSurname(user.getSurname());
-        userDTO.setAvatarURL(user.getAvatar().getAvatarURL());
+        userDTO.setEmail(currentUser.getEmail());
+        userDTO.setUsername(currentUser.getUsername());
+        userDTO.setAge(currentUser.getAge());
+        userDTO.setSurname(currentUser.getSurname());
+        userDTO.setAvatarURL(currentUser.getAvatar().getAvatarURL());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userDTO", userDTO);
         return modelAndView;

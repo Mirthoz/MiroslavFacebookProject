@@ -1,4 +1,5 @@
 package com.example.miroslavfacebookproject.service.implementation;
+
 import com.example.miroslavfacebookproject.component.Constants;
 import com.example.miroslavfacebookproject.dto.UserDTO;
 import com.example.miroslavfacebookproject.entity.Avatar;
@@ -15,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
@@ -43,7 +43,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User registration(RegisterDTO registerDTO) {
-        if (Integer.parseInt(registerDTO.getAge()) <= constants.MIN_AGE) throw new IllegalArgumentException("User must be over 14 years old");
+        if (Integer.parseInt(registerDTO.getAge()) <= constants.MIN_AGE)
+            throw new IllegalArgumentException("User must be over 14 years old");
         if (registerDTO.getPasswordRepeat() == null || !registerDTO.getPassword().equals(registerDTO.getPasswordRepeat()))
             throw new IllegalArgumentException("Password do not match");
 
@@ -56,11 +57,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setSurname(registerDTO.getSurname());
         user.setAge(registerDTO.getAge());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+
+        user.setEmailPrivacy(definePrivacy(registerDTO.isEmailPrivacy()));
+        user.setAgePrivacy(definePrivacy(registerDTO.isAgePrivacy()));
+        user.setPostsAndImagesPrivacy(definePrivacy(registerDTO.isPostsAndImagesPrivacy()));
+
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.takeUserRole());
         user.setRoles(roles);
         userRepository.save(user);
         return user;
+    }
+
+    private String definePrivacy(boolean privacyValue) {
+        String privacy;
+        if (privacyValue) {
+            privacy = "FOR_ALL";
+        } else {
+            privacy = "JUST_ME";
+        }
+        return privacy;
     }
 
     @Override
@@ -81,6 +97,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setAge(userDTO.getAge());
         user.setUsername(userDTO.getUsername());
         user.setSurname(userDTO.getSurname());
+
+        user.setEmailPrivacy(definePrivacy(userDTO.isEmailPrivacy()));
+        user.setAgePrivacy(definePrivacy(userDTO.isAgePrivacy()));
+        user.setPostsAndImagesPrivacy(definePrivacy(userDTO.isPostsAndImagesPrivacy()));
         userRepository.save(user);
     }
 
@@ -95,7 +115,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
-    public List<UserDTO> findByName(String name){
+    public List<UserDTO> findByName(String name) {
         List<User> users = userRepository.findByUsernameContainingIgnoreCase(name.toLowerCase(Locale.ROOT));
         List<UserDTO> userDTOS = new ArrayList<>();
         for (User user : users) {

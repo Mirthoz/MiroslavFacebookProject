@@ -9,5 +9,6 @@ import java.util.List;
 @Service
 public interface PostService {
     void savePost(PostDTO postDTO, User user) throws IOException;
+
     List<User> takeUserFriends(Long currentUserId);
 }

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CommentsController extends BaseController {
+    public static Long publicProfileId;
 
     private final CommentService commentService;
 
@@ -23,5 +24,11 @@ public class CommentsController extends BaseController {
     public ModelAndView addComment(@AuthenticationPrincipal User currentUser, CommentDTO commentDTO){
         commentService.addComment(commentDTO, currentUser);
         return redirect("profile");
+    }
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/add_public_comment")
+    public ModelAndView likePublicPost(@AuthenticationPrincipal User currentUser, CommentDTO commentDTO) {
+        commentService.addComment(commentDTO, currentUser);
+        return redirect("public_profile?userId=" + publicProfileId);
     }
 }

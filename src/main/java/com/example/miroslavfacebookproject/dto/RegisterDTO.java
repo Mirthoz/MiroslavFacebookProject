@@ -22,6 +22,10 @@ public class RegisterDTO {
     @NotBlank
     private String passwordRepeat;
 
+    private boolean emailPrivacy = false;
+    private boolean agePrivacy = false;
+    private boolean postsAndImagesPrivacy = false;
+
     public RegisterDTO() {
     }
 
@@ -71,5 +75,29 @@ public class RegisterDTO {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public boolean isEmailPrivacy() {
+        return emailPrivacy;
+    }
+
+    public void setEmailPrivacy(boolean emailPrivacy) {
+        this.emailPrivacy = emailPrivacy;
+    }
+
+    public boolean isAgePrivacy() {
+        return agePrivacy;
+    }
+
+    public void setAgePrivacy(boolean agePrivacy) {
+        this.agePrivacy = agePrivacy;
+    }
+
+    public boolean isPostsAndImagesPrivacy() {
+        return postsAndImagesPrivacy;
+    }
+
+    public void setPostsAndImagesPrivacy(boolean postsAndImagesPrivacy) {
+        this.postsAndImagesPrivacy = postsAndImagesPrivacy;
     }
 }

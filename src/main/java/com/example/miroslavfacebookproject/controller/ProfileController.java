@@ -17,7 +17,8 @@ public class ProfileController extends BaseController {
     private final ProfileService profileService;
     private final LikeService likeService;
 
-    public ProfileController(ProfileService profileService, LikeService likeService) {
+    public ProfileController(ProfileService profileService,
+                             LikeService likeService) {
         this.profileService = profileService;
         this.likeService = likeService;
     }
@@ -37,8 +38,8 @@ public class ProfileController extends BaseController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
-    public ModelAndView profile(@AuthenticationPrincipal UserDetails userDetails, @AuthenticationPrincipal User currentUser, Model model) {
+    public ModelAndView profile(@AuthenticationPrincipal User currentUser, Model model) {
         likeService.checkingLikes(currentUser);
-        return profileService.sendProfileData(userDetails, currentUser, model);
+        return profileService.sendProfileData(currentUser, model);
     }
 }
