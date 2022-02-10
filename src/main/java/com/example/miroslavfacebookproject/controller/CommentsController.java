@@ -21,13 +21,14 @@ public class CommentsController extends BaseController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/add_comment")
-    public ModelAndView addComment(@AuthenticationPrincipal User currentUser, CommentDTO commentDTO){
+    public ModelAndView addComment(@AuthenticationPrincipal User currentUser, CommentDTO commentDTO) {
         commentService.addComment(commentDTO, currentUser);
         return redirect("profile");
     }
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/add_public_comment")
-    public ModelAndView likePublicPost(@AuthenticationPrincipal User currentUser, CommentDTO commentDTO) {
+    public ModelAndView addPublicComment(@AuthenticationPrincipal User currentUser, CommentDTO commentDTO) {
         commentService.addComment(commentDTO, currentUser);
         return redirect("public_profile?userId=" + publicProfileId);
     }

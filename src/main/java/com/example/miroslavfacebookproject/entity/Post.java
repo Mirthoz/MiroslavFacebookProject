@@ -18,7 +18,7 @@ public class Post {
     private String text;
 
     @Column(name = "status")
-    private Integer status; //1- only for user, 2- for friends and user, 3- for all
+    private Integer status;
 
     @Column(name = "date")
     private Date date;
