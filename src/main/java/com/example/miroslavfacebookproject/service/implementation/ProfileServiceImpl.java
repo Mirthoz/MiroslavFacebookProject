@@ -57,8 +57,7 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
         return send("profile");
     }
 
-    @Override
-    public ModelAndView sendProfileData(User currentUser, Model model) {
+    private List<Post> takeUserPosts(User currentUser){
         List<Post> allPosts = postRepository.findAll();
         List<Post> userPosts = allPosts.stream().filter(p -> p.getPoster().getId().equals(currentUser.getId())).collect(Collectors.toList());
         List<User> userFriends = postService.takeUserFriends(currentUser.getId());
@@ -67,12 +66,13 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
         userProfilePosts.addAll(userPosts);
         userProfilePosts.addAll(friendsPosts);
         userProfilePosts = userProfilePosts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
-        model.addAttribute("posts", userProfilePosts);
-        return takeUserData(currentUser);
+        return userProfilePosts;
     }
 
     @Override
-    public ModelAndView takeUserData(User currentUser) {
+    public ModelAndView sendProfileData(User currentUser, Model model) {
+        List<Post> userProfilePosts = takeUserPosts(currentUser);
+        model.addAttribute("posts", userProfilePosts);
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(currentUser.getEmail());
         userDTO.setUsername(currentUser.getUsername());
