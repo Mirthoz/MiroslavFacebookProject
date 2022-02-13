@@ -221,14 +221,19 @@
                         <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">Add friend</button>
                     </form>
                     <br>
+                    <form method="post" sec:authorize="hasAuthority('ROLE_ADMIN')" name="make_admin" action="make_admin">
+                        <input type="number" name="userId" th:value="${el.id}" style="display: none">
+                        <button class="w-10 btn btn-lg btn-warning ml-2" type="submit">Make admin</button>
+                    </form>
+                    <br>
+                    <form method="post" sec:authorize="hasAuthority('ROLE_ADMIN')" name="make_user" action="make_user">
+                        <input type="number" name="userId" th:value="${el.id}" style="display: none">
+                        <button class="w-10 btn btn-lg btn-warning ml-2" type="submit">Make user</button>
+                    </form>
+                    <br>
                     <form method="post" name="block" action="block">
                         <input type="number" name="userId" th:value="${el.id}" style="display: none">
                         <button class="w-10 btn btn-lg btn-danger ml-2" type="submit">Block user</button>
-                    </form>
-                    <br>
-                    <form method="post" sec:authorize="hasAuthority('ROLE_ADMIN')" name="make_admin" action="make_admin">
-                        <input type="number" name="userId" th:value="${el.id}" style="display: none">
-                        <button class="w-10 btn btn-lg btn-danger ml-2" type="submit">Make admin</button>
                     </form>
                 </div>
             </div>
