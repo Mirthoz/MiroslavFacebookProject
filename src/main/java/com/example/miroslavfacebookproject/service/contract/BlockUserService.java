@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 public interface BlockUserService {
     void blockUser(Long currentUserId, Long blockedUserId);
 
-    boolean checkIsCurrentUserIdOnTheBlockedList(Long currentUserId, Long targetUerId);
+    boolean checkIsCurrentUserIdIsBlocked(Long currentUserId, Long targetUerId);
 }

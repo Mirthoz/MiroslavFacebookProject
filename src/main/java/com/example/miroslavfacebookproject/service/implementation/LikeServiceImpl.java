@@ -28,7 +28,7 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public void likePost(LikeDTO likeDTO, User currentUser) {
         Post post = postRepository.findFirstById(likeDTO.getPostId());
-        if (!blockUserService.checkIsCurrentUserIdOnTheBlockedList(currentUser.getId(), post.getPoster().getId())) {
+        if (!blockUserService.checkIsCurrentUserIdIsBlocked(currentUser.getId(), post.getPoster().getId())) {
 
             if (!likeRepository.existsByPostAndUser(post, currentUser)) {
                 Like like = new Like();

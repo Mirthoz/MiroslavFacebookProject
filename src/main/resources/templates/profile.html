@@ -197,7 +197,6 @@
         <div id="form">
             <form method="post" action="/search_user" th:object="${find_users}">
                 <h1 class="h3 mb-3 fw-normal">Search user</h1>
-
                 <div class="form-floating">
                     <input type="text" name="username" class="form-control" placeholder="Name">
                 </div>
@@ -207,7 +206,6 @@
             <div th:each="el : ${find_users}" class="alert alert-info">
                 <div class="container">
                    <h3 th:text="${el.getUsername()} + ' ' + ${el.getSurname()}"/>
-
                     <form method="get" name="searchProfile" action="/public_profile">
                         <input type="number" name="userId" th:value="${el.id}" style="display: none">
                         <button class="w-10 btn btn-lg btn-primary ml-2" type="submit">View profile</button>

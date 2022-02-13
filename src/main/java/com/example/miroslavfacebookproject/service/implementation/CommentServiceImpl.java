@@ -28,7 +28,7 @@ public class CommentServiceImpl extends BaseController implements CommentService
     @Override
     public void addComment(CommentDTO commentDTO, User currentUser) {
         Post currentPost = postRepository.findFirstById(commentDTO.getCurrentPostId());
-        if (!blockUserService.checkIsCurrentUserIdOnTheBlockedList(currentUser.getId(), currentPost.getPoster().getId())) {
+        if (!blockUserService.checkIsCurrentUserIdIsBlocked(currentUser.getId(), currentPost.getPoster().getId())) {
             String commentatorNameAndSurname = currentUser.getUsername() + " " + currentUser.getSurname();
             Comment freshComment = new Comment(commentDTO.getCommentText(), commentatorNameAndSurname);
             commentRepository.save(freshComment);

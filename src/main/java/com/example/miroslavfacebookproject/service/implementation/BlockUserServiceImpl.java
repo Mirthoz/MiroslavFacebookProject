@@ -23,7 +23,7 @@ public class BlockUserServiceImpl implements BlockUserService {
     }
 
     @Override
-    public boolean checkIsCurrentUserIdOnTheBlockedList(Long currentUserId, Long targetUserId) {
+    public boolean checkIsCurrentUserIdIsBlocked(Long currentUserId, Long targetUserId) {
         User checkedUser = userRepository.findUserById(targetUserId);
         User currentUser = userRepository.findUserById(currentUserId);
         return checkedUser.getBlockedUsers().contains(currentUser);
