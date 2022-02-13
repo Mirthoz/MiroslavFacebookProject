@@ -18,5 +18,4 @@ public interface ProfileService {
 
     ModelAndView sendProfileData(User currentUser, Model model);
 
-    ModelAndView takeUserData(User currentUser);
 }

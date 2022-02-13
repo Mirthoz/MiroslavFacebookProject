@@ -24,12 +24,9 @@ public class AutoLoginServiceImpl implements AutoLoginService {
     public void autoLogin(RegisterDTO registerDTO) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(registerDTO.getEmail(), registerDTO.getPassword());
-
         Authentication auth = authManager.authenticate(authReq);
-
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(auth);
-
         HttpSession session = request.getSession(true);
         session.setAttribute("SPRING_SECURITY_CONTEXT", sc);
     }

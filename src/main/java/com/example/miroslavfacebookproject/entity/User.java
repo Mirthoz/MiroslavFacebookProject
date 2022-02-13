@@ -2,6 +2,7 @@ package com.example.miroslavfacebookproject.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,6 +59,9 @@ public class User implements UserDetails {
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<AlbumImage> albumImages = new ArrayList<>();
+
+    @ManyToMany
+    private Set<User> blockedUsers;
 
     public User() {
     }
@@ -199,5 +203,13 @@ public class User implements UserDetails {
 
     public void setPostsAndImagesPrivacy(String postsAndImagesPrivacy) {
         this.postsAndImagesPrivacy = postsAndImagesPrivacy;
+    }
+
+    public Set<User> getBlockedUsers() {
+        return blockedUsers;
+    }
+
+    public void setBlockedUsers(Set<User> blockedUsers) {
+        this.blockedUsers = blockedUsers;
     }
 }
