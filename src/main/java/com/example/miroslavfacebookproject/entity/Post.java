@@ -18,7 +18,7 @@ public class Post {
     private String text;
 
     @Column(name = "status")
-    private Integer status;
+    private String status;
 
     @Column(name = "date")
     private Date date;
@@ -60,11 +60,11 @@ public class Post {
         this.text = text;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

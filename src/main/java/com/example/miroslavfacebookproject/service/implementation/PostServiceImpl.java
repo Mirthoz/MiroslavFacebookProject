@@ -4,6 +4,7 @@ import com.example.miroslavfacebookproject.dto.PostDTO;
 import com.example.miroslavfacebookproject.entity.Image;
 import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.entity.User;
+import com.example.miroslavfacebookproject.enums.PostStatus;
 import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserFriendsRepository;
 import com.example.miroslavfacebookproject.service.contract.PostService;
@@ -42,6 +43,7 @@ public class PostServiceImpl implements PostService {
         post.setText(postDTO.getPostText());
         post.setPoster(user);
         post.setDate(date);
+        post.setStatus(PostStatus.ACTIVE.name());
         postRepository.save(post);
     }
 
