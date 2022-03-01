@@ -4,6 +4,7 @@ import com.example.miroslavfacebookproject.dto.SearchUserDTO;
 import com.example.miroslavfacebookproject.service.contract.AdminService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +15,12 @@ public class AdminController extends BaseController {
 
     public AdminController(AdminService adminService) {
         this.adminService = adminService;
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/only_for_admins")
+    public ModelAndView onlyForAdminsPage(){
+        return send("only_for_admins");
     }
 
     @PreAuthorize("isAuthenticated()")
