@@ -31,7 +31,7 @@ public class ProfileController extends BaseController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/my_reported_posts")
-    public ModelAndView ShowMyReportedPosts(@AuthenticationPrincipal User currentUser, ModelAndView modelAndView) {
+    public ModelAndView showMyReportedPosts(@AuthenticationPrincipal User currentUser, ModelAndView modelAndView) {
         modelAndView.addObject("reported_posts", profileService.takeMyReportedPosts(currentUser.getId()));
         modelAndView.addObject("my_reported_posts");
         return modelAndView;
