@@ -25,4 +25,10 @@ public class PostController extends BaseController {
         postService.savePost(postDTO, user);
         return redirect("profile");
     }
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("report")
+    public ModelAndView addPost(@ModelAttribute("report") PostDTO postDTO)  {
+        postService.reportPost(postDTO.getPostId());
+        return redirect("profile");
+    }
 }

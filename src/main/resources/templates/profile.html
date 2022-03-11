@@ -187,6 +187,11 @@
                         <button class="w-10 btn btn-lg btn-primary ml-2 mt-2" type="submit">Comment</button>
                         </form>
 
+                        <form method="post" name="report" action="report">
+                            <input type="number" name="postId" th:value="${el.getId()}" style="display: none">
+                            <button class="w-10 btn btn-lg btn-danger ml-2 mt-2" type="submit">Report</button>
+                        </form>
+
                         <div th:each="comment : ${el.getComments()}" id="comments">
                             <br>
                             <h5><span th:text="${comment.getCommentText()}"></span></h5>
