@@ -84,4 +84,9 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
         modelAndView.addObject("userDTO", userDTO);
         return modelAndView;
     }
+
+    @Override
+    public List<Post> takeMyReportedPosts(Long currentUserId) {
+        return postRepository.findAll().stream().filter(post -> post.getPoster().getId().equals(currentUserId) && post.getStatus().equals("REPORTED")).collect(Collectors.toList());
+    }
 }
