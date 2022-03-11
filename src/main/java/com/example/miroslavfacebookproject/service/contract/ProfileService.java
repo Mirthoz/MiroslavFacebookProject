@@ -1,6 +1,7 @@
 package com.example.miroslavfacebookproject.service.contract;
 
 import com.example.miroslavfacebookproject.dto.SearchUserDTO;
+import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.entity.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Service
 public interface ProfileService {
@@ -17,5 +20,7 @@ public interface ProfileService {
     ModelAndView searchUserByName(User user, SearchUserDTO searchUserDTO, Model model);
 
     ModelAndView sendProfileData(User currentUser, Model model);
+
+    List<Post> takeMyReportedPosts(Long currentUserId);
 
 }
