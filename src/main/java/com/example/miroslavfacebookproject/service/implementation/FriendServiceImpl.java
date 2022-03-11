@@ -9,6 +9,7 @@ import com.example.miroslavfacebookproject.repository.UserRepository;
 import com.example.miroslavfacebookproject.service.contract.FriendService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.util.Set;
 
 @Service
@@ -59,7 +60,6 @@ public class FriendServiceImpl implements FriendService {
     public ModelAndView showFriends(User currentUser, ModelAndView modelAndView) {
         Set<FriendRequest> friendRequests = friendRequestRepository.findAllByReceiverId(currentUser.getId());
         Set<UserFriend> userFriends = userFriendsRepository.findAllByUserIdId(currentUser.getId());
-
         modelAndView.addObject("userFriends", userFriends);
         modelAndView.addObject("friendRequests", friendRequests);
         modelAndView.setViewName("friends");

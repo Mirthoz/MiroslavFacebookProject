@@ -4,6 +4,8 @@ import com.example.miroslavfacebookproject.dto.PostDTO;
 import com.example.miroslavfacebookproject.entity.Image;
 import com.example.miroslavfacebookproject.entity.Post;
 import com.example.miroslavfacebookproject.entity.User;
+import com.example.miroslavfacebookproject.entity.UserFriend;
+import com.example.miroslavfacebookproject.enums.PostStatus;
 import com.example.miroslavfacebookproject.repository.PostRepository;
 import com.example.miroslavfacebookproject.repository.UserFriendsRepository;
 import com.example.miroslavfacebookproject.service.contract.PostService;
@@ -42,11 +44,26 @@ public class PostServiceImpl implements PostService {
         post.setText(postDTO.getPostText());
         post.setPoster(user);
         post.setDate(date);
+        post.setStatus(PostStatus.ACTIVE.name());
+        postRepository.save(post);
+    }
+
+    @Override
+    public void reportPost(Long postId) {
+        Post post = postRepository.findFirstById(postId);
+        post.setStatus(PostStatus.REPORTED.name());
+        postRepository.save(post);
+    }
+
+    @Override
+    public void blockPost(Long postId) {
+        Post post = postRepository.findFirstById(postId);
+        post.setStatus(PostStatus.BLOCKED.name());
         postRepository.save(post);
     }
 
     @Override
     public List<User> takeUserFriends(Long currentUserId) {
-        return userFriendsRepository.findAllByUserIdId(currentUserId).stream().map(f -> f.getFriendId()).collect(Collectors.toList());
+        return userFriendsRepository.findAllByUserIdId(currentUserId).stream().map(UserFriend::getFriendId).collect(Collectors.toList());
     }
 }

@@ -9,6 +9,7 @@ import java.util.Set;
 public class PostDTO {
     private String postText;
     private MultipartFile postImage = null;
+    private Long postId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     private Set<Like> likes;
@@ -37,5 +38,13 @@ public class PostDTO {
 
     public void setLikes(Set<Like> likes) {
         this.likes = likes;
+    }
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 }
