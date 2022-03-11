@@ -59,13 +59,14 @@ public class ProfileServiceImpl extends BaseController implements ProfileService
 
     private List<Post> takeUserPosts(User currentUser){
         List<Post> allPosts = postRepository.findAll();
-        List<Post> userPosts = allPosts.stream().filter(p -> p.getPoster().getId().equals(currentUser.getId()) && !p.getStatus().equals("BLOCKED")).collect(Collectors.toList());
+        List<Post> userPosts = allPosts.stream().filter(p -> p.getPoster().getId().equals(currentUser.getId())).collect(Collectors.toList());
         List<User> userFriends = postService.takeUserFriends(currentUser.getId());
         List<Post> friendsPosts = allPosts.stream().filter(post -> userFriends.stream().anyMatch(user -> post.getPoster().equals(user))).collect(Collectors.toList());
         List<Post> userProfilePosts = new ArrayList<>();
         userProfilePosts.addAll(userPosts);
         userProfilePosts.addAll(friendsPosts);
         userProfilePosts = userProfilePosts.stream().sorted(((o1, o2) -> o2.getDate().compareTo(o1.getDate()))).collect(Collectors.toList());
+        userProfilePosts = userProfilePosts.stream().filter(post -> !post.getStatus().equals("BLOCKED")).collect(Collectors.toList());
         return userProfilePosts;
     }
 
